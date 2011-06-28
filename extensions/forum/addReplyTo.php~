@@ -1,0 +1,72 @@
+<?php
+// include core stuff
+require_once('../../core/inc/coreInc.php');
+// app extension file
+require_once('../core/main.php');
+// local extension file
+require_once('core/main.php');
+
+if (isset($_GET['fid']) && is_numeric($_GET['fid']) && isset($_GET['rid']) && is_numeric($_GET['rid'])) {
+	$forum_id = escape($_GET['fid']);
+	$reply_id = escape($_GET['rid']);
+	
+	$forumData = getForum($forum_id, $class_id);
+	if ($forumData == false) {
+		exit();
+	}
+	
+} else {
+	exit();
+}
+
+if (isset($_POST['submitted']) && $forumData['locked'] == 1) {
+	   addReplyTo($reply_id, $forum_id, $user_id, '<p>' . $_POST['body'] . '</p>');
+?>
+
+<cc:inline>
+<?php 
+if ($class_level == 3) {
+		$cssClass = 'recommentbox1';
+		$cssClass2 = 'recommentheader1';
+		
+	} else {
+		$cssClass = 'recommentbox1';
+		$cssClass2 = 'recommentheader1';
+	}
+	
+$me = getUser($user_id);
+?>
+<script type="text/javascript">
+
+$(document).ready(function(){  
+
+$("#box<?php echo $reply_id; ?>").append("<div class=\"<?php echo $cssClass2; ?>\" style=\"display:none\"><?php echo 'Posted at ' . date('g:i A') . ' on ' . date('F j, Y'); ?></div><div class=\"<?php echo $cssClass; ?>\" style=\"display:none\"><img src=\"http://localhost/cc4/app/core/site_img/client_img/user/32703.png\" height=\"40\" width=\"40\" style=\"float:left;border:2px solid #e1e1e1;margin-right:5px;\" /><a href=\"#\"><strong><?php echo $me['first_name'] . ' ' . $me['last_name']; ?></strong></a><?php echo '<p>' . reverse_htmlentities(escape(str_replace('&nbsp;', ' ',$_POST['body']))) . '</p>'; ?></div>");
+$("#box<?php echo $reply_id; ?> .<?php echo $cssClass; ?>:last").slideDown();
+$("#box<?php echo $reply_id; ?> .<?php echo $cssClass2; ?>:last").fadeIn();
+ $("#box<?php echo $reply_id; ?>").find(\'.showDel\').show();
+
+$("#showReply<?php echo $reply_id; ?>").hide();
+
+});
+</script>
+
+
+
+
+</cc:inline>
+	
+<?php	
+	exit();
+} else {
+	echo '<center><br /><br /><span style="font-size:16px; font-weight:bolder; color: #999">Oops! This forum is locked and cannot be edited.</span></center>';
+}
+
+
+
+
+
+
+
+
+
+?>

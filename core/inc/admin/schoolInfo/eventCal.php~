@@ -1,0 +1,18 @@
+<script type="text/javascript">
+	$(function() {
+		$( "#radio" ).buttonset();
+		$( "#check" ).button();
+		$( "#saget" ).button();
+	});
+	</script>
+
+<div id="navcrumbs"><?php echo $school['name']; ?> <img src="<?php echo $imgServer; ?>main/l_arrow.png" /> <strong>Event Calendar</strong></div>
+
+<div id="radio">
+		<input type="radio" id="radio1" name="radio" /><label for="radio1">Require School Email</label>
+		<input type="radio" id="radio2" name="radio" checked="checked" /><label for="radio2">Set Allowed Emails</label>
+		<input type="radio" id="radio3" name="radio" /><label for="radio3">Open To Anyone</label>
+	</div><br /><br /><br />
+	
+	<input type="radio" id="saget" name="hello" /><label for="saget">Programming 1</label><br /><br />
+	<input type="radio" id="check" name="hello" /><label for="check">Biology Period 2</label>

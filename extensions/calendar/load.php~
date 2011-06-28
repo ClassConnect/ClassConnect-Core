@@ -1,0 +1,6 @@
+<?php
+require_once('core/inc/coreInc.php');
+
+echo '<br /><center><img src="' . $imgServer . 'sBoxLoad.gif" /></center>';
+
+?>

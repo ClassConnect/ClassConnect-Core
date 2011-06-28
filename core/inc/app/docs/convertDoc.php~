@@ -1,0 +1,126 @@
+<?php
+// show folders
+// get current folder id
+if ($_GET['id'] != 0) {
+	$curDir = escape($_GET['id']);
+} else {
+	$curDir = 0;
+}
+
+if (auth_dir($curDir, $user_id) == true) {
+
+if ($_GET['q'] == 1) {
+	$dirList = read_dirFolders($curDir, $user_id);
+	$fileList = read_dirFiles($curDir, $user_id);
+echo '<script>
+$(function() {
+		$( "#listFolders" ).buttonset();
+	});	
+</script>';
+
+echo '<div id="listFolders">';
+if ($curDir != 0) {
+	$current_folder = get_dir($curDir);
+	echo '<li class="hudFileList" style="width:350px; border-bottom:2px solid #999; background-color:#e1e1e1" onDblClick="swapDir(' . $current_folder['parent_id'] . ');">&nbsp;<img src="' . $imgServer . 'gen/arrow_up.png" />&nbsp;&nbsp;<span style="font-size:14px">Parent Folder</li>';
+}
+// echo the contents of this directory
+foreach ($dirList as $entry) {
+	echo '<li class="hudFileList" style="width:350px; padding-top:3px; padding-bottom:3px" onDblClick="swapDir(' . $entry['id'] . ');"><span style="padding-left:5px"><img src="' . $imgServer . 'fileBox/folder.png" /> ' . $entry['name'] . '</span></li>';
+	
+}
+
+// echo the contents of this directory
+$start = 0;
+foreach ($fileList as $entry) {
+	if ($entry['format'] == 6 || ($entry['format'] == 1 && ($entry['ext'] == 'doc' || $entry['ext'] == 'odt' || $entry['ext'] == 'ott' || $entry['ext'] == 'rtf' || $entry['ext'] == 'txt' || $entry['ext'] == 'pdf' || $entry['ext'] == 'docx'))) {
+		if ($entry['ext'] != '') {
+			$entry['name'] = $entry['name'] . '.' . $entry['ext'];
+		}
+		echo '<li class="hudFileList" style="width:350px"><input type="radio" id="rad' . $entry['id'] . '" name="target_id" value="' . $entry['id'] . '" /><label for="rad' . $entry['id'] . '" class="noRound">✓</label><span style="padding-left:10px"><img src="' . $imgServer . 'fileBox/formats/' . $entry['icon'] . '.png" /> ' . $entry['name'] . '</span></li>';
+		$start++;
+	}
+	
+}
+
+if (empty($dirList) && $start == 0) {
+	echo '<li class="hudFileList" style="width:350px;padding:5px">No content found in the directory.</li>';
+}
+echo '</div>';
+
+exit();	
+}
+/// if just looking for files
+}
+
+?>
+
+<script>
+
+
+function submitFile() {
+	var value = $('input[name=target_id]:checked').val();
+    if (value != undefined) {
+    	openBox('writer.php?n=6&id=' + value, 350);
+    }
+        
+}
+
+
+
+
+function swapDir(dirID, start) {
+	$.ajax({
+   type: "GET",
+   url: "writer.cc?n=5&q=1&id=" + dirID,
+   success: function(msg){
+   	if (start == 1) {
+   		// start toggle
+   	}
+     $("#contents").html(msg);
+   }
+ });
+}
+
+	$(function() {
+		swapDir(0, 1);
+	});
+	
+	
+function disableSelection(target){
+if (typeof target.onselectstart!="undefined") //IE route
+	target.onselectstart=function(){return false}
+else if (typeof target.style.MozUserSelect!="undefined") //Firefox route
+	target.style.MozUserSelect="none"
+else //All other route (ie: Opera)
+	target.onmousedown=function(){return false}
+target.style.cursor = "default"
+}
+
+
+disableSelection(document.getElementById("contents"));
+</script>
+<?php
+
+	echo '<div class="headTitle"><img src="' . $imgServer . 'gen/w_large.png" style="margin-top:3px; margin-right: 3px" /><div>Open Document From File</div></div>
+<div id="failer" style="display:none"></div>
+<form method="POST" id="add-doc" style="font-size:14px">	
+<div id="contents" style="border-top:1px solid #999">
+
+
+
+</div>
+<input type="password" size="1" style="display:none" />
+</form>
+
+
+<div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
+<button class="button" onClick="submitFile();" type="submit"> 
+<img src="' . $imgServer . 'gen/tick.png" /> Open Document
+</button>
+<button class="button" onClick="closeBox();" type="submit"> 
+<img src="' . $imgServer . 'gen/cross.png" /> Close
+</button>
+</div>';
+
+
+?>

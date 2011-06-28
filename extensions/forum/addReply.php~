@@ -1,0 +1,70 @@
+<?php
+// include core stuff
+require_once('../../core/inc/coreInc.php');
+// app extension file
+require_once('../core/main.php');
+// local extension file
+require_once('core/main.php');
+
+if (isset($_GET['fid']) && is_numeric($_GET['fid'])) {
+	$forum_id = escape($_GET['fid']);
+	
+	$forumData = getForum($forum_id, $class_id);
+	if ($forumData == false) {
+		exit();
+	}
+	
+} else {
+	exit();
+}
+
+if (isset($_POST['submitted']) && $forumData['locked'] == 1) {
+	   addReply($forum_id, $user_id, $_POST['body']);
+?>
+
+<cc:inline>
+<?php 
+if ($class_level == 3) {
+		$cssClass = 'commentboxup';
+		$cssClass2 = 'commentfooterup';
+		
+	} else {
+		$cssClass = 'commentboxup';
+		$cssClass2 = 'commentfooterup';
+	}
+	
+$me = getUser($user_id);
+?>
+<script type="text/javascript">
+
+$(document).ready(function(){  
+
+$("#replies").prepend("<div class=\"<?php echo $cssClass2; ?>\" style=\"display:none\"><?php echo 'Posted at ' . date('g:i A') . ' on ' . date('F j, Y'); ?></div><div class=\"<?php echo $cssClass; ?>\" style=\"display:none\"><img src=\"http://localhost/cc4/app/core/site_img/client_img/user/32703.png\" height=\"40\" width=\"40\" style=\"float:left;border:2px solid #e1e1e1;margin-right:5px;\" /><a href=\"#\"><strong><?php echo $me['first_name'] . ' ' . $me['last_name']; ?></strong></a><?php echo reverse_htmlentities(escape(str_replace('&nbsp;', ' ',$_POST['body']))); ?></div>");
+$("#replies .<?php echo $cssClass; ?>:first").slideDown();
+$("#replies .<?php echo $cssClass2; ?>:first").fadeIn();
+
+$('#replyarea').remove();
+
+});
+</script>
+
+
+
+
+</cc:inline>
+	
+<?php	
+	exit();
+} else {
+	echo '<center><br /><br /><span style="font-size:16px; font-weight:bolder; color: #999">Oops! This forum is locked and cannot be edited.</span></center>';
+}
+
+
+
+
+
+
+
+
+
+?>

@@ -1,0 +1,171 @@
+ <?php 
+// check for n
+if (isset($_GET['n'])) {
+		require_once('core/inc/func/user/addUser.php');
+	
+	if ($_GET['n'] == 1) {
+		// add classes panel
+		require_once('core/inc/student/manageClasses/addClass.php');
+		
+	} elseif ($_GET['n'] == 2) {
+		// view past & future classes
+		require_once('core/inc/student/manageClasses/viewToggle.php');
+		
+	}
+exit();
+} // isset n
+ 
+
+$page_title = 'Manage Classes / Schools';
+
+require_once('core/template/head/header.php');
+
+?>
+<script type="text/javascript" >
+// function for submitting the school signup form
+function viewPast() {
+	$("#past").hide();
+        $.ajax({
+        type: "GET",
+        url: "manage-classes.php?n=2&v=1",
+        success: function(data) {
+        		$("#past").html(data).slideDown(300);
+
+        }
+
+        });
+}
+
+
+// function for submitting the school signup form
+function viewFuture() {
+	$("#future").hide();
+        $.ajax({
+        type: "GET",
+        url: "manage-classes.php?n=2&v=2",
+        success: function(data) {
+        		$("#future").html(data).slideDown(300);
+
+        }
+
+        });
+}
+</script>
+
+
+<div style="width: 700px; padding-right:5px; border-right:1px solid #ccc; float:left">
+
+<div style="font-size: 26px; color:#666">Manage Classes</div>
+<div style="padding-top:5px; border-top: 1px solid #999"></div>
+<?php
+// check this user's past, see if they killed anyone back in 89
+$pastCheck = getEnrolledClasses($user_id, 1);
+if (!empty($pastCheck)) {
+?>
+<div id="past"><a href="#" onClick="viewPast()"><div style="background: #e1e1e1; border: 1px solid #ccc; text-align: center; font-size:16px; padding-top:5px; padding-bottom: 5px">View Past Classes</div></a></div>
+<?php } ?>
+
+<?php
+$listClasses = getEnrolledClasses($user_id, 2);
+
+// if no classes are found
+if (empty($listClasses)) {
+	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
+
+<div style="float:left">
+<span style="font-size:16px; font-weight:bolder">Unable to find any active classes.</span><br />
+<span style="font-size:14px; color: #999">Add a new class clicking the "Enroll In A Class" button on the right.</span>
+</div>
+
+
+</div>';
+}
+
+// list current classes
+foreach ($listClasses as $classEl) {
+	if ($classEl['gp'] != 0) {
+		$fill = '<span style="font-size:14px; color: #999">' . date('m/d/Y', strtotime($classEl['start'])) . ' - ' . date('m/d/Y', strtotime($classEl['end'])) . '</span>';
+	} else {
+		$fill = '<span style="font-size:14px; color: #999">Active since ' . date('m/d/Y', strtotime($classEl['reg_date'])) . '</span>';
+	}
+	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
+
+<div style="float:left">
+<span style="font-size:16px; font-weight:bolder"><a href="#">' . $classEl['name'] . '</a></span><br />
+' . $fill . '
+</div>
+
+
+</div>';
+}
+?>
+<?php
+// check this user's future, see if they're going to kill anyone. minority report this shit.
+$futureCheck = getEnrolledClasses($user_id, 3);
+if (!empty($futureCheck)) {
+?>
+<div id="future"><a href="#" onClick="viewFuture()"><div style="background: #e1e1e1; border: 1px solid #ccc; text-align: center; font-size:16px; padding-top:5px; padding-bottom: 5px">View Future Classes</div></a></div>
+<?php } ?>
+
+<div style="font-size: 26px; color:#666; margin-top:50px">Manage Schools</div>
+<div style="padding-top:5px; border-top: 1px solid #999"></div>
+<?php
+$listSchools = getSchools($user_id);
+
+// if no schools are found
+if (empty($listSchools)) {
+	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
+
+<div style="float:left">
+<span style="font-size:16px; font-weight:bolder">Unable to find any schools.</span><br />
+</div>
+
+
+</div>';
+}
+
+foreach ($listSchools as $schoolEl) {
+	if ($schoolEl['verified'] == 2) {
+		$temp = '<span style="font-size:14px; color: #999"><img src="' . $imgServer . 'gen/tick.png" /> Active since ' . date('m/d/Y', strtotime($schoolEl['reg_date'])) . '</span>';
+	} elseif ($schoolEl['verified'] == 3) {
+		$temp = '<span style="font-size:14px; color: #999"><img src="' . $imgServer . 'gen/cross.png" /> Joined ' . date('m/d/Y', strtotime($schoolEl['reg_date'])) . '. No longer active.</span>';
+	} elseif ($schoolEl['verified'] == 1) {
+		$temp = '<span style="font-size:14px; color: #999"><img src="' . $imgServer . 'gen/cross.png" /> Joined ' . date('m/d/Y', strtotime($schoolEl['reg_date'])) . '. Not yet verified.</span>';
+	}
+	
+	// type
+	if ($schoolEl['type'] == 3) {
+		$userType = 'Teacher';
+	} elseif ($schoolEl['type'] == 4) {
+		$userType = 'Administrator';
+	}
+	
+	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
+
+<div style="float:left">
+<span style="font-size:16px; font-weight:bolder"><a href="school.cc?id=' . $schoolEl['id'] . '">' . $schoolEl['name'] . '</a></span><br />
+' . $temp . '
+</div>
+
+<div style="font-size:16px; float:right; text-align:right">
+<strong>' . $userType . '</strong><br />
+' . $schoolEl['email'] . '
+</div>
+
+</div>';
+}
+?>
+
+<div style="margin-bottom:100px"></div>
+</div>
+
+<div style="width: 190px; float:right">
+<br />
+<a href="#" onClick="openBox('manage-classes.cc?n=1', 400)" class="button" style="margin-left:10px; margin-bottom: 10px"><img src="<?php echo $imgServer; ?>gen/add.png" /> Add New Class</a>
+
+
+</div>
+
+<?php
+require_once('core/template/foot/footer.php');
+?>

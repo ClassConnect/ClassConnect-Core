@@ -1,0 +1,4 @@
+
+<div id="navcrumbs"><a href="school.cc?id=<?php echo $school['id']; ?>"><?php echo $school['name']; ?></a> <img src="<?php echo $imgServer; ?>main/l_arrow.png" /> Dashboard</div>
+
+Welcome back, <?php echo $firstname . ' ' . $lastname; ?>!

