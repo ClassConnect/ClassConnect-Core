@@ -84,7 +84,7 @@ require_once('core/template/head/header.php');
 
 <div id="fboxLeft">
 <div id="barRighter">
-<div class="tabbed" onClick="sdContent()"><img src="<?php echo $imgServer; ?>gen/addContent.png" style="float:left; margin-right:5px; height:18px"/> Add Content</div>
+<div id="addContenter" class="tabbed" onClick="sdContent()"><img src="<?php echo $imgServer; ?>gen/addContent.png" style="float:left; margin-right:5px; height:18px"/> Add Content</div>
 
 <div id="addOpt" style="display:none">
 <div class="subTabbed" onClick="addFolder()"><img src="<?php echo $imgServer; ?>gen/addFolder.png" style="float:left; margin-right:5px; height:18px"/>Create Folder</div>

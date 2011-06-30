@@ -4,7 +4,7 @@
 function submitFile() {
 	var value = $('input[name=target]:checked').val();
     if (value != undefined) {
-    	window.location = "livelecture/Editor/index.php?fid=" + value;
+    	openBox('presentations.php?n=6&id=' + value, 350);
     }
         
 }
@@ -23,9 +23,10 @@ function submitFile() {
 
 </div>
 <div id="contentAllow" style="display:none">
-7
+1,7
 </div>
 <div id="addAllow" style="display:none">
+ppt,pptx,odp
 </div>
 
 <input type="password" size="1" style="display:none" />

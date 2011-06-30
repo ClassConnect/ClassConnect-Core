@@ -21,13 +21,6 @@ if (isset($_GET['step'])) {
 		require_once('steps/download-doc.php');	
 		
 	// convert document
-	} elseif ($_GET['step'] == 3) {
-		require_once('steps/convert-doc.php');
-
-                     // convert document
-	} elseif ($_GET['step'] == 4) {
-		require_once('steps/create-doc.php');
-		
 	}
 	
 	exit();

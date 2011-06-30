@@ -157,6 +157,8 @@ foreach ($fileList as $fEntry) {
 	} elseif ($fEntry['format'] == 5) {
 		echo '<a href="index.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
 		
+	} elseif ($fEntry['format'] == 7) {
+		echo '<a href="#" onClick="window.location = \'/app/livelecture/Presenter/index-debug.html?fid=' . $fEntry['id'] . '&cid=' . $class_id . '\'">';
 	
 	} else {
 		echo '<a href="' . htmlentities(urlencode('index.php?n=1&con_id=' . $fEntry['id'])) . '" target="external">';

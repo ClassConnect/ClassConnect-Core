@@ -230,7 +230,7 @@ function update_content($conID, $uid, $name, $body, $content) {
 		$size = escape($size);
 		
 		if (empty($errors)) {
-			good_query("UPDATE filebox_content SET name = '$name', body = '$body', content = '$content' WHERE id = $conID LIMIT 1");
+			good_query("UPDATE filebox_content SET name = '$name', body = '$body', content = '$content', time_date = NOW() WHERE id = $conID LIMIT 1");
 			return 1;
 		}
 		
@@ -669,7 +669,22 @@ if (auth_dir($locationID, $uid) == true) {
 	foreach($dirArray as $dirID) {
 		// if the dir id is numeric, append the update query
 		if (is_numeric($dirID) && ($dirID != $locationID)) {
-			good_query("UPDATE filebox_folders SET parent_id = '$locationID' WHERE id = $dirID AND uid = $uid LIMIT 1");
+			$allowMove = true;
+			$tempDir = $locationID;
+			// cycle through the parents
+			while ($tempDir != 0) {
+				if ($tempDir == $dirID) {
+					$allowMove = false;
+				}
+				$getFolder = get_dir($tempDir);
+				$tempDir = $getFolder['parent_id'];
+			}
+
+			// if we aren't moving this to a child
+			if ($allowMove == true){
+				good_query("UPDATE filebox_folders SET parent_id = '$locationID' WHERE id = $dirID AND uid = $uid LIMIT 1");
+			}
+
 		}
 			
 	}

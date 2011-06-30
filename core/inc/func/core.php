@@ -1274,6 +1274,20 @@ function getClass($cid) {
 // end getClass function
 
 
+// getClassSession function
+function getClassSession($cid) {
+	global $myClasses;
+	foreach ($myClasses as $classer) {
+		if ($classer['id'] == $cid) {
+			return $classer;
+		}
+	}
+
+	return false;
+}
+// end getClass function
+
+
 // addClassTeacher function
 function addClassTeacher($uid, $cid, $master) {
 	if ($master != 2) {

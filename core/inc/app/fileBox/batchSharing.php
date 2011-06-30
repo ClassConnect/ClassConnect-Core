@@ -57,6 +57,10 @@ if (isset($_GET['classIDs'])) {
 		}
 	}
 
+// send a notification for new content added
+$cdata = getClassSession($classKey);
+sendClassNotification($classKey, $cdata['name'] . ' has just shared new content with your class in <a href="class.cc?id=' . $cdata['id'] . '#4">ShareBox</a>.');
+
 // if no class key, delete
 } else {
 	

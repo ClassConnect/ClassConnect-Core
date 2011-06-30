@@ -52,8 +52,18 @@ updateClass($user_id, $class_id, $classData['name'], $classData['description'], 
 
 echo '<script>
 $(document).ready(function(){   
-	$("#changeImg").attr(\'style\', \'background: url(' . $iconServer . $pid . '.png)\');
-	closeBox();
+	$.ajax({
+        		type: "GET",
+        		url: "extensions/core/setSession.php",
+        		success: function(data2) {
+
+        			$("#changeImg").attr(\'style\', \'background: url(' . $iconServer . $pid . '.png)\');
+					$("#classimger' . $class_id . '").attr(\'src\', \'' . $iconServer . $pid . '.png\');
+					closeBox();
+               
+            }
+            
+            });
 });
 </script>';
 exit();

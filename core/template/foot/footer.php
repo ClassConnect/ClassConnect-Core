@@ -174,5 +174,33 @@ if (getNumLLs($user_id, $myClasses) == 0) {
 <?php if ($extLock != 1) { ?>
 <iframe src="<?php echo $scriptServer; ?>ccrte.cc" width="1" height="1" style="display:none"></iframe>
 <?php } ?>
+
+
+<!-- First include the script: -->
+<script type="text/javascript">
+var mp_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
+document.write(unescape("%3Cscript src='" + mp_protocol + "api.mixpanel.com/site_media/js/api/mixpanel.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<!-- Initialize it with your project token -->
+<script type="text/javascript">
+try {
+    var mpmetrics = new MixpanelLib("583aeb01c87578bc7d789a522ff2347e");
+} catch(err) {
+    var null_fn = function () {};
+    var mpmetrics = { 
+        track: null_fn, 
+        track_funnel: null_fn, 
+        register: null_fn, 
+        register_once: null_fn,
+        register_funnel: null_fn,
+        identify: null_fn
+    };
+}
+
+mpmetrics.identify('<?php echo $user_id; ?>');
+mpmetrics.name_tag('<?php echo htmlentities($firstname) . ' ' . htmlentities($lastname); ?>');
+mpmetrics.track("Button clicked"); 
+</script>
         </body> 
 </html>

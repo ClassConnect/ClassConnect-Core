@@ -50,7 +50,7 @@ require_once('core/template/head/header.php');
 foreach ($recentFiles as $file) {
     echo '<div style="height:40px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;" onClick="window.location = \'writer.php?n=2&doc_id=' . $file['id'] . '\';">
        <span style="font-size:13px">' . $file['name'] . '</span><br />
-           <span style="font-size:12px; color:#999">' . date("g:ia F jS, Y") . '</span><br />
+           <span style="font-size:12px; color:#999">' . date("g:ia F jS, Y", strtotime($file['time_date'])) . '</span><br />
             </div>';
 }
 
@@ -62,14 +62,14 @@ if(empty($recentFiles)){
 </div>
 
 <div style="float:right; width:670px">
-<div style="font-size:22px; color:#666; margin-bottom:15px">Welcome To Docs</div>
-    <div style="width:300px; float:left" class="colorswap fullRound" onClick="openBox('writer.php?n=1', 350); return false">
+<div  style="font-size:22px; color:#666; margin-bottom:15px">Welcome To Docs</div>
+    <div id="createDoc" style="width:300px; float:left" class="colorswap fullRound" onClick="openBox('writer.php?n=1', 350); return false">
 <span style="font-size:18px">Create Document</span><br />
 <span style="color:#999; font-size:13px">Start a brand new document using Docs. You can edit, view, print and download this document from any internet enabled computer or device.</span>
 
     </div>
 
-<div style="width:300px; float:right" class="colorswap fullRound" onClick="openBox('writer.php?n=5', 350); return false">
+<div id="openDoc" style="width:300px; float:right" class="colorswap fullRound" onClick="openBox('writer.php?n=5', 350); return false">
 <span style="font-size:18px">Open Document</span><br />
 <span style="color:#999; font-size:13px">Have an existing document? Our software can open ClassConnect documents as well as a slew of other file types including .doc, .docx, .odt,  and more!</span>
 

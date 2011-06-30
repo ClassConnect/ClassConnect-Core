@@ -12,7 +12,7 @@ if ($contentData['format'] == 1) {
 	});
 	
 	function updateStatus(number, textData) {
-		$('#status-update').html('Converting Document <strong>(' + number + '%)</strong>');
+		$('#status-update').html('Converting Presentation <strong>(' + number + '%)</strong>');
 		$("#progressbar").progressbar({
 			value: number
 		});
@@ -22,11 +22,11 @@ if ($contentData['format'] == 1) {
 	}
 	
 	function downloadDoc() {
-		updateStatus(34, 'Converting your document...');
+		updateStatus(34, 'Converting your presentation...');
 		$.ajax({
-  			url: "writer.php?n=6&step=2&id=<?php echo $conID; ?>",
+  			url: "presentations.php?n=6&step=2&id=<?php echo $conID; ?>",
   			success: function(data){
-  				window.location = "writer.cc?n=2&doc_id=" + data;
+  				window.location = "livelecture/Editor/index.php?fid=" + data;
   			}
 		});
 		
@@ -34,7 +34,7 @@ if ($contentData['format'] == 1) {
 	
 	</script>
 	
-<div class="headTitle"><div id="status-update">Converting Document <strong>(10%)</strong></div></div>
+<div class="headTitle"><div id="status-update">Converting Presentation <strong>(10%)</strong></div></div>
 
 <div id="progressbar" style="margin:5px"></div>
 

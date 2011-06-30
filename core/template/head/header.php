@@ -45,11 +45,11 @@ $padding = round((40 - $theme['logoHeight'])/2, 0);
 	<ul class="subnav">
     	<?php
 		foreach($myClasses as $class) {
-			echo '<li><a href="class.cc?id=' . $class['id'] . '"><img src="' . $iconServer . $class['prof_icon'] . '" style="float:left;height:20px;padding-right:5px;" />' . $class['name'] . '</a></li>';
-		} 
+			echo '<li><a href="class.cc?id=' . $class['id'] . '"><img src="' . $iconServer . $class['prof_icon'] . '" id="classimger' . $class['id'] . '" style="float:left;height:20px;padding-right:5px;" />' . $class['name'] . '</a></li>';
+		}
 		if (empty($myClasses)) {
 			echo '<li><a href="#">No Active Classes Found</a></li>';
-		}		
+		}
 		?>
     </ul>
 </div>

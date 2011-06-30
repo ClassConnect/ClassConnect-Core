@@ -12,7 +12,7 @@ function submitFile() {
 </script>
 <?php
 
-	echo '<div class="headTitle"><img src="' . $imgServer . 'gen/w_large.png" style="margin-top:3px; margin-right: 3px" /><div>Open Document From File</div></div>
+	echo '<div class="headTitle"><img src="' . $imgServer . 'gen/w_large.png" style="margin-top:3px; margin-right: 3px" /><div>Open Document From FileBox</div></div>
 <div id="failer" style="display:none"></div>
 <script type="text/javascript" src="' . $scriptServer . 'filePicker.js"></script>
 <form method="POST" id="add-doc">

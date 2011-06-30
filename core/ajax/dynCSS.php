@@ -1410,7 +1410,7 @@ color: #4A4A4A;
  left:0px;  
  min-width:100%;  
  min-height:100%;  
- z-index:1000;  
+ z-index:1000;
 }  
 
 #lightbox-panel { 
@@ -1505,7 +1505,7 @@ color: #4A4A4A;
  left:50%;  
  background:#FFFFFF;   
   border:6px solid #999;  
- z-index:9999; 
+ z-index:999999999999; 
  /*--Top left rounded corner--*/
 	-moz-border-radius-bottomleft: 5px;
 	-khtml-border-radius-bottomleft: 5px;
@@ -3797,28 +3797,28 @@ font-size:13px;
 .testEvent,
 .fc-agenda .testEvent .fc-event-time,
 .testEvent a {
-    background: #fa0000 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
+    background: #ff0000 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
 }
  
  
 .projEvent,
 .fc-agenda .projEvent .fc-event-time,
 .projEvent a {
-    background: #fad500 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
+    background: #fbb818 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
 }
     
     
 .eventEvent,
 .fc-agenda .eventEvent .fc-event-time,
 .eventEvent a {
-    background: #0d00fa url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
+    background: #1111cc url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
 }   
  
 
 .asmtEvent,
 .fc-agenda .asmtEvent .fc-event-time,
 .asmtEvent a {
-    background: #2dad00 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
+    background: #228822 url(" . $imgServer . "main/cal_rep.png) repeat-x; /* background color */
 }
 
 
