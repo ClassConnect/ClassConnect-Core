@@ -127,7 +127,7 @@ searchBox();
 
 </script>
 <form id="searchBoxSub">
-    <div id="sbox_menu">
+    <div id="sbox_menu" style="padding-top:70px">
         <span id="opt1" class="item"><a href="#" onClick="swapSearch(1); return false">Websites</a></span>
         <span id="opt2" class="item"><a href="#" onClick="swapSearch(2); return false">Images</a></span>
         <span id="opt3" class="item"><a href="#" onClick="swapSearch(3); return false">Videos</a></span>

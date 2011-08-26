@@ -169,7 +169,7 @@ if ($type == 1) {
 
         // print record
 		echo '<div id="resultBox">
-		<a href="#" onClick="openBox(\'searchBox.cc?n=2&type=3&url=' . urlencode($watch) . '&title=' . urlencode($media->group->title) . '&body=' . urlencode(descSubstr($media->group->description)) . '&query=' . $query . '\', 480)"><img src="' . $thumbnail . '" class="float-left" style="border:2px solid #CCCCCC; width:200px" /></a>
+		<a href="#" onClick="openBox(\'searchBox.cc?n=2&type=3&url=' . urlencode($watch) . '&title=' . urlencode($media->group->title) . '&body=' . urlencode(descSubstr($media->group->description)) . '&query=' . $query . '\', 480)"><img src="' . $thumbnail . '" style="border:2px solid #CCCCCC; width:200px; float:left; margin:10px" /></a>
 		
 		<p class="desc"><span class="title"><a href="#" onClick="openBox(\'searchBox.cc?n=2&type=3&url=' . urlencode($watch) . '&title=' . urlencode($media->group->title) . '&body=' . urlencode(descSubstr($media->group->description)) . '&query=' . $query . '\', 480)">' . $media->group->title . '</a> - (' . sprintf("%0.2f", $length/60) . ' min)</span><br />' . descSubstr($media->group->description) . '</p>
 		
@@ -232,7 +232,7 @@ if (strlen(str_replace(' ', '', $query)) > 0) {
 	foreach ($data as $doc) {
 		echo '<div id="resultBox">
 		
-		<a href="#" onClick="openBox(\'searchBox.cc?n=2&type=4&doc_id=' . $doc['doc_id'] . '&doc_title=' . urlencode($doc['title']) . '&query=' . $query . '&title=' . urlencode($doc['title']) . '&body=' . urlencode(descSubstr($doc['description'])) . '&key=' . $doc['access_key'] . '\', 480)"><img src="' . $doc['thumbnail_url'] . '" class="float-left" style="border:2px solid #CCCCCC;" /></a>
+		<a href="#" onClick="openBox(\'searchBox.cc?n=2&type=4&doc_id=' . $doc['doc_id'] . '&doc_title=' . urlencode($doc['title']) . '&query=' . $query . '&title=' . urlencode($doc['title']) . '&body=' . urlencode(descSubstr($doc['description'])) . '&key=' . $doc['access_key'] . '\', 480)"><img src="' . $doc['thumbnail_url'] . '" style="border:2px solid #CCCCCC;float:left; margin:10px" /></a>
 		
 		<p class="desc"><span class="title"><strong><a href="#" onClick="openBox(\'searchBox.cc?n=2&type=4&doc_id=' . $doc['doc_id'] . '&doc_title=' . urlencode($doc['title']) . '&query=' . $query . '&title=' . urlencode($doc['title']) . '&body=' . urlencode(descSubstr($doc['description'])) . '&key=' . $doc['access_key'] . '\', 480)">' . $doc['title'] . '</a></strong> - (' . $doc['page_count'] . ' pages)</span><br />' . descSubstr($doc['description']) . '</p></div>';
 	}	

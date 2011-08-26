@@ -5,6 +5,7 @@ if (isset($_POST['id'])) {
 
 $url = str_replace(' ', '%20', $_POST['img']);
 $pid = strip_tags($_POST['id']);
+if (!file_exists('extensions/classPage/temp/' . $_POST['id'] . '.png')) {
 $ch = curl_init($url);
 $fp = fopen('extensions/classPage/temp/' . $pid . '.png', 'wb');
 curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -37,8 +38,12 @@ $container = $conn->get_container('cc4_img');
 $object = $container->create_object($pid . '.png');
 $object->load_from_filename('extensions/classPage/temp/' . $pid . '.png');
 
+}
+
 $userData = getUser($user_id);
 updateUser($user_id, $pid, $userData['cell'], $userData['cell_active'], $userData['e_mail'], $userData['email_active']);
+
+$_SESSION['prof_icon'] = $pid;
 
 echo '<script>
 $(document).ready(function(){

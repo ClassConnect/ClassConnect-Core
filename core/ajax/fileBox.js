@@ -211,6 +211,9 @@ function addContent(cType) {
 	
 	} else if (cType == 4) {
 		openBox('filebox.cc?n=7&cType=' + cType + '&fid=' + fid, 250);
+
+	} else if (cType == 8) {
+		openBox('filebox.cc?n=7&cType=' + cType + '&fid=' + fid, 250);
 		
 	}
 		
@@ -269,6 +272,9 @@ function viewContent(cType, contentID) {
 
 	} else if (cType == 7) {
 		window.location = '/app/livelecture/Editor/index.php?fid=' + contentID;
+
+	} else if (cType == 8) {
+		window.location = 'filebox.cc?n=10&content_id=' + contentID;
 	
 	}
 

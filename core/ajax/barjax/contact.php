@@ -1,12 +1,10 @@
 <?php
-$cryptinstall="crypt/cryptographp.fct.php";
-include $cryptinstall;
 require_once('../../inc/coreInc.php');
 
 $body = escape($_GET['body']);
 
 if (isset($_GET['body'])) {
-    mail('ericsimons@es40.net', 'Internal Contact: ' . $firstname . ' ' . $lastname . ', UID: ' . $user_id, $body, "From: support@classconnect.com");
+    mail('founders@classconnect.com', 'Internal Contact: ' . $firstname . ' ' . $lastname . ', UID: ' . $user_id, $body, "From: support@classconnect.com");
 }
 
 ?>

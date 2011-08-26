@@ -6,6 +6,7 @@ verifySchool();
 
 // display the settings page after signup success
 function verifySchool(logData) {
+  $("#main-block").html('<br /><br /><center><img src="<?php echo $imgServer; ?>load.gif" /></center><br /><br />');
 $.ajax({
    type: "POST",
    url: "manage-classes.cc?n=4&s=2",
@@ -107,6 +108,7 @@ function submitEmail() {
 // function for submitting the school email signup form
 function showchangeEmail() {
 
+  $("#main-block").html('<br /><br /><center><img src="<?php echo $imgServer; ?>load.gif" /></center><br /><br />');
 
         $.ajax({
         type: "POST",
@@ -127,6 +129,7 @@ function showchangeEmail() {
 
 // function for submitting the school email signup form
 function changeEmail() {
+
         dataString = $("#school-email-signup").serialize();
 
         $.ajax({
@@ -167,6 +170,7 @@ function requestEmail() {
 
 // display the settings page after signup success
 function allowLogin(idType) {
+  $("#main-block").html('<br /><br /><center><img src="<?php echo $imgServer; ?>load.gif" /></center><br /><br />');
 if (idType == 1) {
 	var crumb = 'Signup Complete!';
  } else {
@@ -190,6 +194,8 @@ $.ajax({
 
 // show the school signup form page
 function schoolForm(id) {
+
+  $("#main-block").html('<br /><br /><center><img src="<?php echo $imgServer; ?>load.gif" /></center><br /><br />');
 
 	if(id == null) {
 		var crumb = 'Create New School';

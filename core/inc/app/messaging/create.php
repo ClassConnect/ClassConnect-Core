@@ -27,6 +27,13 @@ function isNumber(n) {
 			// Location of TinyMCE script
 			script_url : \'' . $scriptServer . 'editor/tiny_mce.js\',
 
+    setup: function(ed){
+                    ed.onInit.add(function(ed) {
+                       $("#loading_gfx").hide();
+                       $("#showSwapper").show();
+                    });
+                 },
+
 			// General options
 			theme : "advanced",
 			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
@@ -84,7 +91,8 @@ function createMsg() {
             <input type="text"  class="subjecter" name="subject" maxlength="60" />
             <br/><br/>
             <span style="font-size:16px">Message</span><br />
-            <div><textarea id="temp1" name="body" style="width: 510px" class="tinymce"></textarea></div>
+            <?php echo '<div id="loading_gfx"><img src="' . $imgServer . 'loading.gif" /></div>'; ?>
+            <div id="showSwapper" style="display:none"><textarea id="temp1" name="body" style="width: 510px" class="tinymce"></textarea></div>
             <input type="hidden" name="submitted" value="true" />
         </form>
 <div style="float:right; margin:5px">

@@ -15,5 +15,11 @@ $extServer = 'http://localhost/app/extensions/';
 $cloudServer = 'http://c424828.r28.cf2.rackcdn.com/';
 // rackspace cloud files main bucket
 $cloudBucket = 'cc4_storage';
+// cloud img bucket
+$cloudImgBucket = 'ccStage_img';
+// cloud img location
+$cloudImgPub = 'http://c714621.r21.cf2.rackcdn.com/';
+// css server location
+$cssServer = $scriptServer;
 
 ?>

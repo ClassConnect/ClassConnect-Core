@@ -56,16 +56,12 @@ require_once('core/inc/thumb/ThumbLib.inc.php');
 				$thumb = PhpThumbFactory::create('core/site_img/client_img/school/' . $filename); 
 				$thumb->resize(200, 30)->save('core/site_img/client_img/school/' . $filename);
 				list($width, $height, $type, $attr) = getimagesize('core/site_img/client_img/school/' . $filename);
-				unlink ('core/site_img/client_img/school/' . $school['settingLogo']);
+				//unlink ('core/site_img/client_img/school/' . $school['settingLogo']);
 				$update = good_query("UPDATE schools SET settingLogo = '$filename', logoHeight='$height' WHERE id = $sid LIMIT 1");
                                                                           setSession($user_id);
 				setLocalPolicies($user_id, $sid);
 				$school['settingLogo'] = $filename;
 				
-				// Delete the file if it still exists:
-				if (file_exists ($_FILES['upload']['tmp_name']) && is_file($_FILES['upload']['tmp_name']) ) {
-					unlink ($_FILES['upload']['tmp_name']);
-				}
 			}
 		}
 			

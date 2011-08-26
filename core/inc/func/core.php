@@ -104,6 +104,7 @@ function setSession($userid) {
 	$_SESSION['user_id'] = $row['id'];
 	$_SESSION['first_name'] = $row['first_name'];
 	$_SESSION['last_name'] = $row['last_name'];
+    $_SESSION['prof_icon'] = $row['prof_icon'];
 	$_SESSION['level'] = $row['level'];
 	$_SESSION['classes'] = $classes;
 	$_SESSION['schools'] = $schools;
@@ -124,8 +125,11 @@ function setNodeSession($userID, $sessID) {
 function setLocalPolicies($userID, $sid) {
 
     // set generic theme and settings
-                $localPol['settingLogo'] = 'cc.png';
-            $localPol['settingColor'] = '#af0101';
+    		$localPol['id'] = 0;
+    		$localPol['name'] = 'ClassConnect';
+            $localPol['settingLogo'] = 'cc.png';
+            $localPol['logoHeight'] = '30';
+            $localPol['settingColor'] = '#f50b00';
             $localPol['userPolicies'] = '{
 "teacher_communication":1,
 "student_communication":1,
@@ -248,26 +252,48 @@ function getFellows() {
     global $level;
     global $user_id;
     global $myClasses;
+    global $mySchools;
     
     if ($level == 3) {
 
 
 $str = '';
-foreach($myClasses as $class) {
-    $school =  getSchoolSession($class['sid']);
+foreach($mySchools as $school) {
     $jArr = json_decode(reverse_htmlentities($school['userPolicies']), true);
     // only add class if the teach_comm setting is 1
     if ($jArr['teacher_communication'] == 1){
-          $str = $str . $class['id'] . ', ';
+        $myUsers = good_query_table("SELECT * FROM users LEFT JOIN school_users ON users.id = school_users.uid WHERE school_users.sid = " . $school['id']);
+
+    } elseif ($jArr['teacher_communication'] == 2){
+    	$myUsers = good_query_table("SELECT * FROM users LEFT JOIN school_users ON users.id = school_users.uid WHERE (school_users.type = 3 OR school_users.type = 4) AND school_users.sid = " . $school['id']);
+
+    } elseif ($jArr['teacher_communication'] == 3){
+    	$myUsers = array();
+
     }
+
+
+	foreach ($myUsers as $usr) {
+    	$fillArray[$usr['id']] = $usr;
+
+	}
 }
 
+// if this user doesn't have any schools
+if (empty($mySchools) || empty($fillArray)) {
+	foreach($myClasses as $class) {
 
-$myStudents = good_query_table("SELECT * FROM users LEFT JOIN class_students ON users.id = class_students.uid WHERE class_students.cid IN (" . $str . "0)");
+          $str = $str . $class['id'] . ', ';
 
-foreach ($myStudents as $student) {
-    $fillArray[$student['id']] = $student;
 
+	}
+
+	// load students in
+	$myStudents = good_query_table("SELECT * FROM users LEFT JOIN class_students ON users.id = class_students.uid WHERE class_students.cid IN (" . $str . "0) AND class_students.uid != $user_id");
+	foreach ($myStudents as $student) {
+	    $fillArray[$student['id']] = $student;
+
+	}
 }
 
 
@@ -285,6 +311,9 @@ foreach($myClasses as $class) {
           $tStr = $tStr . $class['id'] . ', ';
     } elseif ($jArr['student_communication'] == 2){
           $tStr = $tStr . $class['id'] . ', ';
+    } else {
+    	$str = $str . $class['id'] . ', ';
+    	$tStr = $tStr . $class['id'] . ', ';
     }
 }
 
@@ -907,6 +936,7 @@ function getClasses($teacherid, $type) {
 function checkClassOwner($classid) {
 	global $user_id;
 	global $myClasses;
+    global $level;
 	$bool = false;
 	foreach($myClasses as $class) {
 		if ($class['id'] == $classid) {
@@ -921,6 +951,10 @@ function checkClassOwner($classid) {
 			$bool = true;
 		}
 	}
+
+    if ($level != 3) {
+        $bool = false;
+    }
 	
 	return $bool;
 } // end checkClassOwner
@@ -966,7 +1000,7 @@ function getVerifiedSchools($userID) {
 
 
 // This function will check if a user is linked to a school
-function checkSchoolLink($schoolID, $userID) {
+function checkSchoolLink($schoolID, $userID, $sessOn) {
 	global $mySchools;
 	global $user_id;
 
@@ -998,18 +1032,12 @@ function checkSchoolAdmin($sid, $userID) {
 	$bool = false;
 	foreach($mySchools as $school) {
 		if ($school['id'] == $sid) {
-			// if the school is in "free mode", all teachers are admins
-			if ($school['subscription'] == 0) {
-				if ($school['type'] == 3) {
-					$bool = true;
-				}
-				
-			} else {
+
 				// if teacher level is 4
 				if ($school['type'] == 4) {
 					$bool = true;
 				}
-			}
+			
 
 		} // if
 	} // foreach loop
@@ -1177,7 +1205,7 @@ function createClass($name, $body, $sid, $gp, $userID) {
 	global $dbc;
 	$errors = array();
 	
-	if (checkSchoolLink($sid) != true) {
+	if (checkSchoolLink($sid) != true && $sid != 0) {
 		$errors[] = 'Not valid school.';
 	}
 	
@@ -1185,7 +1213,7 @@ function createClass($name, $body, $sid, $gp, $userID) {
 	if ($sid != '') {
 		$sid = escape($sid);
 	} else {
-		$errors[] = 'No school was chosen.';
+		$sid = 0;
 	}
 	
 	// check for first name

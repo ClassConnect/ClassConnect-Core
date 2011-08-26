@@ -30,6 +30,8 @@ if (isset($_POST['submitted'])) {
 	}
 	$user = userLogin($_POST['identity'], $_POST['pass']);
 	if ($user != false) {
+		// kill any existing sessions
+		killSession();
 		setSession($user['id']);
                                      $themeData =  getVanityScheme();
 

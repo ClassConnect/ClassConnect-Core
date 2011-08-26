@@ -13,16 +13,16 @@ if (checkSchoolLink($sid) == true) {
 } else {
 	$page_title = "Error 404";
 	require_once('core/template/head/header.php');
-	echo '<div class="infobox" style="margin-top:20px; text-align:center"><strong>Uh oh!</strong> Either this page doesn\'t exist or you don\'t have permission to view it.</div>';
+	echo '<br /><br /><br /><br /><div class="infobox" style="text-align:center"><strong>Uh oh!</strong> Either this page doesn\'t exist or you don\'t have permission to view it.</div>';
 	require_once('core/template/foot/footer.php');
 	exit();
 }
 
 // check if our account is an admin for this school
 if (checkSchoolAdmin($sid) != true) {
-	$page_title = "Error 404";
+	$page_title = "Authentication Error";
 	require_once('core/template/head/header.php');
-	echo '<div class="infobox" style="margin-top:20px; text-align:center"><strong>Uh oh!</strong> Either this page doesn\'t exist or you don\'t have permission to view it.</div>';
+	echo '<br /><br /><br /><br /><div class="infobox" style="text-align:center"><strong>You\'re not an administrator of this school.<br /></strong>To become an administrator of this school, simply send us an email at support@classconnect.com or give us a call at (866) 844-5250.</div>';
 	require_once('core/template/foot/footer.php');
 	exit();
 }
@@ -127,11 +127,14 @@ $.ajax({
 }
 
 
-	var myMenu;
-	window.onload = function() {
-		myMenu = new SDMenu("my_menu");
-		myMenu.init();
-	};
+
+$(document).ready(function() {
+    myMenu = new SDMenu("my_menu");
+	myMenu.init();
+});
+
+
+
 
  function getCurrentFolder() {
 	if (self.document.location.hash.substring(1) != 0) {
@@ -171,7 +174,7 @@ $.ajax({
       <div class="collapsed">
         <span>Class Management</span>
       <!--   <a href="#11" onClick="swapPage(11)">Manage Classes</a> -->
-        <a href="#12" id="xoar12" nClick="swapPage(12)">Manage Grading Periods</a>
+        <a href="#12" id="xoar12" onClick="swapPage(12)">Manage Grading Periods</a>
          <a href="#13" id="xoar13" onClick="swapPage(13)">Class Policies</a>
       <!--   <a href="#">Import / Export Courses</a> -->
       </div>

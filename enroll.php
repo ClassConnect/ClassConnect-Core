@@ -1,6 +1,4 @@
 <?php
-$cryptinstall="crypt/cryptographp.fct.php";
-include $cryptinstall;
 require_once('core/inc/coreInc.php');
 $page_title = 'Enroll';
 // pull in signup api file
@@ -15,7 +13,6 @@ if ($status == 2) {
 if(isset($_GET['s']) && is_numeric($_GET['s'])) {
 	if ($_GET['s'] == 1) { // if it's signup request...
 		
-	if (chk_crypt($_POST['code'])) { // proceed only if the captcha is correct
 	
 	// take the array of post variables and if they aren't set, set them to ''
 	$postArray = 'email,firstName,lastName,pass1,pass2,username';
@@ -33,17 +30,13 @@ if(isset($_GET['s']) && is_numeric($_GET['s'])) {
 	if ($tryAdd == 1) {
 		echo "1";
 	} else { //if the insert failed...
-		echo '<div class="errorbox" style="width: 300px;margin-top:100px"><span style="font-size:14px; font-weight:bolder">Oops!</span>';
+		echo '<div class="errorbox" style="width: 270px;margin-top:100px; margin-left:35px"><span style="font-size:14px; font-weight:bolder">Oops!</span>';
 		foreach ($tryAdd as $error) {
 			echo '<li>' . $error . '</li>';
 		}
 		echo '</div>';
 	}
 	
-	// captcha catch
-	} else {
-    echo '<div class="errorbox" style="width: 300px;margin-top:100px"><span style="font-size:14px; font-weight:bolder">Oops!</span><li>You entered the captcha incorrectly.</li></div>';
-   }
 
 	
 } elseif ($_GET['s'] == 2) { // school signup page
@@ -144,18 +137,12 @@ require_once('core/template/head/header.php');
 
 echo $initJS;
 ?>
-<script>
-    	$(function() {
-                $( "#progressbar > div" ).addClass('bevColor');
-	});
-</script>
 <div id="lightbox-panel">   
     <a href="http://www.classconnect.com" target="_blank"><img src="core/site_img/logo.png" style="float:left" border="0" /></a>
 <div id="panel-title" style="font-size: 23px;color:#666666;margin-top:5px;"><img src="core/site_img/main/l_arrow.png" style="padding-left:10px; padding-right:10px" />Student Enrollment</div>
 
-<div id="progressbar"></div>
 
-<div id="main-block" style="margin-top:10px">
+<div id="main-block" style="margin-top:20px">
 <div id="cont-right" style="float:right; width:350px">
     <div class="signupBoxer">
 
@@ -173,28 +160,35 @@ echo $initJS;
 
 
 
-<form method="POST" id="signup-form">
-<strong>First Name</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<form method="POST" id="signup-form" style="margin-left:20px;margin-bottom:40px">
+<strong>First Name</strong> <br />
 <input type="text" name="firstName" style="width:215px" /><br /><br/>
 
-<strong>Last Name</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<strong>Last Name</strong> <br />
 <input type="text" name="lastName" style="width:215px" /><br /><br/>
 
-<strong>Username</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<strong>Username</strong> <br />
 <input type="text" name="username" style="width:215px" /><br />
-<span style="font-size:9px; font-style: italic; color: #666">You'll use this to login. <strong>ex: BobSaget22</strong></span><br /><br />
+<span style="font-size:9px; font-style: italic; color: #666">You'll use this to login. <strong>ex: BobSaget22</strong></span>
+<div id="hidersa" style="font-size:9px">
+<a href="#" onClick="$('#emailfield').show(); $('#hidersa').hide();">Add an email address for login support</a>
+</div>
+<br />
 
+
+
+<div id="emailfield" style="display:none"><br />
 <strong>Email Address</strong><br />
 <input type="text" name="email" style="width:215px" /><br />
 <span style="font-size:9px; font-style: italic; color: #666">Not required but it allows you to reset your password.</span><br /><br />
+</div>
 
-<strong>Password</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<strong>Password</strong> <br />
 <input type="password" name="pass1" style="width:215px" /><br /><br/>
 
-<strong>Confirm Password</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<strong>Confirm Password</strong> <br />
 <input type="password" name="pass2" style="width:215px" /><br /><br/>
-<?php dsp_crypt(0,1); ?>
-<strong>Enter The Code:<span style="color:#dd1100;font-style: bolder">*</span> <input type="text" name="code" style="width:100px" /><br /><br />
+
 <button class="button" type="submit" style="margin-left:20px"> 
 <img src="<?php echo $imgServer; ?>gen/tick.png" /> Create Your Account!
 </button>

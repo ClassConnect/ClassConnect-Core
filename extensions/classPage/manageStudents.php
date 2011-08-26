@@ -159,7 +159,7 @@ foreach ($students as $student) {
 
 <div style="float:right">
 <a href="manageStudents.php?p=1&uid=' . $student['id'] . '" class="button" target="dialog" width="250"><img src="' . $imgServer . 'gen/resend.png" />Reset Password</a>
-<a href="manageStudents.php?p=2&uid=' . $student['id'] . '" class="button" target="dialog" width="250"><img src="' . $imgServer . 'gen/cross.png" />Remove From Class</a>
+<a href="manageStudents.php?p=2&uid=' . $student['id'] . '" class="button" target="dialog" width="300"><img src="' . $imgServer . 'gen/cross.png" />Remove From Class</a>
 </div>
 
 

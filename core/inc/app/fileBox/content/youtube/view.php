@@ -14,15 +14,19 @@ function showDesc() {
 
 
 echo '<div class="headTitle"><img src="' . $imgServer . 'gen/yt_l.png" style="margin-top:3px; margin-right: 5px" /><div>' . $content['name'] . '</div></div>
-<iframe title="YouTube video player" width="480" height="320" src="http://www.youtube.com/embed/' . $content['content'] . '" frameborder="0" allowfullscreen></iframe>
+<iframe title="YouTube video player" width="480" height="320" src="http://www.youtube.com/embed/' . $content['content'] . '?HD=1;rel=0;showinfo=0" frameborder="0" allowfullscreen></iframe>
 
 <div id="opted" style="display:none; margin:10px; border: 1px solid #999; padding:5px; font-size:13px">' . $content['body'] . '</div>
 
-<div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
-<button class="button" onClick="showVid()" type="submit"> 
+<div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">';
+
+if ($content['body'] != '') {
+echo '<button class="button" onClick="showVid()" type="submit"> 
 <img src="' . $imgServer . 'gen/information.png" /> View Video Description
-</button>
-<button class="button" onClick="closeBox();" type="submit"> 
+</button>';	
+
+}
+echo '<button class="button" onClick="closeBox();" type="submit"> 
 <img src="' . $imgServer . 'gen/cross.png" /> Close
 </button>
 </div>';

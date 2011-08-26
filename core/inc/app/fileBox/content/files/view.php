@@ -55,11 +55,15 @@ echo '<div class="headTitle"><img src="' . $imgServer . 'gen/download_l.png" sty
 
 <div id="opted" style="display:none; margin:10px; border: 1px solid #999; padding:5px; font-size:13px">' . $content['body'] . '</div>
 
-<div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
-<button class="button" onClick="showDesc()" type="submit"> 
+<div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">';
+
+if ($content['body'] != '') {
+echo '<button class="button" onClick="showDesc()" type="submit"> 
 <img src="' . $imgServer . 'gen/information.png" /> View File Description
-</button>
-<button class="button" onClick="closeBox();" type="submit"> 
+</button>';	
+
+}
+echo '<button class="button" onClick="closeBox();" type="submit"> 
 <img src="' . $imgServer . 'gen/cross.png" /> Close
 </button>
 </div>';

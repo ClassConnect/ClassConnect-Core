@@ -29,10 +29,10 @@ $page_title = 'Manage Classes / Schools';
 require_once('core/template/head/header.php');
 
 ?>
-<script type="text/javascript" >
-    function swapThis(id, obj) {
-        $("#managebar li").removeClass("active");
-        obj.addClass("active");
+<script type="text/javascript">
+    function swapThis(id) {
+        $(".active").removeClass("active");
+        $("#opt" + id).addClass('active');
 $("#classLoad").html('<br /><br /><center><img src="/app/core/site_img/loading.gif" /></center>');
         $.ajax({
         type: "GET",
@@ -47,24 +47,29 @@ $("#classLoad").html('<br /><br /><center><img src="/app/core/site_img/loading.g
     }
 
 $(document).ready(function(){
-swapThis(2, $("#origLI"));
+swapThis(2);
 
 });
 </script>
 
 
-<div style="width: 700px; padding-right:5px; border-right:1px solid #ccc; float:left">
+<div style="width: 700px; padding-right:5px; float:left">
+
 
 <div id="managebar">
-    <li onClick="swapThis(1, $(this))">Past Classes</li>
-    <li id="origLI" class="active" onClick="swapThis(2, $(this))">Current Classes</li>
-    <li onClick="swapThis(3, $(this))">Future Classes</li>
-    <li onClick="swapThis(4, $(this))">Schools</li>
+        <span id="opt1" class="item"><a href="#" onclick="swapThis(1); return false">Past Classes</a></span>
+        <span id="opt2" class="item active"><a href="#" onclick="swapThis(2); return false">Current Classes</a></span>
+<?php
+//<span id="opt3" class="item"><a href="#" onclick="swapThis(3); return false">Future Classes</a></span>
 
-</div>
+//<span id="opt4" class="item"><a href="#" onclick="swapThis(4); return false">Schools</a></span>
+?>
+    </div>
 
-    <div id="classLoad" style="margin-top:5px">
+    <div style="background-color:#f1f1ec; padding:1px; border:1px solid #BABABA;margin-top:-3px">
+	    <div id="classLoad" style="background-color:#fff; margin:10px; border:2px solid #ccc;padding:3px">
 
+	    </div>
     </div>
 
 
@@ -73,8 +78,10 @@ swapThis(2, $("#origLI"));
 
 <div style="width: 190px; float:right" id="manageRighter">
 <br />
-<a href="#" onClick="openBox('manage-classes.cc?n=1', 500)" class="button" style="margin-left:10px; margin-bottom: 10px"><img src="<?php echo $imgServer; ?>gen/add.png" /> Create New Class</a>
-<a href="#" onClick="openBox('manage-classes.cc?n=4&s=2&sd=1', 610)" class="button" style="margin-left:10px"><img src="<?php echo $imgServer; ?>gen/search.png" /> Find / Add School</a>
+<a href="#" id="createAclass" onClick="openBox('manage-classes.cc?n=1', 270)" class="button" style="margin-left:10px; margin-bottom: 10px"><img src="<?php echo $imgServer; ?>gen/add.png" /> Create New Class</a>
+<?php
+//<a href="#" onClick="openBox('manage-classes.cc?n=4&s=2&sd=1', 610)" class="button" style="margin-left:10px"><img src="imgserver/gen/search.png" /> Find / Add School</a>
+?>
 
 
 </div>

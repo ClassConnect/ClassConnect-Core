@@ -30,6 +30,10 @@ if ($content['format'] == 1) {
 // if were adding a scribd doc
 } elseif ($content['format'] == 5) {
 	require_once('core/inc/app/fileBox/content/scribd/edit.php');
+
+// if were adding a gdoc
+} elseif ($content['format'] == 8) {
+	require_once('core/inc/app/fileBox/content/gapp/edit.php');
 	
 } else {
     require_once('core/inc/app/fileBox/content/gen/edit.php');

@@ -10,7 +10,7 @@ foreach ($lectures as $lec) {
         }
     }
     echo '<div style="border-bottom:1px solid #ccc; padding-left:10px; padding-top:5px; padding-bottom:5px">
-        <span style="font-size:16px; font-weight:bolder"><a href="/app/livelecture/Presenter/index-debug.html?lid=' . $lec['lid'] . '">' . $lec['title'] . '</a></span><br />
+        <span style="font-size:16px; font-weight:bolder"><a href="/app/livelecture/Presenter/index.php?lid=' . $lec['lid'] . '">' . $lec['title'] . '</a></span><br />
             <span style="font-size:10px; color:#666">started at ' . $time_start . ' by ' . $className . '</span>
             </div>';
 }

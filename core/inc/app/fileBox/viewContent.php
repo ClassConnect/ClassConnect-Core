@@ -19,7 +19,7 @@ if ($content['format'] == 1) {
 echo '<html><head><meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <title>ClassConnect | Preview "' . $content['name'] . '"</title>
-<link rel="stylesheet" href="' . $scriptServer . 'dynCSS.cc" type="text/css" />
+<link rel="stylesheet" href="' . $cssServer . 'main.css" type="text/css" />
 <script type="text/javascript" src="' . $scriptServer . 'jquery.js"></script>
 <script type="text/javascript" src="' . $scriptServer . 'siteFunctions.js"></script>
 <script>
@@ -83,6 +83,10 @@ table{font-size:100%}
 // if were viewing a scribd doc
 } elseif ($content['format'] == 5) {
 	require_once('core/inc/app/fileBox/content/scribd/view.php');
+
+// if were viewing a gdoc
+} elseif ($content['format'] == 8) {
+	require_once('core/inc/app/fileBox/content/gapp/view.php');
 	
 }
 

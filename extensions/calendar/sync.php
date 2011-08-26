@@ -42,8 +42,10 @@ exit();
 
 echo '<div class="headTitle"><img src="' . $imgServer . 'gen/sync.png" style="margin-right:8px;margin-top:5px" /><div>Sync Class Calendars</div></div>
 <div id="failer" style="display:none;margin-top:1px;margin-left:1px;margin-right:1px;margin-bottom:5px"></div>
-<div id="content" style="margin:5px">
-<form method="POST" id="class-list">
+<div id="content" style="margin:5px">';
+if (count($myClasses) > 1) {
+    
+echo '<form method="POST" id="class-list">
 
 <div style="float:right; width:210px;font-size:14px;padding-right:5px;">
 Choose the classes that you want to sync this calendar with.<br />
@@ -88,6 +90,11 @@ $(function() {
 });
 
 </script>';
+
+} else {
+    echo '<div style="font-size:14px;color:#666;margin-top:10px;margin-left:25px">You don\'t have any classes to sync this calendar with!</div></div>
+<div id="bottom" style="clear:both;float:right;margin-top:10px;margin-bottom:5px"><button class="button" type="submit" onClick="closeBox();" style="float:right"><img src="' . $imgServer . 'gen/cross.png" />Close</button></div>';
+}
 
 
 

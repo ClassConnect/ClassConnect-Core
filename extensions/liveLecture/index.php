@@ -21,9 +21,9 @@ $actives .= '<div style="float:right">
 <a href="del.php?lid=' . $llc['lid'] . '" target="dialog" width="350"><img src="' . $imgServer . 'gen/delCircle.png" height="16" style="padding:3px; border: 1px solid #ccc; margin-top:3px; margin-right:3px" border="0" /><small>Delete</small></a>
 </div>';
 }
-$actives .= '<div style="margin-left:10px;margin-right:10px;margin-top:5px;margin-bottom:5px;float:left; height:40px; width:40px; border:2px solid #999" class="bevColor fullRound"><img src="' . $imgServer . 'main/play.png" width="40" height="40" /></div>
+$actives .= '<div style="margin-left:15px;margin-right:10px;margin-top:5px;margin-bottom:5px;float:left; height:40px; width:40px; border:2px solid #999" class="bevColor fullRound"><img src="' . $imgServer . 'main/play.png" width="40" height="40" /></div>
 
-<span class="forum_head"><a href="#" onClick="window.location = \'/app/livelecture/Presenter/index-debug.html?lid=' . $llc['lid'] . '\'">' . $llc['title'] . '</a></span>
+<span class="forum_head" style="cursor:pointer"><a onClick="window.location = \'/app/livelecture/Presenter/index.php?lid=' . $llc['lid'] . '\'">' . $llc['title'] . '</a></span>
 <br />
     <span style="color:#666; font-size:14px">Started at ' . date("g:ia", strtotime($llc['created'])) . ' on ' . date("F jS", strtotime($llc['created'])) . '</span>
 </div>
@@ -39,9 +39,9 @@ $archives .= '<div style="float:right">
 </div>';
 }
 
-$archives .= '<div style="margin-left:10px;margin-right:10px;margin-top:5px;margin-bottom:5px;float:left; height:40px; width:40px; border:2px solid #999" class="fullRound"><img src="' . $imgServer . 'main/time.png" width="40" height="40" /></div>
+$archives .= '<div style="margin-left:15px;margin-right:10px;margin-top:5px;margin-bottom:5px;float:left; height:40px; width:40px; border:2px solid #999" class="fullRound"><img src="' . $imgServer . 'main/time.png" width="40" height="40" /></div>
 
-<span class="forum_head"><a href="#" onClick="window.location = \'/app/livelecture/Presenter/index-debug.html?lid=' . $llc['lid'] . '\'">' . $llc['title'] . '</a></span>
+<span class="forum_head" style="cursor:pointer"><a onClick="window.location = \'/app/livelecture/Presenter/index.php?lid=' . $llc['lid'] . '\'">' . $llc['title'] . '</a></span>
 <br />
     <span style="color:#999; font-size:14px">' .  date("g:ia", strtotime($llc['created'])) . ' - ' .  date("g:ia", strtotime($llc['ended'])) . ' ' .  date("F jS, Y", strtotime($llc['ended'])) . '</span>
 </div>
@@ -52,7 +52,8 @@ $archives .= '<div style="margin-left:10px;margin-right:10px;margin-top:5px;marg
 
 }
 
-echo '<div id="llheader">';
+
+echo '<div id="llheader" style="padding-left:15px">';
 if ($class_level == 3) {
     echo '<div style="margin-top:-3px;float:right; padding-left:6px; padding-right:6px; padding-top:2px; padding-bottom:2px;border:1px solid #999 " class="bevColor fullRound"><a href="host.php" target="dialog" width="350" style="background:none">Host A LiveLecture</a></div>';
 }
@@ -63,15 +64,12 @@ if (!empty($actives)) {
     echo '<div style="text-align:center; color:#999; font-size:14px; padding-top:5px">No active LiveLectures found</div>';
 }
 
-echo '<div id="llheader" style="margin-top:50px">Archived LiveLectures</div>';
+echo '<div id="llheader" style="margin-top:50px; padding-left:15px">Archived LiveLectures</div>';
 if (!empty($archives)) {
     echo $archives;
 } else {
     echo '<div style="text-align:center; color:#999; font-size:14px; padding-top:5px">No archived LiveLectures found</div>';
 }
-
-
-
 
 
 ?>

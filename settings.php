@@ -71,11 +71,11 @@ function updateSettings() {
 
 }
 </script>
-<style typ="text/css">
+<style type="text/css">
 .accordian {
 	width: 980px;
-        margin-left:-40px;
-        margin-top:-10px;
+  margin-left:-40px;
+  clear:both;
 }
 
 .accordian li {
@@ -103,17 +103,17 @@ function updateSettings() {
 </style>
 <div id="failer1" style="float:right; display:none"></div>
 
-<div class="accordian" style="margin-top:10px">
+<div class="accordian">
 	<ul>
 		<li class="odd"><img src="<?php echo $imgServer; ?>gen/basic.png" style="float:left; margin-right:5px" /> Basic Settings</li>
 		<li>
 <div style="float:right; width:740px">
 
     <div style="float:right; width:400px; font-size:14px; border-left:1px solid #ccc; padding-left:50px; padding-top:30px; padding-bottom:40px">
-     This page allows you to update your account settings. You can change your icon, password, email notifications and mobile notifications. Feel free to contact us if you have any questions.
+     <span style="color:#666; font-size:20px">Want to export your data?</span><br />Email support@classconnect.com and we will send you a CSV file of your data within 1-2 business days.
 </div>
 
-    <span style="color:#666; font-size:20px"><?php echo $firstname . ' ' . $lastname; ?></span>
+    <br /><br /><span style="color:#666; font-size:20px"><?php echo $firstname . ' ' . $lastname; ?></span>
 <br /><a href="#" class="button" onClick="openBox('settings.cc?n=2', 250)"><img src="<?php echo $imgServer; ?>gen/resend.png" /> Reset Password</a>
 
 

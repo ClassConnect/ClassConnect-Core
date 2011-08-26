@@ -25,6 +25,13 @@ require_once('core/template/head/header.php');
 			// Location of TinyMCE script
 			script_url : '<?php echo $scriptServer; ?>editor/tiny_mce.js',
 
+			setup: function(ed){
+                    ed.onInit.add(function(ed) {
+                       $("#loading_gfx").hide();
+                       $("#showSwapper").show();
+                    });
+                 },
+
 			// General options
 			theme : "advanced",
 			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
@@ -112,12 +119,7 @@ function printIt() {
 
 function checkDiff(e) {
 	if(tinyMCE.getInstanceById('elm1').isDirty()) {
-	var answer = confirm ("You have unsaved progress. Do you want to save before you exit?")
-if (answer) {
-	auto_save('elm1');
-} else {
-	// do nothing
-}
+	return "You have unsaved progress. Are you sure you want to exit?";
 
 }
 
@@ -137,7 +139,8 @@ window.onbeforeunload=checkDiff;
 <button class="button" type="submit" onClick="printIt();" style="margin-left:-7px; -webkit-border-bottom-left-radius: 0px;-moz-border-radius-bottomleft: 0px;-khtml-border-radius-bottomleft: 0px;-moz-border-radius-topleft: 0px;-khtml-border-radius-topleft: 0px;-webkit-border-top-left-radius: 0px;-webkit-border-bottom-right-radius: 0px;-moz-border-radius-bottomright: 0px;-khtml-border-radius-bottomright: 0px;"><img src="<?php echo $imgServer; ?>gen/print.png" /> Print</button>
 
 </div>
-		<div style="clear:both">
+		<div id="loading_gfx"><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><center><img src="<?php echo $imgServer; ?>load.gif" /></center></div>
+		<div id="showSwapper" style="clear:both;display:none">
 			<textarea id="elm1" name="body" style="width: 900px; height:600px" class="tinymce"><?php echo $docData['content']; ?></textarea>
 		</div>
 

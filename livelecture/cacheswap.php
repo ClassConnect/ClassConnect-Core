@@ -24,7 +24,7 @@ if (isset($_GET['fid'])) {
             }
             blastNodeification($userIDs, 5, 0, 'add');
 
-            header('location:/app/livelecture/Presenter/index-debug.html?lid=' . $llc_id);
+            header('location:/app/livelecture/Presenter/index.php?lid=' . $llc_id);
             exit();
             
         } else {

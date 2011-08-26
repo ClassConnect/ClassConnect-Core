@@ -58,10 +58,20 @@ foreach ($permissions as $per) {
 }
 
 	
+	if ($allow) {
+
+		$dirList = read_dirFolders($dirID, $user_id);
 	
-	$dirList = read_dirFolders($dirID, $user_id);
-	
-	$fileList = read_dirFiles($dirID, $user_id);
+		$fileList = read_dirFiles($dirID, $user_id);
+
+	// if this folder isn't allowed, load the home directory
+	} else {
+		$allow = true;
+		// get dir list
+		$dirList = get_home_dirs($class_id);
+		// get file list
+		$fileList = get_home_content($class_id);
+	}
 }
 
 if ($allow) {
@@ -136,6 +146,9 @@ foreach ($dirList as $entry) {
 
 
 foreach ($fileList as $fEntry) {
+	// does this file still exist?
+	if ($fEntry['time_date'] != '') {
+
 	if ($fEntry['format'] == 1) {
 		$fEntry['name'] = $fEntry['name'] . '.' . $fEntry['ext'];
 		$fEntry['format_name'] = strtoupper($fEntry['ext']) . ' ' . $fEntry['format_name'];
@@ -158,7 +171,10 @@ foreach ($fileList as $fEntry) {
 		echo '<a href="index.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
 		
 	} elseif ($fEntry['format'] == 7) {
-		echo '<a href="#" onClick="window.location = \'/app/livelecture/Presenter/index-debug.html?fid=' . $fEntry['id'] . '&cid=' . $class_id . '\'">';
+		echo '<a href="index.php?dir=' . $fEntry['fid'] . '" onClick="window.location = \'/app/livelecture/Presenter/index.php?fid=' . $fEntry['id'] . '&cid=' . $class_id . '\'; return false">';
+
+	} elseif ($fEntry['format'] == 9) {
+		echo '<a href="index.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
 	
 	} else {
 		echo '<a href="' . htmlentities(urlencode('index.php?n=1&con_id=' . $fEntry['id'])) . '" target="external">';
@@ -174,10 +190,16 @@ foreach ($fileList as $fEntry) {
 
 
 </li></a>';
+
+// detect if this file still exists
 }
 
+// end loop
+}
 
-if (empty($dirList) && empty($fileList)) {
+if (empty($dirList) && empty($fileList) && $dirID == 0 && $class_level == 3) {
+	echo '<li>To add content to ShareBox, go to <a href="index.php" onClick="window.location=\'filebox.cc\'">FileBox</a> and share the desired content with your classes. <a href="#" onClick="openBox(\'/app/core/ajax/barjax/echo.php?data=' . urlencode('<img src="/app/core/site_img/gen/cross.png" style="position:absolute;margin-top:-30px; margin-left:560px; border:3px solid #999; background:#eee; padding:5px; cursor:pointer" onClick="closeBox();" /><iframe width="560" height="349" src="http://www.youtube.com/embed/mf9_SqyIt1w" frameborder="0" allowfullscreen></iframe>') . '\', 560); return false">(watch a video)</a></li>';
+} elseif (empty($dirList) && empty($fileList)) {
 	echo '<li>No content found in this directory.</li>';
 }
 

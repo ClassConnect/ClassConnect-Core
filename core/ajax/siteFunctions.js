@@ -5,8 +5,8 @@ function openBox(boxURL, boxWidth, shadow) {
 	boxMargin = -boxMargin;
 	var mTop = $(window).scrollTop();
 	$("#dialogBox").width(boxWidth);
-	$("#dialogBox").margin({left: boxMargin})
-	$("#dialogBox").margin({top: mTop})
+	$("#dialogBox").margin({left: boxMargin});
+	$("#dialogBox").margin({top: mTop});
 	if (shadow == 1) { 
 		append = ", #blackbox";
 	} else {
@@ -140,3 +140,61 @@ $("#livelecture").animate({backgroundPosition:"0 -0px"},800).animate({background
 setTimeout("animateLL()",1600);
 }
 
+
+
+
+
+// initialize the helper wizard
+function initWiz(step) {
+  $(".wizShade").show();
+	$.ajax({
+        type: "GET",
+        url: "core/ajax/barjax/wizard.cc?step=" + step + "&p=" + escape(location.href),
+        success: function(data) {
+               $(".wizShade").hide();
+               $("#wizfill").html(data);
+               tempEr();
+        }
+
+    });
+}
+
+
+
+// initialize the helper wizard
+function endWiz() {
+$("#wizthing").remove();
+$("#wizpnel").remove();
+guider.hideAll();
+	guider.createGuider({
+      attachTo: "#helper",
+      buttons: [{name: "Close"}],
+      description: "You can click the blue icon below to begin an interactive tutorial of the page you are on!",
+      id: "n",
+      next: "x",
+      position: 12,
+      title: "If you ever need tutorials again..."
+    }).show();
+	$.ajax({
+        type: "GET",
+        url: "core/ajax/barjax/wizard.cc?c=1",
+        success: function(data) {
+               $("#wizbox").html(data);
+        }
+
+    });
+}
+
+
+
+function tempEr() {
+    if (!$("#wizpnel").is(":visible")) {
+        $("#wizpnel").show().animate({right:"+=360px"},500);
+        $("#wizthing").animate({right:"+=360px"},500);
+
+    } else {
+        $("#wizpnel").animate({right:"-=360px"},500);
+        $("#wizthing").show().animate({right:"-=360px"},500);
+        setTimeout("$('#wizpnel').hide();",500);
+    }
+}

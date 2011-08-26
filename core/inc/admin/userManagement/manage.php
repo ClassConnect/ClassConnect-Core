@@ -10,7 +10,7 @@ if (isset($_GET['n']) && is_numeric($_GET['n'])) {
 		if ($_POST['pass'] != '') {
 		$password = escape($_POST['pass']);
 		setPassword($uid, $password);
-		sendPasswordEmail($uid);
+		sendPasswordEmail($uid, $password);
 		echo "1";
 		exit();	
 		}

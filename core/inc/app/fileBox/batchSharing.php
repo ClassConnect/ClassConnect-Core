@@ -148,7 +148,8 @@ function updateSharing() {
         data: dataString,
         success: function(data) {
         	if (data == 1) {
-               closeBox();
+        		$("#flashStatus").html("<div class=\'successbox\' style=\'text-align:center\'>Permissions updated successfully!</div>");
+        	setTimeout("closeBox();",500);
                updateFbox(pid);
          } else {
          	 $("#failer").html(data).slideDown(400);
@@ -164,6 +165,8 @@ function updateSharing() {
 ';
 
 echo '<div class="headTitle"><img src="' . $imgServer . 'gen/share_l.png" style="margin-right: 5px" /><div>Set Sharing Permissions</div></div>
+<div id="flashStatus">
+
 <form method="GET" id="update-sharing">
 <div id="failer"></div>
 <div style="margin:5px; font-size:10px">Select which classes can access this content. Remember, when sharing a folder, all content in every subfolder will be able to be accessed as well.</div>
@@ -192,10 +195,11 @@ foreach($myClasses as $cur_class) {
 
 echo '
 <input type="hidden" name="classIDs" value="' . $totalCID . '" />
+</div>
 </form>
 
 
-</div>
+
 <div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
 <button class="button" onClick="updateSharing();" type="submit"> 
 <img src="' . $imgServer . 'gen/tick.png" /> Update Sharing Permissions
@@ -203,6 +207,8 @@ echo '
 <button class="button" onClick="closeBox();" type="submit"> 
 <img src="' . $imgServer . 'gen/cross.png" /> Close
 </button>
+</div>
+
 </div>';	
 } // auth Dir
 

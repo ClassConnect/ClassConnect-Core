@@ -27,6 +27,8 @@ function showDesc() {
 
 
 function updateBookmark() {
+		$('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+        $('#bottom').hide();
         dataString = $("#update-bookmark").serialize();
         $.ajax({
         type: "POST",
@@ -38,6 +40,8 @@ function updateBookmark() {
                updateFbox(<?php echo $content['fid']; ?>);
          } else {
          	 $("#failer").html(data).slideDown(400);
+         	 $('#loadImgur').remove();
+             $('#bottom').show();
          	 
          }
                

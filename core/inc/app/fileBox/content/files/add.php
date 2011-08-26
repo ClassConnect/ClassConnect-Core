@@ -1,18 +1,41 @@
 <?php
+//set array of allowed image types
+$imgTypes = array('jpg', 'jpeg', 'png', 'gif','bmp');
+
+
 if (isset($_FILES['file'])) {
-	$enc_name = gen_encName($user_id, $_FILES['file']['name']);
-	$upload_file = upload_file($_FILES['file']['tmp_name'], $enc_name);
+if ($_FILES['file']['error'] > 0) {
+  echo '{"name":"Error. This file might be too big.","type":"0","size":"0"}';
+  exit();
+}
+
+$ext = strtolower(substr($_FILES['file']['name'], strrpos($_FILES['file']['name'], '.') + 1));
+$enc_name = gen_encName($user_id, $_FILES['file']['name']);
+
+  if (in_array(strtolower($ext), $imgTypes)) {
+    $upType = 2;
+    $isImg = true;
+  } else {
+    $upType = 1;
+    $isImg = false;
+  }
+
+	$upload_file = upload_file($_FILES['file']['tmp_name'], $enc_name, $upType, $ext);
 	
 	if ($upload_file == 1) {
 		
 	// get the extension
-	$ext = strtolower(substr($_FILES['file']['name'], strrpos($_FILES['file']['name'], '.') + 1));
-	$file_name = substr(substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.')), 0, 45);
+	$file_name = substr(substr($_FILES['file']['name'], 0, strrpos($_FILES['file']['name'], '.')), 0, 35);
 	$file_size = $_FILES["file"]["size"];
 	$file_type = $_FILES["file"]["type"];
 	
-	// insert it into the database
-	$insertFile = create_file($fid, $user_id, $file_name, $ext, $file_type, $file_size, $enc_name);
+  if ($isImg) {
+	 // insert it as an image
+	 $insertFile = create_img($fid, $user_id, $file_name, $ext, $file_type, $file_size, $enc_name, $_FILES['file']['tmp_name']);
+  } else {
+    // insert it as a regular file
+   $insertFile = create_file($fid, $user_id, $file_name, $ext, $file_type, $file_size, $enc_name);
+  }
 	
 	// if success
 	if ($insertFile == 1) {
@@ -27,6 +50,9 @@ if (isset($_FILES['file'])) {
 	}
 	
 	exit();
+} elseif (!isset($_FILES['file']) && isset($_GET['u'])) {
+  echo '{"name":"Error. This file might be too big.","type":"0","size":"0"}';
+  exit();
 }
 
 
@@ -116,6 +142,7 @@ $(function () {
         uploadTable: $('.upload_files'),
         downloadTable: $('.download_files'),
         buildUploadRow: function (files, index) {
+          $("#bottom").html('<img src="/app/core/site_img/loading.gif" style="margin-right:10px;margin-bottom:5px" />');
             var file = files[index];
             return $('<tr><td>' + file.name.substr(0,42) + '<\/td>' +
                     '<td class="file_upload_progress"><img src="<?php echo $imgServer; ?>uploader.gif" style="margin-left:10px; margin-right:10px" /><\/td>' +
@@ -125,7 +152,10 @@ $(function () {
                     '<\/div><\/td><\/tr>');
         },
         buildDownloadRow: function (file) {
-            return $('<tr><td>' + file.name + '<\/td><\/tr>');
+          if ($('.upload_files').html() == '<tbody></tbody>') {
+            $("#bottom").html('<button class="button" onClick="finishUpload();" type="submit"><img src="/app/core/site_img/gen/cross.png" /> Close</button>');
+          }
+            return $('<tr><td><img src="/app/core/site_img/gen/tick.png" style="height:12px; float:left; margin-right:5px; margin-top:2px">' + file.name + '<\/td><\/tr>');
         }
     });
 });
@@ -146,7 +176,7 @@ echo '
 <div class="headTitle"><img src="' . $imgServer . 'gen/upload_l.png" style="margin-top:2px; margin-right: 5px" /><div>Upload Files</div></div>
 <div id="failer" style="display:none"></div>
 <div id="content" style="margin:5px">
-<form class="upload" action="filebox.cc?n=7&cType=' . $cType . '&fid=' . $fid . '" method="POST" enctype="multipart/form-data">
+<form class="upload" action="filebox.cc?n=7&cType=' . $cType . '&fid=' . $fid . '&u=1" method="POST" enctype="multipart/form-data">
     <input type="file" name="file" multiple>
     <button>Upload</button>
     <div>Add / Drag Files To Upload</div>
@@ -156,8 +186,9 @@ echo '
 </div>
 
 <div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
+
 <button class="button" onClick="finishUpload();" type="submit"> 
-<img src="' . $imgServer . 'gen/tick.png" /> Finish & Add Files
+<img src="' . $imgServer . 'gen/cross.png" /> Close
 </button>
 </div>';
 

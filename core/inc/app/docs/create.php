@@ -46,6 +46,8 @@ function IsNumeric(sText)
 
 
 function createDoc() {
+        $('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+        $('#bottom').hide();
         dataString = $("#add-doc").serialize();
         var fid = 0;
         $.ajax({
@@ -57,6 +59,8 @@ function createDoc() {
                window.location = "writer.cc?n=2&doc_id=" + data;
          } else {
          	 $("#failer").html(data).slideDown(400);
+           $('#loadImgur').remove();
+           $('#bottom').show();
          	 
          }
                
@@ -72,16 +76,23 @@ function createDoc() {
 <div id="failer" style="display:none"></div>
 <script type="text/javascript" src="' . $scriptServer . 'folderPicker.js"></script>
 <form method="POST" id="add-doc" style="font-size:14px">	
-<div style="margin:5px">
+<div style="margin:5px; margin-left:10px">
 <strong>Document Name </strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
 <input type="text" name="name" style="width:300px" maxlength="45" />
 
-<br /><br /><strong>File Location </strong> <span style="color:#dd1100;font-style: bolder">*</span> 
+<div style="font-size:12px;margin-top:5px"><a href="#" onClick="$(\'#file_location\').show();$(this).parent().hide();return false">Choose where to save this in FileBox</a></div>
 </div>
+
+<div id="file_location" style="display:none">
+<div style="margin:5px; margin-top:20px;margin-left:10px;style="display:none">
+<strong>File Location</strong>
+</div>
+
 <div id="selectBox" style="font-size:11px">
 
 
 
+</div>
 </div>
 <input type="password" size="1" style="display:none" />
 </form>

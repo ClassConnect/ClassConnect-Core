@@ -15,7 +15,25 @@ if (checkSchoolLink($sid) == true) {
 	exit();
 }
 // check if our account is an admin for this school
-$isAdmin = checkSchoolAdmin($sid);
+$tempSchool = getSchoolSession($sid);
+if ($tempSchool['subscription'] == 0) {
+	if ($tempSchool['type'] == 3 || $tempSchool['type'] == 4) {
+		$isAdmin = true;
+	}
+} else {
+	if ($tempSchool['type'] == 4) {
+		$isAdmin = true;
+	}
+}
+
+if (!isset($tempSchool)) {
+	$page_title = "Authentication Error";
+	require_once('core/template/head/header.php');
+	echo '<br /><br /><br /><br /><div class="infobox" style="text-align:center"><strong>You haven\'t verified your email address for this school.<br /></strong>Click the confirmation link in the email we sent you. Need help? Email us at support@classconnect.com or give us a call at (866) 844-5250.</div>';
+	require_once('core/template/foot/footer.php');
+	exit();
+}
+
  
 $page_title = $thisSchool['name'];
 $scriptArr[] = $scriptServer . 'classPage.js';

@@ -27,6 +27,8 @@ function showDesc() {
 
 
 function addEmbed() {
+		$('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+        $('#bottom').hide();
         dataString = $("#add-embed").serialize();
         var fid = <?php echo $fid; ?>;
         var cType = <?php echo $cType; ?>;
@@ -40,6 +42,8 @@ function addEmbed() {
                updateFbox(fid);
          } else {
          	 $("#failer").html(data).slideDown(400);
+         	 $('#loadImgur').remove();
+             $('#bottom').show();
          	 
          }
                

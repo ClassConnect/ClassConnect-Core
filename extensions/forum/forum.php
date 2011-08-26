@@ -19,30 +19,23 @@ if (isset($_GET['fid']) && is_numeric($_GET['fid'])) {
 
 $userData = getUser($user_id);
 
+$editorID = rand(1, 1500);
+
 	echo '<cc:crumbs><a href="index.php">Forum</a>{crumbSplit}' . $forumData['title'] . '</cc:crumbs>
-	<script type="text/javascript" src="' . $scriptServer . 'editor/richEdit.js"></script>
 <script>
 $(document).ready(function () {
-		$(\'textarea.tinymce\').tinymce({
-			// Location of TinyMCE script
-			script_url : \'' . $scriptServer . 'editor/tiny_mce.js\',
+	var config = {
+		toolbar:
+		[
+			[\'Bold\', \'Italic\', \'-\', \'NumberedList\', \'BulletedList\', \'-\', \'Link\', \'Unlink\'],
+			[\'UIColor\']
+		]
+	};
 
-			// General options
-			theme : "advanced",
-			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+	// Initialize the editor.
+	// Callback function can be passed and executed after full instance creation.
+	$("textarea.tinymce").ckeditor(config);
 
-			// Theme options
-			theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,forecolor,backcolor,styleselect,formatselect,fontselect,fontsizeselect",
-			theme_advanced_buttons2 : "search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,sub,sup,hr,image,charmap,emotions,iespell,media,|,insertdate,inserttime,pagebreak,preview,fullscreen",
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
-			theme_advanced_statusbar_location : "bottom",
-			theme_advanced_resizing : true,
-			content_css : "' . $scriptServer . 'dynCSS.cc"
-
-
-		});
 	});
 function showReply() {
 	$("#clickHide").hide();
@@ -53,6 +46,10 @@ function showReply() {
 
 function showRepTo(id) {
 	$("#showReply" + id).show();
+}
+
+function addLoad(ele) {
+	$(ele).html(\'<img src="core/site_img/loading.gif" style="margin-right:15px" />\');
 }
 	
 </script>';
@@ -98,19 +95,10 @@ echo '<div class="info" style="margin-bottom:10px; margin-left:10px">
 	
 	// if unlocked, show main reply button
 	if ($forumData['locked'] == 1) {
-		echo '<div id="replyarea" style="border-top:1px solid #999">
-		
-	<div id="replybox" style="display:none">
-	<form method="post" action="addReply.php?fid=' . $forum_id . '">
-		<div><textarea id="elm1" name="body" rows="15" cols="80" style="width: 747px" class="tinymce"></textarea></div>
-		<input type="hidden" name="submitted" value="true" />
-
-		<div style="height:45px"><div style="float:right; margin-top:10px"><button class="button" type="reset" name="reset"><img src="' . $imgServer . 'gen/resend.png" /> Reset</button> <button type="submit" class="button"><img src="' . $imgServer . 'gen/tick.png" /> Add Reply</button></div></div>
-	</form>
-	</div>
+		echo '<div id="replyarea">
 	
 	
-		<div id="clickHide"><a href="#" target="_blank" onClick="showReply(); return false"><div class="forum_load" style="border-bottom:none">
+		<div id="clickHide" style="border-top:1px solid #999"><a href="#" target="_blank" onClick="showReply(); return false"><div class="forum_load" style="border-bottom:none">
   <div style="padding-left:250px"><img src="' . $imgServer . 'main/forum_open.png" style="float:left; margin-top:8px; height:24px; margin-right:5px" /> <div class="load_text">Respond To Forum Thread</div></div>
     </div></a></div>
     
@@ -119,9 +107,19 @@ echo '<div class="info" style="margin-bottom:10px; margin-left:10px">
     </div>';
    }
 
-	echo '</div>
+	echo '</div>';
+if ($forumData['locked'] == 1) {
+echo '	<div id="replybox" style="display:none; margin-left:10px">
+	<form method="post" action="addReply.php?fid=' . $forum_id . '" onSubmit="addLoad(\'#mainSub\')">
+		<div><textarea id="elm' . $editorID . '" name="body" rows="15" cols="80" style="width: 738px" class="tinymce"></textarea></div>
+		<input type="hidden" name="submitted" value="true" />
+
+		<div style="height:45px"><div id="mainSub" style="float:right; margin-top:10px"><button type="submit" class="button"><img src="' . $imgServer . 'gen/tick.png" /> Add Reply</button></div></div>
+	</form>
+	</div>';
+}
 	
-<div id="replies" style="margin-left:10px">';
+echo '<div id="replies" style="margin-left:10px">';
 
 
 $replies = getReplies($forum_id);
@@ -183,11 +181,11 @@ $tempStr = '<div style="clear:both; margin-top:30px; margin-left:60px">
 <div style="float:left">
 <img src="' . $imgServer . 'main/arrow-left.png" style="float:left; margin-top:10px" />
 <div style="background: #eeeeea; border: 1px solid #d1d1cc; width:610px; margin-left:6px; padding:5px">
-<form method="post" action="addReplyTo.php?rid=' . $reply['reply_id'] . '&fid=' . $forum_id . '">
+<form method="post" action="addReplyTo.php?rid=' . $reply['reply_id'] . '&fid=' . $forum_id . '" onSubmit="addLoad(\'#submit' . $reply['reply_id'] . '\')">
 		<textarea name="body" rows="5" cols="80" style="width: 575px; margin-left:10px"></textarea>
 		<input type="hidden" name="submitted" value="true" />
 
-		<div style="height:45px"><div style="float:right; margin-top:10px"> <button type="submit" class="button"><img src="' . $imgServer . 'gen/tick.png" /> Add Reply</button></div></div>
+		<div style="height:45px"><div id="submit' . $reply['reply_id'] . '" style="float:right; margin-top:10px"> <button type="submit" class="button"><img src="' . $imgServer . 'gen/tick.png" /> Add Reply</button></div></div>
 	</form>
 </div>
 </div>
@@ -218,11 +216,11 @@ echo '</div>
 echo '<!--[if IE 7]>
 <style type="text/css">
 .showDel {
-margin-top: -21px;
+margin-top: -31px;
 }
 
 .showRep {
-margin-top: -21px;
+margin-top: -31px;
 }
 </style>
 <![endif]-->';

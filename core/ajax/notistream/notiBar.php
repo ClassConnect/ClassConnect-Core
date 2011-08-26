@@ -10,7 +10,7 @@ if (empty($notifications)) {
 	echo '<li><p>You have no notifications.</p></li>';
 	
 } else {
-	//echo '<li class="view"><a href="#">View All</a></li> ';
+	echo '<li class="view"><a href="#" onClick="openBox(\'/app/core/ajax/notistream/fullFeed.cc\', 400); $(\'#alertpanel a:first\').click(); return false">View All</a></li> ';
 }
 
             	

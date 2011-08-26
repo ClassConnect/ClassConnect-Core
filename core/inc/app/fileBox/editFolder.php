@@ -27,6 +27,8 @@ if (isset($_POST['name'])) {
 
 <script>
 function validateFedit() {
+        $('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+        $('#bottom').hide();
         dataString = $("#update-folder").serialize();
         var fid = <?php echo $_GET['fid']; ?>;
         var pid = <?php echo $currentDir['parent_id']; ?>;
@@ -40,6 +42,8 @@ function validateFedit() {
                updateFbox(pid);
          } else {
          	 $("#failer").html(data).slideDown(400);
+                 $('#loadImgur').remove();
+                 $('#bottom').show();
          	 
          }
                

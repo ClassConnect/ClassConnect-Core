@@ -1,21 +1,94 @@
-<?php require_once('foot.php'); ?>
+<div id="dialogBox"></div><div id="blackbox"></div><div id="clearbox"></div><div id="wizfill"></div>
+<?php
+// check for a wizard session
+if ($_SESSION['wizard'] == 1) {
+    echo '<div id="wizthing" onClick="tempEr();" class="schColor"><img src="' . $imgServer . 'main/gs.png" style="margin-left:8px;padding-top:10px" /></div>
+<div id="wizpnel">
+<div class="wizShade"><div class="wizLdr"><img src="' . $imgServer . 'sBoxLoad.gif" /></div></div>';
+
+
+$genSty = ' style="text-decoration: line-through;"';
+
+// show create classes
+if (!empty($myClasses)) {
+    $createSty = $genSty;
+}
+// detect if we've visited filebox
+if ($_SESSION['wizViz']['filebox'] == 1) {
+    $fboxSty = $genSty;
+}
+// detect if we've visited filebox
+if ($_SESSION['wizViz']['class'] == 1) {
+    $classSty = $genSty;
+}
+// detect if we've visited filebox
+if ($_SESSION['wizViz']['presentations'] == 1) {
+    $presSty = $genSty;
+}
+// detect if we've visited filebox
+if ($_SESSION['wizViz']['writer'] == 1) {
+    $docSty = $genSty;
+}
+// detect if we've visited filebox
+if ($_SESSION['wizViz']['searchBox'] == 1) {
+    $sboxSty = $genSty;
+}
+
+
+    echo '
+<div class="wizcol wizTop">Here are the basics for getting started with ClassConnect.</div>
+
+<div class="wizDiv"' . $createSty . '>
+    <span class="wizBld">1.&nbsp;&nbsp;<a href="#" onClick="initWiz(1);">Create your classes</a></span>
+    <div class="sgtx">It takes just a few clicks to create your classes. Your students can join a class by using its access code.</div>
+</div>
+
+<div class="wizDiv"' . $fboxSty . '>
+    <span class="wizBld">2.&nbsp;&nbsp;<a href="#" onClick="initWiz(2);">Add & organize class content</a></span>
+    <div class="sgtx">Upload files, bookmark websites, organize content into folders, and then share class content with all your classes with just a click.</div>
+</div>
+<div class="wizDiv"' . $classSty . '>
+    <span class="wizBld">3.&nbsp;&nbsp;<a href="#" onClick="initWiz(3);">Manage a class page</a></span>
+    <div class="sgtx">Your classes have their own individual "pages" where you can post updates, manage the class calendar, open forums and start lectures.</div>
+</div>
+<div class="wizDiv" style="font-weight:bolder;margin-top:30px">Want to try some cool tools?</div>
+<div style="margin-left:20px; margin-top:5px">
+    <li><a href="#" onClick="initWiz(4);"' . $presSty . '>Create & deliver an interactive lecture</a></li>
+    <li><a href="#" onClick="initWiz(5);"' . $docSty . '>Create & edit documents</a></li>
+    <li><a href="#" onClick="initWiz(6);"' . $sboxSty . '>Find & save content</a></li>
+</div>
+<div style="margin-top:60px;font-size:12px">
+    <div class="wizcol wizEx"><a href="#" style="color:#fff;font-weight:bolder" onClick="endWiz();">End the \'Getting Started\' wizard</a></div>
+    <div style="padding-top:5px;padding-left:17px;color:#666">Done with these steps?</div>
+</div>
+</div>';
+echo '<script type="text/javascript" src="' . $scriptServer . 'guider.js"></script>';
+echo '<script>
+ $(document).ready(function() {';
+require_once('core/ajax/barjax/wizard/main.php');
+echo ' });</script>';
+}
+?>
+</div><!-- wrap ends here --> 
+
+<?php if ($extLock != 1) { ?>
 <div style="clear:both; margin-top:20px"></div>
 <!-- footer starts here --> 
    <div id="footpanel"> 
-	<ul id="mainpanel">    	
+    <ul id="mainpanel">     
         <li><a href="msg.cc" class="home"><div style="float:left; padding-top:1px">Inbox</div> 
                 <?php
 $totalNot = getNumMsgs($user_id);
 if ($totalNot > 0) {
-	$class = 'hasMsg';
+    $class = 'hasMsg';
 } else {
-	$class = 'noMsg';
+    $class = 'noMsg';
 }
 echo '<div id="msgCount" class="' . $class . '">' . $totalNot . '</div>';
 ?>    
                 <small>Messages</small></a></li>
         
-        <li id="calculator"><a href="#" class="calculator">Calculator <small>Calculator</small></a>
+        <li id="calculator"><a class="calculator">Calculator <small>Calculator</small></a>
         <div class="subpanel"> 
             <h3><span> &ndash; </span> Calculator</h3>
              <ul>
@@ -54,7 +127,7 @@ echo '<div id="msgCount" class="' . $class . '">' . $totalNot . '</div>';
         
         </li>
         
-         <li id="img_search"><a href="#" class="img_search">Image Search <small>Image Search</small></a> 
+         <li id="img_search"><a class="img_search">Image Search <small>Image Search</small></a> 
         <div class="subpanel" style="width:520px"> 
             <h3><span> &ndash; </span> Image Search</h3>
              <ul>
@@ -79,7 +152,7 @@ echo '<div id="msgCount" class="' . $class . '">' . $totalNot . '</div>';
         
         </li>
 
-        <li id="feedback"><a href="#" class="feedback">Feedback <small>Feedback</small></a>
+        <li id="feedback"><a class="feedback">Feedback <small>Feedback</small></a>
             <div class="subpanel" style="width:400px">
             <h3><span> &ndash; </span> Send Us Feedback</h3>
              <ul >
@@ -99,7 +172,7 @@ echo '<div id="msgCount" class="' . $class . '">' . $totalNot . '</div>';
         </li>
 
 
-        <li id="helper"><a href="#" class="helper">Need help? <small>Need help?</small></a>
+        <li id="helper"><a class="helper">Need help? <small>Need help?</small></a>
             <div class="subpanel" style="width:230px">
             <h3><span> &ndash; </span> Live Helper</h3>
              <ul >
@@ -115,22 +188,22 @@ echo '<div id="msgCount" class="' . $class . '">' . $totalNot . '</div>';
 
 
         <li id="alertpanel"> 
-        	<a href="#" class="alerts">
+            <a class="alerts">
 <?php
 $totalNot = getNumNotifications($user_id);
 if ($totalNot > 0) {
-	$class = 'hasNot';
+    $class = 'hasNot';
 } else {
-	$class = 'noNot';
+    $class = 'noNot';
 }
 echo '<div id="notCount" class="' . $class . '">' . $totalNot . '</div>';
-?>       	
+?>          
 <small>Notifications</small></a> 
  
             <div class="subpanel"> 
             <h3><span> &ndash; </span>Notifications</h3> 
             <ul id="notiBar"> 
-            	
+                
  
             </ul> 
             </div> 
@@ -168,14 +241,16 @@ if (getNumLLs($user_id, $myClasses) == 0) {
         </li>  -->
         
         
-	</ul> 
+    </ul> 
 </div><br /><br /> 
+
+
+<!-- old footer was here --> 
 <div id="growlNotify" class="jGrowl bottom-right"></div>
-<?php if ($extLock != 1) { ?>
 <iframe src="<?php echo $scriptServer; ?>ccrte.cc" width="1" height="1" style="display:none"></iframe>
 <?php } ?>
 
-
+<?php if ($extLock != 1) { ?>
 <!-- First include the script: -->
 <script type="text/javascript">
 var mp_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
@@ -199,8 +274,8 @@ try {
 }
 
 mpmetrics.identify('<?php echo $user_id; ?>');
-mpmetrics.name_tag('<?php echo htmlentities($firstname) . ' ' . htmlentities($lastname); ?>');
-mpmetrics.track("Button clicked"); 
+mpmetrics.name_tag('<?php echo $level . ' - ' . htmlentities($firstname) . ' ' . htmlentities($lastname); ?>');
 </script>
+<?php } ?>
         </body> 
 </html>

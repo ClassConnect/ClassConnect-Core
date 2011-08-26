@@ -1,11 +1,11 @@
 <?php
 require_once('core/inc/coreInc.php');
+requireSession();
 // define appid and app type
 $appID = 9; $type = 2;
 require_once('core/inc/app/auth/authorize.php');
 require_once('core/inc/func/app/fileBox/main.php');
 require_once('core/inc/func/app/docs/main.php');
-requireSession();
 
 
 if (is_numeric($_GET['n'])) {

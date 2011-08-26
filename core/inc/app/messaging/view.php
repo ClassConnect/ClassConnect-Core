@@ -35,6 +35,13 @@ echo '<script>$().ready(function() {
 			// Location of TinyMCE script
 			script_url : \'' . $scriptServer . 'editor/tiny_mce.js\',
 
+			setup: function(ed){
+                    ed.onInit.add(function(ed) {
+                       $("#loading_gfx").hide();
+                       $("#showSwapper").show();
+                    });
+                 },
+
 			// General options
 			theme : "advanced",
 			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
@@ -75,14 +82,15 @@ echo '<div class="infobox"><strong>Recipients:</strong> ' . substr($totalRec, 0,
 foreach ($feedData as $feed) {
     echo '<div style="width:900px; padding-top:5px; padding-bottom:5px; border-bottom:1px solid #ccc">
         <img src="' . $iconServer . $feed['prof_icon'] . '.png" height="40" width="40" style="float:left;margin-right:5px;margin-top:2px">
-        <div style="padding-top:8px; font-size:13px"><strong>' . $feed['first_name'] . ' ' . $feed['last_name'] . '</strong>&nbsp;&nbsp;<span style="color:#999">March 3rd at 3:10pm</span></div>
+        <div style="padding-top:8px; font-size:13px"><strong>' . $feed['first_name'] . ' ' . $feed['last_name'] . '</strong>&nbsp;&nbsp;<span style="color:#999">' . date('F j, Y', strtotime($feed['sent_at'])) . ' at ' . date('g:i A', strtotime($feed['sent_at'])) . '</span></div>
 
         ' . reverse_htmlentities($feed['body']) . '
     </div>';
 }
 
 echo '
-<form action="msg.cc?n=2&id=' . $thread_id . '" method="POST"><div><textarea id="temp2" name="bodyer" style="width:900px" class="tinymce"></textarea></div>
+<form action="msg.cc?n=2&id=' . $thread_id . '" method="POST"><div id="loading_gfx"><img src="' . $imgServer . 'loading.gif" /></div>
+<div id="showSwapper" style="display:none"><textarea id="temp2" name="bodyer" style="width:900px" class="tinymce"></textarea></div>
 <button class="button" type="submit" style="float:right;-moz-border-radius-topleft: 0px;-khtml-border-radius-topleft: 0px;-webkit-border-top-left-radius: 0px;-moz-border-radius-topright: 0px;-khtml-border-radius-topright: 0px;-webkit-border-top-right-radius: 0px;margin-right:0px"><img src="' . $imgServer . 'gen/add_mail_s.png" /> Send Message</button>
  </form>
  <div id="bottom"><br /></div>';

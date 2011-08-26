@@ -1,113 +1,187 @@
 <?php
-require_once('core/inc/func/app/quiz/main.php');
+require_once('core/inc/coreInc.php');
+require_once('extensions/classPage/core/main.php');
+requireSession();
 
-// create the main array of questions for a quiz
-$dataset = array();
+require_once('core/template/head/header.php');
+?>
+<script type="text/javascript" src="/app/core/ajax/editor/richEdit.js"></script>
+<script type="text/javascript" src="/app/core/ajax/assessment_builder.js"></script>
+<script type="text/javascript" src="/app/core/ajax/scroll.js"></script>
+<script type="text/javascript" src="/app/core/ajax/autogrow.js"></script>
+<script type="text/javascript" src="/app/core/ajax/input.js"></script> 
 
-// create a question set
-$question_set = create_question_set('heres a question', 30);
+<style>
+#mainviewer {
+    width:700px;
+    float:right;
+}
 
+#mainviewer textarea{
+    font-size:14px;
+    font-family:arial;
+}
 
+.addMore {
+    float:right;
+    border:1px solid #ccc;
+    padding-left:30px;
+    padding-top:7px;
+    padding-bottom:10px;
+    margin-bottom:20px;
+    font-size:16px;
+    height:20px;
+    width:670px;
+    clear:both;
+}
 
-// this is where a loop would usually start
+.selement {
+    border:1px solid #ccc;
+    padding:20px;
+    margin-bottom:20px;
+    background: #fff;
 
-$question_text = 'This is a question.';
-
-// add a multiple choice question
-$answer_list[] = 'This is the first answer';
-$answer_list[]= 'This is the second answer';
-$answer_list[] = 'This is the third answer';
-$answer_list[] = 'This is the fourth answer';
-
-$answer_key[] = 0;
-$answer_key[] = 0;
-// 1 denotes a correct answer
-$answer_key[] = 1;
-$answer_key[] = 0;
-
-// add a multiple choice question to a question set
-$question_set = create_mcq($question_set, $question_text, $answer_list, $answer_key);
-
-// add a multiple choice question to a question set
-$question_set = create_mcq($question_set, $question_text, $answer_list, $answer_key);
-
-
-
-var_dump($question_set);
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-$q1 = array();
-$q1['type'] = 1;
-$q1['text'] = 'This is the question!';
-$a_data = array();
-$a_data['correct_data'] = 'correct data here';
-$answers = array();
-$answers[1] = 'This is answer 1';
-$answers[2] = 'This is answer 2';
-$answers[3] = 'This is answer 3';
-$answers[4] = 'This is answer 4';
-$a_data['questions'] = $answers;
-
-$q1['answer_data'] = $a_data;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
 
 
+.selement .answers{
+    clear:both;
+    margin-top:20px;
+}
+.selement .answers input{
+    border:1px solid #999;
+    font-size:14px;
+    width:400px;
+    padding:5px;
+    -moz-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    -webkit-border-radius: 0px;
+}
 
-$el_set[1] = $q1;
-$elements[1] = $el_set;
-$orig_data[1] = $elements;
+.selement .ordnum {
+    background: #000;
+    padding-left:8px;
+    padding-top:1px;
+    padding-bottom:1px;
+    padding-right:8px;
+    color:#fff;
+    font-size:16px;
+    font-weight:bolder;
+    position:absolute;
+    margin-top:-30px;
+    margin-left:-30px;
 
-$original['properties'] = $orig_props;
-$original['data'] = $orig_data;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-top-right: 5px;
+}
+
+.selement .handle {
+    background: #ccc;
+    padding-left:2px;
+    padding-top:1px;
+    padding-bottom:2px;
+    padding-right:2px;
+    color:#fff;
+    font-weight:bolder;
+    float:right;
+    margin-top:-20px;
+    margin-right:-20px;
+    cursor:pointer;
+
+    -moz-border-radius-bottomleft: 5px;
+    -khtml-border-radius-bottomleft: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+}
+
+.selement .points {
+    float:right;
+    width:100px;
+    padding-top:1px;
+    font-size:12px;
+    margin-top:-20px;
+}
+
+.selement .pointput {
+    font-size:12px;
+    font-weight:bolder;
+    width:30px;
+    height:12px;
+    text-align:center;
+    margin-bottom:10px;
+    margin-right:4px;
+    float:left;
+}
+
+.selement .pointers {
+    font-weight:bolder;
+}
+
+.selement .deler {
+    font-size:12px;
+    margin-top:-20px;
+    margin-right:10px;
+    background: #ccc;
+    padding-left:5px;
+    padding-top:1px;
+    padding-bottom:2px;
+    padding-right:5px;
+    color:#fff;
+    font-weight:bolder;
+    float:right;
+    cursor:pointer;
+}
+
+#sidepanel {
+    width:170px;
+    border:1px solid #ccc;
+    float:left;
+}
+
+#totalPoints {
+    font-size:16px;
+    font-weight:bolder;
+    padding:10px;
+
+}
+
+.answer {
+    margin-top:10px;
+}
+
+.floatingPanel { position: fixed; top: 10px; }
+</style>
 
 
-var_dump($original);
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- $question_text = 'This is a fill in the blank question!';
+<div style="font-size:24px; color:#666"><a href="#" onClick="create_ele(1);">Assessments</a> <img src="/app/core/site_img/main/l_arrow.png"> Quiz</div>
+
+<div style="margin-top:20px"></div>
+    <div id="sidepanel">
+        <div id="totalPoints">
+        </div>
+        <br /><br />
+        <a href="#" onClick="saveMent(); return false">Save This</a>
+    </div>
+
+<div id="mainviewer">
 
 
-// okay, so lets create a fill in the blank question
-$answer_key[1] = 'saget';
-$answer_key[2] = 'saget';
+</div>
 
 
-// add a fill-in-the-blank question to a question set
-$question_set = create_fibq($question_set, $question_text, $answer_key);
+<div class="addMore" style="margin-bottom:200px">
+    <div style="color:#666; font-weight:bolder; float:left">Add a...</div>
+
+    <div style="margin-left:30px; color:#666; float:left; cursor:pointer" onClick="create_ele(3);"><img src="<?php echo $imgServer; ?>gen/text.png" style="margin-right:2px;margin-bottom:-2px" /> text block</div>
+
+    <div style="margin-left:30px; color:#666; float:left; cursor:pointer" onClick="create_ele(1);"><img src="<?php echo $imgServer; ?>gen/mcq.png" style="margin-right:2px;margin-bottom:-2px" /> multiple choice</div>
+
+</div>
 
 
-
-
-
-
-
-
-
-// cool, now lets create an essay question
-$question_text = 'This is an essay question.';
-
-// add an essay question to a question set
-$question_set = create_essayq($question_set, $question_text);
-*/
-
-
+<?php
+require_once('core/template/foot/footer.php');
 ?>

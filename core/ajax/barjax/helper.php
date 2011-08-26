@@ -33,8 +33,7 @@ $name = $arr[count($arr) - 1];
 $name = substr($name, 0, strpos($name, '.'));
 
 if (file_exists('guides/' . $name . '.php')) {
-	echo '<div style="font-size:16px; color:#666; text-align:center; margin-top:10px">Learn how this page works.</div>
-<button class="button" type="submit" onClick="initTutorial(\'' . $name . '\')" style="margin-bottom:10px; margin-top:10px; margin-left:10px">Start The Interactive Tutorial</button>';
+	echo '<button class="button" type="submit" onClick="initTutorial(\'' . $name . '\')" style="margin-bottom:10px; margin-top:10px; margin-left:10px">Learn How This Page Works</button>';
 } else {
 	echo '<div style="font-size:14px; color:#666; margin-top:10px; margin-left:5px; margin-bottom:10px">No tutorial found for this page.<div style="font-size:12px; color:#333; text-align:left; margin-top:7px">Have a question? Click the feedback button on the bottom bar or you can call us at (866) 844-5250.</div></div>';
 }

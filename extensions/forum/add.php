@@ -34,40 +34,31 @@ if (isset($_POST['submitted'])) {
 	
 	exit();
 }
+
+$editorID = rand(1, 1500);
+
+
 echo '<cc:crumbs><a href="index.php">Forum</a>{crumbSplit}Create Thread</cc:crumbs>
-<script type="text/javascript" src="' . $scriptServer . 'editor/richEdit.js"></script>
 <script type="text/javascript">
-	$().ready(function() {
-		$(\'textarea.tinymce\').tinymce({
-			// Location of TinyMCE script
-			script_url : \'' . $scriptServer . 'editor/tiny_mce.js\',
+$(document).ready(function () {
+	var config = {
+		toolbar:\'genToolbar\'
+	};
 
-			// General options
-			theme : "advanced",
-			plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,advlist",
+	// Initialize the editor.
+	// Callback function can be passed and executed after full instance creation.
+	$("textarea.tinymce").ckeditor(config);
 
-			// Theme options
-			theme_advanced_buttons1 : "cut,copy,paste,pastetext,pasteword,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,forecolor,backcolor,styleselect,formatselect,fontselect,fontsizeselect",
-			theme_advanced_buttons2 : "search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,sub,sup,hr,image,charmap,emotions,iespell,media,|,insertdate,inserttime,pagebreak,preview,fullscreen",
-			theme_advanced_buttons3 : "",
-			theme_advanced_toolbar_location : "top",
-			theme_advanced_toolbar_align : "left",
-			theme_advanced_statusbar_location : "bottom",
-			theme_advanced_resizing : true,
-			content_css : "' . $scriptServer . 'dynCSS.cc"
-
-
-		});
 	});
 </script>
-<div id="failer" class="errorbox" style="text-align:center; font-weight:bolder; display:none; margin-bottom:5px"></div>
-<form method="post" action="add.php">
+<div id="failer" class="errorbox" style="text-align:center; font-weight:bolder; display:none; margin-bottom:5px; margin-left:10px"></div>
+<form method="post" action="add.php" style="margin-left:20px">
 <span style="font-size:14px; font-weight:bolder">Forum Title</span><br />
-<input type="text" name="title" style="width:215px" /><br /><br />
+<input type="text" name="title" style="width:300px;font-size:14px;padding:4px" class="noRound" /><br /><br />
 
 <span style="font-size:14px; font-weight:bolder">Forum Description</span><br />
-		<div>
-			<textarea id="elm1" name="body" rows="15" cols="80" style="width: 750px" class="tinymce"></textarea>
+		<div id="showSwapper">
+			<textarea id="elmadd' . $editorID . '" name="body" rows="15" cols="80" style="width: 700px" class="tinymce"></textarea>
 		</div>
 
 <input type="hidden" name="submitted" value="true" />

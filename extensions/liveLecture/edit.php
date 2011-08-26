@@ -26,6 +26,7 @@ if (isset($_GET['lid']) && is_numeric($_GET['lid'])) {
 // if submitted
 if (isset($_POST['saget'])) {
 	$attempt = archiveLLC($lid);
+	sendNodeification('kLLRTEStopHostingNotification', '5', 'livelecture/' . $lid, $class_id);
 	echo 1;
 	exit();
 }

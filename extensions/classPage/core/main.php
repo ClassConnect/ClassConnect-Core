@@ -2,6 +2,7 @@
 
 // add comment to class wall
 function addComment($body, $userID, $level, $classID) {
+	global $dbc;
 	// clean stuff
 	$body = escape($body);
 	$userID = escape($userID);
@@ -9,9 +10,13 @@ function addComment($body, $userID, $level, $classID) {
 	
 	// insert if there is a body
 	if ($body != '') {
-		$test = good_query("INSERT INTO class_wall (body, userID, level, classID, date_posted) VALUES ('$body', '$userID', '$level', '$classID', NOW() )");	
+		$test = @mysqli_query($dbc, "INSERT INTO class_wall (body, userID, level, classID, date_posted) VALUES ('$body', '$userID', '$level', '$classID', NOW() )");	
+
+		$doc_id = $dbc->insert_id;
+		return $doc_id;
 	}
-	
+
+	return false;
 }
 // end addComment
 

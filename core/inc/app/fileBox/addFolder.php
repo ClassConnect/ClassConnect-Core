@@ -18,6 +18,8 @@ if (isset($_POST['name'])) {
 
 <script>
 function validateFolder() {
+        $('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+        $('#bottom').hide();
         dataString = $("#add-folder").serialize();
         var fid = <?php echo $_GET['fid']; ?>;
         $.ajax({
@@ -30,6 +32,9 @@ function validateFolder() {
                updateFbox(fid);
          } else {
          	 $("#failer").html(data).slideDown(400);
+                 $('#loadImgur').remove();
+                 $('#bottom').show();
+
          	 
          }
                

@@ -25,13 +25,12 @@
 				document.getElementById("app" + currentApp).className = "";
 				document.getElementById("app" + appID).className += " active_item";
 				currentApp = appID;
-				
 				changeDivContent("appLoad.cc?cid=" + classID + "&id=" + appID +  "&appType=" + appType + "&page=" + cleanData(getPage));
 		}
 		
 		// changing pages within an application
 		function changePage(appID, getPage) {
-				changeDivContent("appLoad.cc?cid=" + classID + "&id=" + appID + "&appType=" + appType + "&page=" + cleanData(getPage));
+			changeDivContent("appLoad.cc?cid=" + classID + "&id=" + appID + "&appType=" + appType + "&page=" + cleanData(getPage));
 		}
 		
 		
@@ -135,17 +134,20 @@ function apiEventHandler() {
 										
 									// regular app page swap
 									} else {
-										// make sure it's not tiny mce
-										if (URLlocation != 'javascript:;') {
-											changePage(currentApp, URLlocation);
-											parent.location.hash = currentApp + '_' + URLlocation;
+										// make sure it's not a javascript command
+										if (URLlocation.indexOf('javascript:', 0) == -1) {
+											if (URLlocation.indexOf('http://', 0) == -1 && URLlocation.indexOf('https://', 0) == -1) {
+												changePage(currentApp, URLlocation);
+												parent.location.hash = currentApp + '_' + URLlocation;
+												} else {
+													window.location = URLlocation
+												}
 										}
 										return false;	
 									}
 									
 									
 									} // target blank else
-									
 								});
 								
 								// handle form submissions

@@ -12,7 +12,7 @@ function create_pres($title, $body, $parent_dir, $uid) {
 	if ($title != '') {
 		$title = escape($title);
 	} else {
-		$errors[] = 'No presentation name was entered.';
+		$errors[] = 'No lecture name was entered.';
 	}
 	
 	// clean body

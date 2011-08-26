@@ -17,6 +17,11 @@ if ($cType == 1) {
 // if were adding a youtube video
 } elseif ($cType == 4) {
 	require_once('core/inc/app/fileBox/content/embed/add.php');
+
+
+// if were adding a google doc
+} elseif ($cType == 8) {
+	require_once('core/inc/app/fileBox/content/gapp/add.php');
 	
 }
 

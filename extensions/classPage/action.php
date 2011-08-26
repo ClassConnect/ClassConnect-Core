@@ -14,15 +14,16 @@ if ($_GET['n'] == 1) {
 	
 if (isset($_POST['message'])) {
 	$message = escape($_POST['message']);
-	addComment($message, $user_id, $class_level, $class_id);
+	$comment_id = addComment($message, $user_id, $class_level, $class_id);
 } 
 ?>
 
 <cc:inline>
 <?php if ($message != '') { 
+
 if ($class_level == 3) {
-		$cssClass = 'darkcommentbox';
-		$cssClass2 = 'darkcommentfooter';
+		$border = 'class=\"borderColor\"';
+		$bbotom = '';
 
 		$classData = getClass($class_id);
 		// send notification
@@ -31,8 +32,8 @@ if ($class_level == 3) {
 		$append = '$(\'#latestBox\').hide(); $(\'#latestBox\').html(\'<span class="status">' . $message . '</span><br /><span class="posted_at">posted at ' . date('g:i A') . ' on ' . date('F j, Y') . '</span>\').fadeIn(400);';
 		
 	} else {
-		$cssClass = 'commentbox';
-		$cssClass2 = 'commentfooter';
+		$border = '';
+        $bbotom = 'border-bottom: 1px solid #d1d1cc;';
 	}
 	
 $me = getUser($user_id);
@@ -44,7 +45,10 @@ $(document).ready(function(){
 var message_wall = $('#message_wall').attr('value');
 
 
-$("#class_comments").prepend("<div style=\"clear:both;display:none;margin-top:10px\"><img src=\"<?php echo $iconServer . $me['prof_icon']; ?>.png\" height=\"40\" width=\"40\" style=\"float:left;border:1px solid #bbbbb7;margin-right:5px\" /><div style=\"float:left\"><img src=\"<?php echo $imgServer; ?>main/arrow-left.png\" style=\"float:left; margin-top:10px\" /><div style=\"background: #eeeeea; border: 1px solid #d1d1cc; width:670px; margin-left:6px; padding:5px\"><strong><?php echo $me['first_name'] . ' ' . $me['last_name']; ?></strong> <span style=\"color:#666\"><?php echo 'posted at ' . date('g:i A') . ' on ' . date('F j, Y'); ?></span><br /><?php echo $message; ?></div></div></div><div style=\"clear:both; height:10px\"></div>");
+$("#class_comments").prepend("<div id=\"comment<?php echo $comment_id; ?>\" style=\"clear:both;display:none;margin-top:10px\"><img src=\"<?php echo $iconServer . $me['prof_icon']; ?>.png\" height=\"40\" width=\"40\" style=\"float:left;border:1px solid #bbbbb7;margin-right:5px\" /><div style=\"float:left\"><img src=\"<?php echo $imgServer; ?>main/arrow-left.png\" style=\"float:left; margin-top:10px\" /><div style=\"background: #eeeeea; border-left: 1px solid #d1d1cc;border-right: 1px solid #d1d1cc;border-top: 1px solid #d1d1cc; <?php echo $bbotom; ?> width:670px; margin-left:6px; padding:5px\" <?php echo $border; ?>><?php
+if ($class_level == 3) {
+	echo '<span style=\"float:right; font-weight:bolder; color:#fff; padding-top:0px; padding-bottom:0px; padding-left:5px; padding-right:5px; border:1px solid #666\" class=\"bevColor\"><a href=\"#\" class=\"delMe\" target=\"_blank\" onClick=\"deleteComment(' . $comment_id . ');return false;\">X</a></span>';
+} ?><strong><?php echo $me['first_name'] . ' ' . $me['last_name']; ?></strong> <span style=\"color:#666\"><?php echo 'posted at ' . date('g:i A') . ' on ' . date('F j, Y'); ?></span><br /><?php echo $message; ?></div></div></div><div style=\"clear:both; height:10px\"></div>");
 $("#class_comments div:first").slideDown();
 
 $('#message_wall').val('');

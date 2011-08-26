@@ -30,6 +30,12 @@ $scriptArr[] = $scriptServer . 'classPage.js';
 require_once('core/template/head/header.php');
 // display class page HTML (JS hits it later)
 ?>
+	<script type="text/javascript">
+	var CKEDITOR_BASEPATH = '<?php echo $scriptServer; ?>ckedit/';
+	</script>
+	<script type="text/javascript" src="<?php echo $scriptServer; ?>ckedit/ckeditor.js"></script>
+	<script type="text/javascript" src="<?php echo $scriptServer; ?>ckedit/adapters/jquery.js"></script>
+
 <script type="text/javascript" >
 var className = "<?php echo $classData['name']; ?>";
 var classID = "<?php echo $classData['id']; ?>";
@@ -65,9 +71,17 @@ $(document).ready(function(){
 </div> 
  
 <?php
-$thisSchool = getSchoolSession($classData['sid']);
-$jArr = json_decode(reverse_htmlentities($thisSchool['classPolicies']), true);
-$apps = getClassApps($jArr['list_type'], $jArr['exception_list']);
+// if this class isn't linked to a school
+if ($classData['sid'] == 0) {
+	$jArr = json_decode(reverse_htmlentities($theme['classPolicies']), true);
+	$apps = getClassApps($jArr['list_type'], $jArr['exception_list']);
+
+// if there is a school
+} else {
+	$thisSchool = getSchoolSession($classData['sid']);
+	$jArr = json_decode(reverse_htmlentities($thisSchool['classPolicies']), true);
+	$apps = getClassApps($jArr['list_type'], $jArr['exception_list']);
+}
 foreach ($apps as $app) {
     // <img src=" $imgServer; client_img/user/java.png" height="12" style="float:left; padding-top:4px; padding-right:3px;" />
     echo '<a href="#' . $app['id'] . '" onclick="selectApp(' . $app['id'] . ')"><li id="app' . $app['id'] . '">&nbsp;' . $app['name'] . '</li></a>';

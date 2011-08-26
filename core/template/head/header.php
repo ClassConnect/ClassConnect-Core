@@ -2,10 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"> 
 <head> 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="Description" content="App." />
-<meta name="Keywords" content="keywords." />
-<meta name="Distribution" content="Global" /> 
 <meta name="Robots" content="index,follow" /> 
+<link rel="stylesheet" href="<?php echo $cssServer; ?>main.css" type="text/css" />
 <link rel="stylesheet" href="<?php echo $scriptServer; ?>dynCSS.cc" type="text/css" />
 <script type="text/javascript" src="<?php echo $scriptServer; ?>jquery.js"></script>
 <script type="text/javascript" src="<?php echo $scriptServer; ?>siteFunctions.js"></script>
@@ -25,11 +23,10 @@ foreach ($scriptArr as $script) {
 </head> 
  
 <body> 
-<!-- wrap starts here --> 
-<div id="wrap"> 
 
 <?php if ($extLock != 1) { ?>
- 
+<!-- header-wrap --> 
+<div id="header-wrap">
 		<!-- header --> 
 		<div id="header">
        
@@ -37,74 +34,105 @@ foreach ($scriptArr as $script) {
 <?php
 $padding = round((40 - $theme['logoHeight'])/2, 0);
 ?>
-<li class="logo"><img src="<?php echo $imgServer; ?>client_img/school/<?php echo $theme['settingLogo']; ?>" style="padding-left:2px;padding-top:<?php echo $padding; ?>px" /></li>
-<li style="border-left:1px solid #999"><a href="home.cc">Home</a></li>
-<li>
+<div id="toplogo">
+<a href="home.cc">
+  <img src="<?php echo $imgServer; ?>client_img/school/<?php echo $theme['settingLogo']; ?>" style="padding-left:2px;padding-top:<?php echo $padding; ?>px" />
+</a></div>
+<li id="myclassesHover">
 <div>
-	<a class="getme" href="#"><img src="<?php echo $imgServer; ?>header/classes.png" style="float:left;height:20px;padding-right:5px;padding-top:2px;" /> Classes</a> 
-	<ul class="subnav">
+	<a class="getme" href="#" onClick="return false;"><img src="<?php echo $imgServer; ?>header/classes.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Classes</a> 
+	<ul class="subnav" id="classLister">
     	<?php
 		foreach($myClasses as $class) {
 			echo '<li><a href="class.cc?id=' . $class['id'] . '"><img src="' . $iconServer . $class['prof_icon'] . '" id="classimger' . $class['id'] . '" style="float:left;height:20px;padding-right:5px;" />' . $class['name'] . '</a></li>';
 		}
 		if (empty($myClasses)) {
-			echo '<li><a href="#">No Active Classes Found</a></li>';
+			echo '<li title="Click to manage your classes/schools"><a href="manage-classes.cc">No active classes found.</a></li>';
 		}
 		?>
     </ul>
 </div>
 </li>
-
+<?php
+if (!empty($mySchools)) {
+?>
 <li>
 <div>
-	<a class="getme" href="#"><img src="<?php echo $imgServer; ?>header/horn.png" style="float:left;height:20px;padding-right:5px;padding-top:2px;" /> Schools</a> 
+	<a class="getme" href="#" onClick="return false;"><img src="<?php echo $imgServer; ?>header/horn.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Schools</a> 
 	<ul class="subnav">
     	<?php
 		foreach($mySchools as $school_ID) {
 			echo '<li><a href="school.cc?id=' . $school_ID['id'] . '"><img src="' . $imgServer . 'client_img/school/' . $school_ID['settingLogo'] . '" style="float:left;height:20px;padding-right:5px;padding-top:2px;" />' . $school_ID['name'] . '</a></li>';
 		} 
 		if (empty($mySchools)) {
-			echo '<li><a href="#">No Active Classes Found</a></li>';
+			echo '<li title="Click to manage your classes/schools"><a href="manage-classes.cc">No active schools found.</a></li>';
 		}		
 		?>
     </ul>
 </div>
 </li>
+<?php
+}
+?>
 
-<li><div><a class="getme" href="#"><img src="<?php echo $imgServer; ?>header/apps.png" style="float:left;height:20px;padding-right:5px;padding-top:2px;" /> Apps</a>
+<li id="appsHover"><div><a class="getme" href="#" onClick="return false;"><img src="<?php echo $imgServer; ?>header/apps.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Apps</a>
 <ul class="subnav">
-<li><a href="filebox.cc">
+<li id="fboxappHover"><a href="filebox.cc">
         <img src="<?php echo $imgServer; ?>header/fbox.png" style="float:left;height:20px;padding-right:5px;" />
         <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">FileBox
         <div style="color:#666; font-size:10px;margin-top:-5px">Store files, videos, and more.</div></div>
     </a></li>
-<li><a href="searchBox.cc">
+<li id="lectureappHover"><a href="presentations.cc">
+         <img src="<?php echo $imgServer; ?>header/presentation.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
+           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Lectures
+       <div style="color:#666; font-size:10px;margin-top:-5px">Create & edit lectures.</div></div>
+</a></li>
+<li id="docsappHover"><a href="writer.cc">
+        <img src="<?php echo $imgServer; ?>header/docs.png" style="float:left;height:20px;padding-right:5px;" />
+           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Docs
+        <div style="color:#666; font-size:10px;margin-top:-5px">Create & edit documents.</div></div>
+    </a></li>
+<li id="sboxappHover"><a href="searchBox.cc">
         <img src="<?php echo $imgServer; ?>header/sbox.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
          <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">SearchBox
         <div style="color:#666; font-size:10px;margin-top:-5px">Educational search engine.</div></div>
 
     </a></li>
-<li><a href="writer.cc">
-        <img src="<?php echo $imgServer; ?>header/docs.png" style="float:left;height:20px;padding-right:5px;" />
-           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Docs
-        <div style="color:#666; font-size:10px;margin-top:-5px">Create & edit documents.</div></div>
+<?php
+if ($level == 3) {
+?>
+<li id="gbookappHover"><a href="gradebook.cc">
+        <img src="<?php echo $imgServer; ?>header/gbook.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
+         <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Gradebook
+        <div style="color:#666; font-size:10px;margin-top:-5px">Manage your class grades.</div></div>
+
     </a></li>
-<li><a href="presentations.cc">
-         <img src="<?php echo $imgServer; ?>header/presentation.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
-           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Presentations
-       <div style="color:#666; font-size:10px;margin-top:-5px">Create & edit presentations.</div></div>
-</a></li>
+<?php
+}
+?>
         </ul></div></li>
-<li><div><a class="getme" href="#"><img src="<?php echo $imgServer; ?>header/settings.png" style="float:left;height:20px;padding-right:5px;padding-top:2px;" /> Settings</a>
+<li id="settingsHover"><div><a class="getme" href="#" onClick="return false;"><img src="<?php echo $imgServer; ?>header/settings.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Settings</a>
 
 <ul class="subnav">
     <li><a href="settings.cc">Account Settings</a></li>
-   <li><a href="manage-classes.cc">Manage Classes / Schools</a></li>
+   <li id="manageclassesHover"><a href="manage-classes.cc">Manage Classes</a></li>
 </ul>
 </div></li>
 
-<li style="float:right;border-right:none;border-left:1px solid #999"><a href="logout.cc"><img src="<?php echo $imgServer; ?>header/logout.png" style="float:left;height:20px;padding-right:5px;padding-top:2px;" /> Logout</a></li>
+
+<li style="float:right;border-right:none;border-left:1px solid #999"><a href="logout.cc"><img src="<?php echo $imgServer; ?>header/logout.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Logout</a></li>
+<!--
+<div style="float:right;border-right:none;width:200px; line-height:1">
+  <img src="<?php echo $iconServer . $user_icon ?>.png" style="height:26px; margin-right:5px; float:left; background-color:#fff; border:2px solid #999;" />
+  <?php echo $firstname . ' ' . $lastname; ?><br />
+  <span style="color:#666; font-size:10px">Teacher</span>
+</div>
+-->
+
 </ul>
        
        </div><!-- header end -->
+       </div><!-- header-wrap end-->
+       <!-- wrap starts here --> 
+<div id="wrap"> 
 <?php } ?>

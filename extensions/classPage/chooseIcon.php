@@ -12,9 +12,10 @@ if ($class_level == 3) {
 
 
 if (isset($_POST['id'])) {
-	
+
 $url = str_replace(' ', '%20', $_POST['img']);
 $pid = strip_tags($_POST['id']);
+if (!file_exists('temp/' . $_POST['id'] . '.png')) {
 $ch = curl_init($url);
 $fp = fopen('temp/' . $pid . '.png', 'wb');
 curl_setopt($ch, CURLOPT_FILE, $fp);
@@ -46,6 +47,8 @@ $container = $conn->get_container('cc4_img');
 // upload file to Rackspace
 $object = $container->create_object($pid . '.png');
 $object->load_from_filename('temp/' . $pid . '.png');
+
+} // if the file doesn't already exist
 
 $classData = getClass($class_id);
 updateClass($user_id, $class_id, $classData['name'], $classData['description'], $classData['classKey'], $pid . '.png');

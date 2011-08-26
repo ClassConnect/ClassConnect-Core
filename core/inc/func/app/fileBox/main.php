@@ -279,7 +279,7 @@ function create_bookmark($fid, $uid, $name, $url, $body) {
 		}
 	
 		// check for http in URL
-		if (strpos($url, 'http://') !== false) {
+		if ((strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false)) {
 			$url = escape($url);
 		} else {
 			$url = escape('http://' . $url);
@@ -288,6 +288,42 @@ function create_bookmark($fid, $uid, $name, $url, $body) {
 		
 		if (empty($errors)) {
 			$add = create_content($fid, $uid, 2, $name, $body, $url, '', '', '');
+			if ($add == 1) {
+				return 1;
+			} else {
+				return $add;
+			}
+			
+		}
+		
+	
+	return $errors;
+	
+}
+// end create_bookmark
+
+
+
+// create bookmark
+function create_gdoc($fid, $uid, $name, $url, $body) {
+	// init errors array
+	$errors = array();
+	
+		// empty URL?
+		if ($url == '') {
+			$errors[] = 'You forgot to enter a URL.';
+		}
+	
+		// check for http in URL
+		if ((strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false)) {
+			$url = escape($url);
+		} else {
+			$url = escape('http://' . $url);
+		}
+		
+		
+		if (empty($errors)) {
+			$add = create_content($fid, $uid, 8, $name, $body, $url, '', '', '');
 			if ($add == 1) {
 				return 1;
 			} else {
@@ -315,7 +351,7 @@ function update_bookmark($conID, $uid, $name, $url, $body) {
 		}
 	
 		// check for http in URL
-		if (strpos($url, 'http://') !== false) {
+		if ((strpos($url, 'http://') !== false) || (strpos($url, 'https://') !== false)) {
 			$url = escape($url);
 		} else {
 			$url = escape('http://' . $url);
@@ -374,6 +410,34 @@ function create_file($fid, $uid, $name, $ext, $file_type, $size, $enc_name) {
 
 
 
+// create file
+function create_img($fid, $uid, $name, $ext, $file_type, $size, $enc_name, $imgFile) {
+	// init errors array
+	$errors = array();
+	global $cloudImgPub;
+	$imgData = getimagesize($imgFile);
+	
+		// empty name?
+		if ($name == '') {
+			$name = 'tempfile';
+		}
+
+			$add = create_content($fid, $uid, 9, $name, $body, $cloudImgPub . $enc_name . '.' . $ext, $ext, $imgData[0], $imgData[1]);
+			if ($add == 1) {
+				return 1;
+			} else {
+				return $add;
+			}
+			
+		
+	
+	return $errors;
+	
+}
+// end create_bookmark
+
+
+
 
 
 // update file
@@ -406,25 +470,34 @@ if (empty($errors)) {
 
 
 // upload file to rackspace cloud
-function upload_file($localfile, $enc_name) {
+function upload_file($localfile, $enc_name, $type, $ext) {
 // get cloud files ext
 require_once('core/ext_api/cloudFiles/cloudfiles.php');
 global $cloudUser;
 global $cloudKey;
 global $cloudBucket;
+global $cloudImgBucket;
+global $cloudImgPub;
 	
 	// Connect to Rackspace
 $auth = new CF_Authentication($cloudUser, $cloudKey);
 $auth->authenticate();
 $conn = new CF_Connection($auth);
  
-// Get the container we want to use
-$container = $conn->get_container($cloudBucket);
+if ($type == 1) {
+	// Get the container we want to use
+	$container = $conn->get_container($cloudBucket);
+	// create object
+	$object = $container->create_object($enc_name);
+} elseif ($type == 2) {
+	// choose img container
+	$container = $conn->get_container($cloudImgBucket);
+	// create object
+	$object = $container->create_object($enc_name . '.' . $ext);
+}
 
  
-// $container->delete_object('JB_blog.odt');
 // upload file to Rackspace
-$object = $container->create_object($enc_name);
 $object->load_from_filename($localfile);
 
 return 1;

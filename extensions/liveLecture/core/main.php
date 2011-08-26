@@ -1,8 +1,10 @@
 <?php
 // get a cached livelecture
 function getLLC($ll_id) {
+    global $dbc;
     $ll_id = escape($ll_id);
-    $llData = good_query_assoc("SELECT * FROM livelec_cache WHERE lid = $ll_id LIMIT 1");
+    $r = @mysqli_query($dbc, "SELECT * FROM livelec_cache WHERE lid = $ll_id LIMIT 1");
+    $llData = mysqli_fetch_array($r, MYSQLI_BOTH);
     return $llData;
 }
 // end function

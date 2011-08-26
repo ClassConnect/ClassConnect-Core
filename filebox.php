@@ -92,6 +92,7 @@ require_once('core/template/head/header.php');
 <div class="subTabbed" onClick="addContent(2, 250)"><img src="<?php echo $imgServer; ?>gen/web_l.png" style="float:left; margin-right:5px; height:18px"/>Bookmark URL</div>
 <div class="subTabbed" onClick="addContent(3, 250)"><img src="<?php echo $imgServer; ?>gen/yt_l.png" style="float:left; margin-right:5px; height:18px"/>Add YouTube Video</div>
 <div class="subTabbed" onClick="addContent(4, 250)"><img src="<?php echo $imgServer; ?>gen/embed_l.png" style="float:left; margin-right:5px; height:18px"/>Add Embed Code</div>
+<div class="subTabbed" onClick="addContent(8, 250)"><img src="<?php echo $imgServer; ?>gen/gaoo_l.png" style="float:left; margin-right:5px; height:16px"/>Add Google Doc</div>
 </div>
 
 <div id="leftDesc" style="padding:5px">

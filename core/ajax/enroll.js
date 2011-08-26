@@ -11,6 +11,7 @@ $( "#progressbar" ).progressbar({
     $("#signup-form").submit(function(){
         dataString = $("#signup-form").serialize();
 
+$("#cont-right").html('<br /><br /><br /><br /><br /><br /><br /><br /><center><img src="/app/core/site_img/load.gif" /></center>');
         $.ajax({
         type: "POST",
         url: "enroll.cc?s=1",
@@ -34,6 +35,7 @@ $( "#progressbar" ).progressbar({
 
 // display the settings page after signup success
 function verifyCode(logData) {
+$("#main-block").html('<br /><br /><center><img src="/app/core/site_img/load.gif" /></center><br /><br />');
 $( "#progressbar" ).progressbar({
 			value: 66
 		});
@@ -76,6 +78,7 @@ function submitCode() {
 
 // display the settings page after signup success
 function allowLogin() {
+  $("#main-block").html('<br /><br /><center><img src="/app/core/site_img/load.gif" /></center><br /><br />');
 $( "#progressbar" ).progressbar({
 			value: 100
 		});

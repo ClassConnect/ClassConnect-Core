@@ -14,7 +14,7 @@ function hostLecture() {
 if ($("input[name=target]:checked").val() != undefined) {
     window.location = "livelecture/cacheswap.cc?classID=' . $class_id . '&fid=" + $("input[name=target]:checked").val();
 } else {
-$("#failer").html(\'<div class="errorbox" style="font-weight:bolder; text-align:center;">You forgot to choose a presentation.</div>\');
+$("#failer").html(\'<div class="errorbox" style="font-weight:bolder; text-align:center;">You forgot to choose a lecture.</div>\');
 }
 
 }
@@ -23,7 +23,7 @@ $("#failer").html(\'<div class="errorbox" style="font-weight:bolder; text-align:
 <script type="text/javascript" src="' . $scriptServer . 'filePicker.js"></script>
 
 <form method="GET" id="move-content">
-<div id="failer" style="border-bottom:2px solid #999;"><div style="font-size:14px; color:#999; padding:5px; font-style:italic">choose a presentation...</div></div>
+<div id="failer" style="border-bottom:2px solid #999;"><div style="font-size:14px; color:#999; padding:5px; font-style:italic">choose a lecture...</div></div>
 <div id="selectBox">
 
 

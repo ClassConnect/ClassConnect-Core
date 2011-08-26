@@ -25,7 +25,7 @@ foreach ($listClasses as $classEl) {
 	}
 	echo '<div style="height:50px; margin-top:5px; border-bottom:1px solid #ccc">
 
-<div style="float:left">
+<div style="float:left; margin-left:10px"">
 <span style="font-size:16px; font-weight:bolder">' . $classEl['name'] . '</span><br />
 ' . $fill . '
 </div>
@@ -41,7 +41,7 @@ $end = '';
 }
 
 if (empty($listClasses)) {
-    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px">You have no past classes.</div>';
+    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px;margin-bottom:20px">You don\'t have any past classes.</div>';
 }
 
 } elseif ($_GET['v'] == 2) {
@@ -54,7 +54,7 @@ foreach ($listClasses as $classEl) {
 	}
 	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
 
-<div style="float:left">
+<div style="float:left; margin-left:10px">
 <span style="font-size:16px; font-weight:bolder"><a href="class.cc?id=' . $classEl['id'] . '">' . $classEl['name'] . '</a></span><br />
 ' . $fill . '
 </div>
@@ -68,7 +68,7 @@ foreach ($listClasses as $classEl) {
 }
 
 if (empty($listClasses)) {
-    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px">You have no current classes.</div>';
+    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px;margin-bottom:20px">You don\'t have any current classes.</div>';
 }
 
 // if we want to view the future...
@@ -79,7 +79,7 @@ foreach ($listClasses as $classEl) {
 		
 echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
 
-<div style="float:left">
+<div style="float:left; margin-left:10px"">
 <span style="font-size:16px; font-weight:bolder"><a href="class.cc?id=' . $classEl['id'] . '">' . $classEl['name'] . '</a></span><br />
 ' . $fill . '
 </div>
@@ -94,7 +94,7 @@ echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
 }
 
 if (empty($listClasses)) {
-    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px">You have no future classes.</div>';
+    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px;margin-bottom:20px">You don\'t have any future classes.</div>';
 }
 } elseif ($_GET['v'] == 4) {
 
@@ -117,7 +117,7 @@ foreach ($listSchools as $schoolEl) {
 
 	echo '<div style="height:50px; border-bottom: 1px solid #ccc; margin-top:5px">
 
-<div style="float:left">
+<div style="float:left; margin-left:10px"">
 <span style="font-size:16px; font-weight:bolder"><a href="school.cc?id=' . $schoolEl['id'] . '">' . $schoolEl['name'] . '</a></span><br />
 ' . $temp . '
 </div>
@@ -128,6 +128,10 @@ foreach ($listSchools as $schoolEl) {
 </div>
 
 </div>';
+}
+
+if (empty($listSchools)) {
+    echo '<div style="font-size:16px; color: #666;text-align:center;margin-top:20px;margin-bottom:20px">You don\'t have any schools.</div>';
 }
 
 

@@ -16,7 +16,7 @@ foreach ($msgs as $msg) {
     <div style="float:left; width:170px; height:44px">
         <img src="' . $iconServer . $msgData['prof_icon'] . '.png" height="40" width="40" style="float:left;margin-right:5px;margin-top:2px">
         <div style="padding-top:8px"><strong>' . $msgData['first_name'] . ' ' . $msgData['last_name'] . '</strong><br />
-        <span style="color:#999; font-size:9px">March 3rd at 3:10pm</span>
+        <span style="color:#999; font-size:9px">' . date('F j, Y', strtotime($msgData['sent_at'])) . ' at ' . date('g:i A', strtotime($msgData['sent_at'])) . '</span>
         </div>
     </div>
     <div style="font-size:14px; padding-top:3px">

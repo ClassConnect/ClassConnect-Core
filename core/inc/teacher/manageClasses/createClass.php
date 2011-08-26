@@ -17,7 +17,7 @@ if (isset($_POST['name'])) {
 	if ($_POST['sid'] != '') {
 		$sid = escape($_POST['sid']);
 	} else {
-		$errors[] = 'You forgot to choose a school.';
+		$sid = 0;
 	}
 
 
@@ -26,7 +26,7 @@ if (isset($_POST['name'])) {
 		echo "1";
 		setSession($user_id);
 	} else { // report the errors
-		echo '<div class="errorbox" style="width: 470px;"><span style="font-size:14px; font-weight:bolder">Oops!</span>';
+		echo '<div class="errorbox" style="margin-right:3px"><span style="font-size:14px; font-weight:bolder">Oops!</span>';
 		foreach ($errors as $error) {
 			echo '<li>' . $error . '</li>';
 		}
@@ -68,43 +68,29 @@ if ($_GET['ni'] == 1) {
 echo '<div class="headTitle"><img src="' . $imgServer . 'gen/add_l.png" style="margin-right:5px;margin-top:2px" /><div>Create New Class</div></div>
 <div id="failer" style="display:none;margin-top:5px;margin-left:3px;margin-bottom:5px"></div>
 <div id="content" style="margin:5px">
-<form method="POST" id="create-class" style="font-size:14px">
+<form method="POST" id="create-class" style="font-size:14px; margin-left:7px">
 
-<div style="width: 250px; float:right">
-<strong>Select School</strong> <span style="color:#dd1100;font-style: bolder">*</span>
-';
-echo '<div id="jCatch" style="margin-bottom:20px">';
-foreach($mySchools as $school) {
-	
-	echo '<input type="radio" id="radio' . $school['id'] . '" onClick="swapGP(' . $school['id'] . ')" name="sid" value="' . $school['id'] . '" /><label for="radio' . $school['id'] . '" style="font-size:12px; margin-bottom:10px">' . $school['name'] . '</label><br />';
-} 
-if (empty($mySchools)) {
-	echo 'No schools found. You must add or find your school before you can create classes.';
-}		
-echo '</div>';
-
-echo '<strong>Choose Grading Period</strong>
-<div id="gp">
-<span style="font-style:italic; color:#999">You must select your school first!</span>
-</div>';
-
-echo '</div>
-
-<div style="width:225px; padding-right:5px; border-right:1px solid #ccc">
-<strong>Class Name</strong> <span style="color:#dd1100;font-style: bolder">*</span><br />
+<strong>Class Name</strong><br />
 <input type="text" name="name" style="width:215px" /><br />
 <span style="font-size:9px; font-style: italic; color: #666">ex: Biology Period 1</span><br /><br />
 
 
-<strong>Description</strong><br />
-<textarea name="body" style="height:50px; width:215px"></textarea>
+<div style="display:none"><input type="password" name="saget" /></div>';
 
-<div style="display:none"><input type="password" name="saget" /></div>
-<br /><br/>
-</div>
+if (!empty($mySchools)) {
+	echo '<strong>Select School</strong>';
+	echo '<div id="jCatch" style="margin-bottom:20px">';
+	foreach($mySchools as $school) {
+	echo '<input type="radio" id="radio' . $school['id'] . '" onClick="swapGP(' . $school['id'] . ')" name="sid" value="' . $school['id'] . '" /><label for="radio' . $school['id'] . '" style="font-size:12px; margin-bottom:10px">' . $school['name'] . '</label><br />';
+	} 
 
+	echo '</div>';
 
-</form>
+	echo '<div id="gp">
+	</div>';
+}
+
+echo '</form>
 
 
 </div>
@@ -116,6 +102,8 @@ $( "#jCatch" ).buttonset();
 
 
 function swapGP(node) {
+	/*
+	$("#gp").html(\'<br /><center><img src="' . $imgServer . 'loading.gif" /></center><br />\');
 $.ajax({
    type: "GET",
    url: "manage-classes.cc?n=1&ni=1&id="+node,
@@ -123,7 +111,7 @@ $.ajax({
      $("#gp").html(msg);
    }
  });
-
+*/
     
 }
 
@@ -138,7 +126,7 @@ function createClass() {
         success: function(data) {
         	if (data == 1) {
         			$("#content").slideUp(300);
-               $("#failer").html(\'<div class="successbox" style="width: 470px;margin-top:10px; margin-bottom:10px; text-align:center; font-weight:bolder">Class Created Successfully! <a href="#" onClick="addAnother();">Add another class.</a></div>\').slideDown(400);
+               $("#failer").html(\'<div class="successbox" style="margin-top:10px; margin-right:3px; margin-bottom:10px; text-align:center; font-weight:bolder">Class Created Successfully!<br /><a href="#" onClick="addAnother();">Add another class.</a></div>\').slideDown(400);
                $("#bottom").html(\'<a href="manage-classes.php" style="float:right" class="button"><img src="' . $imgServer . 'gen/cross.png" />Close</a>\').slideDown(400);
          } else {
          	 $("#failer").html(data).slideDown(400);
