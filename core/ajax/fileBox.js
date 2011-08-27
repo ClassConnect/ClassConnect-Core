@@ -275,6 +275,9 @@ function viewContent(cType, contentID) {
 
 	} else if (cType == 8) {
 		window.location = 'filebox.cc?n=10&content_id=' + contentID;
+
+	} else if (cType == 9) {
+		openBox('filebox.cc?n=10&content_id=' + contentID, 300);
 	
 	}
 

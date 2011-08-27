@@ -17,4 +17,6 @@ require_once('user/var_set.php');
 require_once('data/connect.php');
 // Include core site functions
 require_once('func/core.php');
+// get cloud files ext
+require_once('site/cloudFiles/cloudfiles.php');
 ?>

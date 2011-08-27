@@ -87,6 +87,9 @@ table{font-size:100%}
 // if were viewing a gdoc
 } elseif ($content['format'] == 8) {
 	require_once('core/inc/app/fileBox/content/gapp/view.php');
+
+} elseif ($content['format'] == 9) {
+	require_once('core/inc/app/fileBox/content/files/viewImg.php');
 	
 }
 

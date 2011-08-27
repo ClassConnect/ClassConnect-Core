@@ -471,8 +471,6 @@ if (empty($errors)) {
 
 // upload file to rackspace cloud
 function upload_file($localfile, $enc_name, $type, $ext) {
-// get cloud files ext
-require_once('core/ext_api/cloudFiles/cloudfiles.php');
 global $cloudUser;
 global $cloudKey;
 global $cloudBucket;
