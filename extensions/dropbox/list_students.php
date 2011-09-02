@@ -11,8 +11,7 @@
    $students = dropbox_submitted_students($assignment_id); 
    echo '<div id='.$assignment_id.'>';
    foreach($students as $student){
-     echo '<div id=' .$student.uid. '>';
-
+     echo '<div id=' .$student.uid. '>' . '</div>';
    }
   }
 

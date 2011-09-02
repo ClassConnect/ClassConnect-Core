@@ -187,16 +187,10 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
   $length = count($files);
   for($i = 0 ; $i < $length ; $i++)
   {
-<<<<<<< HEAD
-    $query += '('.$assignment_id.','.$student_id.','.$files["id"].','.$files["type"].')';
-    if($i != ($length-1))
-      $query += ", ";
-=======
     $file = $files[$i];
     $query .= '('.$assignment_id.','.$student_id.','.$file["id"].','.$file["type"].')';
     if($i != ($length-1))
       $query .= ", ";
->>>>>>> 75be99f560153d776bc26ab2c9ad17a25fd023f0
   }
   mysqli_query($dbc,$query);
   
