@@ -30,7 +30,7 @@ function dropbox_add_assignment($name,$date_due)
   $date_due = mysqli_real_escape_string($date_due);
   good_query("INSERT INTO dropbox_assignments (class_id,name,date_due) \
               VALUES ($class_id,'$name','$date_due')");
-  return true
+  return true;
 }
 
 /*/ 
@@ -148,9 +148,9 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
   $length = count($files);
   for($i = 0 ; $i < $length ; $i++)
   {
-    $query += '('.$assignment_id.','.$student_id.','.$files["id"].','.$files["type"].')'
+    $query += '('.$assignment_id.','.$student_id.','.$files["id"].','.$files["type"].')';
     if($i != ($length-1))
-      $query += ", "
+      $query += ", ";
   }
   mysqli_query($dbc,$query);
 

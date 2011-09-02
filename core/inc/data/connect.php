@@ -1,8 +1,8 @@
 <?php
 DEFINE ('DB_USER', 'root');
-DEFINE ('DB_PASSWORD', 'e40represent');
+DEFINE ('DB_PASSWORD', '');
 DEFINE ('DB_HOST', 'localhost');
-DEFINE ('DB_NAME', 'cc4');
+DEFINE ('DB_NAME', 'gradebook_development');
 
 $dbc = @mysqli_connect (DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) OR die ('MySQL Connection Error');
 

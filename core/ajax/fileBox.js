@@ -152,8 +152,6 @@ checkNumSelected();
 
 
 function unSetMe(contType, id) {
-	
-	
 	// generate string for div
 if (contType == 1) {
 	var str = 'fo';
