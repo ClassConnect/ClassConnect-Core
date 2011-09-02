@@ -1,4 +1,8 @@
 <?php
+/*/
+ *  Throughout this file, if a SQL query is over 80 characters long, I will
+ *  include a comment with a nicely formatted version of the query.
+/*/
 
 /*/
  *  Parameters
@@ -9,9 +13,8 @@
 /*/
 function dropbox_assignments()
 {
-  return good_query_table("SELECT * \
-                           FROM dropbox_assignments \
-                           WHERE class_id = $class_id");
+  global $class_id;
+  return good_query_table("SELECT * FROM dropbox_assignments WHERE class_id = $class_id");
 }
 
 /*/
@@ -20,17 +23,24 @@ function dropbox_assignments()
  *    $date_due: the due date of the assignment. Can be null
  *
  *  Returns
- *    true or false, based on whether it succeeded
+ *    If the assignment was added, returns the new assignment's id. If not
+ *    returns false
 /*/
 function dropbox_add_assignment($name,$date_due)
 {
+  global $dbc;
+  global $class_id;
+  global $class_level;
   if($class_level != 3)
     return false;
-  $name = mysqli_real_escape_string($name);
-  $date_due = mysqli_real_escape_string($date_due);
-  good_query("INSERT INTO dropbox_assignments (class_id,name,date_due) \
-              VALUES ($class_id,'$name','$date_due')");
-  return true
+  $name = mysqli_real_escape_string($dbc,$name);
+  $date_due = mysqli_real_escape_string($dbc,$date_due);
+  /*/
+   *  INSERT INTO dropbox_assignments (class_id,name,date_due)
+   *  VALUES ($class_id, '$name', '$date_due')
+  /*/
+  good_query("INSERT INTO dropbox_assignments (class_id,name,date_due) VALUES ($class_id,'$name','$date_due')");
+  return mysqli_insert_id($dbc);
 }
 
 /*/ 
@@ -46,21 +56,25 @@ function dropbox_add_assignment($name,$date_due)
 /*/
 function dropbox_update_assignment($assignment_id, $name, $date_due)
 {
+  global $class_id;
+  global $class_level;
   if($class_level != 3)
     return false;
   if(!$name && !$date_due)
     return true;
   global $dbc;
+  $name = mysqli_real_escape_string($dbc,$name);
+  $date_due = mysqli_real_escape_string($dbc,$date_due);
   $query = "UPDATE dropbox_assignments SET";
   if($name)
   {
-    $query += " name = '$date_due'";
+    $query .= " name = '$name'";
     if($date_due)
-      $query += ",";
+      $query .= ",";
   }
   if($date_due)
-    $query += " date_due = '$date_due'";
-  $query += " WHERE id = $assignment_id AND class_id = $class_id";
+    $query .= " date_due = '$date_due'";
+  $query .= " WHERE id = $assignment_id AND class_id = $class_id";
   good_query($query);
   return (mysqli_affected_rows($dbc) != 0);
 }
@@ -75,10 +89,16 @@ function dropbox_update_assignment($assignment_id, $name, $date_due)
 /*/
 function dropbox_delete_assignment($assignment_id)
 {
+  global $class_id;
+  global $class_level;
   if($class_level != 3)
     return false;
   global $dbc;
-  good_query("DELETE FROM dropbox_assignments WEHRE id = $assignment_id AND class_id = $class_id");
+  /*/
+   *  DELETE FROM dropbox_assignments
+   *  WHERE id = $assignment_id AND class_id = $class_id
+  /*/
+  good_query("DELETE FROM dropbox_assignments WHERE id = $assignment_id AND class_id = $class_id");
   return (mysqli_affected_rows($dbc) != 0);
 }
 
@@ -95,26 +115,32 @@ function dropbox_delete_assignment($assignment_id)
 /*/
 function dropbox_contents($assignment_id,$student_id)
 {
+  global $class_id;
+  global $class_level;
   if($class_level != 3)
     return null;
-  //  Wow, I hate when I have to write queries like that. 
-  $query = "SELECT filebox_id, filebox_type \
-            FROM dropbox_content \
-            JOIN dropbox_assignments \
-            ON dropbox_content.assignment_id = dropbox_assignments.id \
-            WHERE dropbox_assignments.class_id = $class_id \
-              AND assignment_id = $assignment_id \
-              AND student_id = $student_id";
-  $contents = good_query_table($query);
+  
+  /*/
+   * SELECT filebox_id, filebox_type 
+   * FROM dropbox_content 
+   * JOIN dropbox_assignments 
+   *   ON dropbox_content.assignment_id = dropbox_assignments.id 
+   * WHERE dropbox_assignments.class_id = $class_id 
+   *   AND assignment_id = $assignment_id 
+   *   AND student_id = $student_id
+  /*/
+  $contents = good_query_table("SELECT filebox_id, filebox_type FROM dropbox_content JOIN dropbox_assignments ON dropbox_content.assignment_id = dropbox_assignments.id WHERE dropbox_assignments.class_id = $class_id AND assignment_id = $assignment_id AND student_id = $student_id");
   $file_query = "SELECT * FROM filebox_content WHERE id IN (";
   $folder_query = "SELECT * FROM filebox_folders WHERE id IN (";
   foreach($contents as $content)
   {
-    if($contents["filebox_type"] == 1)
-      $file_query += $contents["filebox_id"];
+    if($content["filebox_type"] == 1)
+      $file_query .= $content["filebox_id"];
     else
-      $folder_query += $contents["filebox_id"];
+      $folder_query .= $content["filebox_id"];
   }
+  $file_query .= ")";
+  $folder_query .= ")";
   $files = good_query_table($file_query);
   $folders = good_query_table($folder_query);
   return array('files' => $files, 'folders' => $folders);
@@ -132,30 +158,46 @@ function dropbox_contents($assignment_id,$student_id)
 /*/
 function dropbox_set_contents($assignment_id,$student_id,$files)
 {
+  global $class_id;
+  global $class_level;
   if($class_level != 3)
     return false;
   
   global $dbc;
+  /*/
+   *  SELECT *
+   *  FROM dropbox_assignments
+   *  WHERE class_id = $class_id
+   *    AND id = $assignment_id
+  /*/
+  if(!mysqli_num_rows(good_query("SELECT * FROM dropbox_assignments WHERE class_id = $class_id AND id = $assignment_id")))
+    return false;
   mysqli_autocommit($dbc, false);
-
-  //  Delete all the current content
-  $query = "DELETE FROM dropbox_content \
-            WHERE assignment_id = $assignment_id \
-              AND student_id = $student_id";
+  /*/
+   *  DELETE FROM dropbox_content 
+   *  WHERE assignment_id = $assignment_id 
+   *    AND student_id = $student_id
+  /*/
+  $query = "DELETE FROM dropbox_content WHERE assignment_id = $assignment_id AND student_id = $student_id";
   mysqli_query($dbc, $query);
-
+  
+  //  Ha! I bet you though there woudl be a comment here! Well it's a dynamic 
+  //  query so FUCK YOU!
   $query = "INSERT INTO dropbox_content (assignment_id,student_id,filebox_id,filebox_type) VALUES ";
   $length = count($files);
   for($i = 0 ; $i < $length ; $i++)
   {
-    $query += '('.$assignment_id.','.$student_id.','.$files["id"].','.$files["type"].')'
+    $file = $files[$i];
+    $query .= '('.$assignment_id.','.$student_id.','.$file["id"].','.$file["type"].')';
     if($i != ($length-1))
-      $query += ", "
+      $query .= ", ";
   }
   mysqli_query($dbc,$query);
-
+  
   mysqli_commit($dbc);
   mysqli_autocommit($dbc, true);
+  
+  return true;
 }
 
 /*/
@@ -168,10 +210,14 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
 /*/
 function dropbox_submitted_students($assignment_id)
 {
-  $query = "SELECT DISTINCT users.* \
-            FROM dropbox_content \
-            JOIN users ON users.id = dropbox_content.student_id \
-            WHERE dropbox_content.assignment_id = $assignment_id";
+  /*/
+   *  SELECT DISTINCT users.* 
+   *  FROM dropbox_content 
+   *  JOIN users 
+   *    ON users.id = dropbox_content.student_id 
+   *  WHERE dropbox_content.assignment_id = $assignment_id
+  /*/
+  $query = "SELECT DISTINCT users.* FROM dropbox_content JOIN users ON users.id = dropbox_content.student_id WHERE dropbox_content.assignment_id = $assignment_id";
   return good_query_table($query);
 }
 
