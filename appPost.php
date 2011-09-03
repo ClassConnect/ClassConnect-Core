@@ -88,9 +88,9 @@ curl_close ($ch);
 
 // get request
 } else {
-
  $ch=curl_init();
- curl_setopt($ch,CURLOPT_URL,$hitURL . '?' . $subData);
+ echo $hitURL.'&'.$subData;
+ curl_setopt($ch,CURLOPT_URL,$hitURL . '&' . $subData);
  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
  $page = curl_exec($ch);
  curl_close($ch);

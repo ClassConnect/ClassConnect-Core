@@ -37,9 +37,9 @@ function dropbox_add_assignment($name,$date_due)
   $date_due = mysqli_real_escape_string($dbc,$date_due);
   /*/
    *  INSERT INTO dropbox_assignments (class_id,name,date_due)
-   *  VALUES ($class_id, '$name', '$date_due')
+   *  VALUES ($class_id, '$name', DATE('$date_due'))
   /*/
-  good_query("INSERT INTO dropbox_assignments (class_id,name,date_due) VALUES ($class_id,'$name','$date_due')");
+  good_query("INSERT INTO dropbox_assignments (class_id,name,date_due) VALUES ($class_id,'$name',DATE('$date_due'))");
   return mysqli_insert_id($dbc);
 }
 

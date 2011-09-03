@@ -198,3 +198,15 @@ function tempEr() {
         setTimeout("$('#wizpnel').hide();",500);
     }
 }
+
+//  Inspired by Rails' reverse_merge!, reverse_merge will attempt to combine
+//  options and defaults, using defaults when no value is set in 'options', and
+//  using the value in options otherwise
+var reverse_merge = function(options,defaults)
+{
+	for(var key in defaults)
+	{
+		if(options[key] == undefined)
+			options[key] = defaults[key]
+	}
+}
