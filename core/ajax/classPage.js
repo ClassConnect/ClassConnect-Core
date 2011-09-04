@@ -207,6 +207,11 @@ function apiEventHandler() {
 
 
 
+/*
+* method - 'post' or 'get'
+* action - URL you want to hit
+* dataString - bullshit you want to send
+*/
 function postToAPI(method, action, appID, classID, dataString) {
 	dataString = cleanData(dataString);
    

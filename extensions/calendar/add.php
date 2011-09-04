@@ -247,6 +247,7 @@ function showTime() {
 function addEntry() {
 		  dataString = $("#add-entry").serialize();
         var hitURL = postToAPI("POST", "add.php", currentApp, ' . $class_id . ', dataString);
+        alert(hitURL);
         $.ajax({
         type: "GET",
         url: hitURL,

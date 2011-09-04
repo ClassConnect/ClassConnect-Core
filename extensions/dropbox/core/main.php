@@ -251,4 +251,21 @@ function dropbox_submitted_students($assignment_id)
   return $ret;
 }
 
+function buttonize_submitted_student($student){
+  $_student_string = "<div class='assignmentButton' id=" . $student['id'] . ">";
+  $_student_string .= $student['first_name']. " " . $student['last_name']. "</div>";
+  return $_student_string;
+}
+
+function check_date_format($date){
+  $dateparts = preg_split("-", $date);
+  return checkdate($dateparts[1], $dateparts[2], $dateparts[0]);
+}
+
+
+function dropbox_get_assignment($aid)
+{
+  global $class_id;
+  return good_query_table("SELECT * FROM dropbox_assignments WHERE class_id = $class_id AND id = $aid");
+}
 ?>
