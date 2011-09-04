@@ -54,8 +54,8 @@ $files = dropbox_contents($_GET['a'],$user_id)
       type: "GET",
       url: postToAPI("POST", "student_files.php", currentApp, <?= $class_id ?>, $("#file_form").serialize()),
       success: function(data) {
-        console.log(data);
         closeBox();
+        window.location.reload();
       }
     });
   }
