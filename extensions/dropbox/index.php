@@ -7,19 +7,16 @@ require_once('../core/main.php');
 require_once('../../core/inc/func/app/fileBox/main.php');
 require_once('./core/main.php');
 
-
 //declare crumbs
 echo '<cc:crumbs>DropBox</cc:crumbs>';
-
-echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
 $assignments = dropbox_assignments();
 ?>
 
 <style type="text/css">
-.lecButton {
-  height:40px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px
+.assignmentButton {
+  height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px
 }
-.lecButton:hover {
+.assignmentButton:hover {
     opacity:0.75;
   filter:alpha(opacity=75);
 }
@@ -59,11 +56,37 @@ cursor:default;
   border:1px solid #999;
   font-size:13px;margin-top:5px;width:125px;padding:5px
 }
+
+.assignments_list_bar{
+  -moz-box-shadow:inset -4px 4px 10px -4px #ccc;
+  -webkit-box-shadow:inset -4px 4px 10px -4px #ccc;
+  box-shadow:inset -4px 4px 10px -4px #ccc;
+  width: 200px;
+}
+
+div.no_students_message{
+
+}
+
+div#add-new-assignment{
+  width: 180px;
+  height: 15px;
+}
+
+span#delete{
+  float: right;
+  margin-right:5px;
+}
+
+span#dropbox_buttons{
+  float:right;
+  margin-right:5px;
+}
+
 </style>
 
 <?php
 //if a teacher...
-echo '<span>';
 if($class_level == 3){
   require_once('./teacher_view.php');
 }
@@ -73,5 +96,4 @@ else if ($class_level == 1){
   $assignments_div = '<div id="student_assignments_list"></div>';
 }
 
-echo '</span>';
 ?>
