@@ -4417,7 +4417,7 @@ cursor: pointer;
 background: #efefef;
 }
 
-#selectBox {
+#selectBox, .filePicker {
 height:150px;
 overflow-y: scroll;
 }

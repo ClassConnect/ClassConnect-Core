@@ -22,4 +22,9 @@ $cloudImgPub = 'http://c714621.r21.cf2.rackcdn.com/';
 // css server location
 $cssServer = $scriptServer;
 
+function image_path($image)
+{
+  return $imgServer . $image;
+}
+
 ?>

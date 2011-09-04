@@ -64,14 +64,10 @@ cursor:default;
 <?php
 //if a teacher...
 echo '<span>';
-if($class_level == 3){
-  require_once('./teacher_view.php');
+if($class_level == 3) {
+  require_once('teacher_view.php');
+} else if ($class_level == 1) {
+  require_once('student_view.php');
 }
-
-//if a student...
-else if ($class_level == 1){
-  $assignments_div = '<div id="student_assignments_list"></div>';
-}
-
 echo '</span>';
 ?>
