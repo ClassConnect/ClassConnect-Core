@@ -213,7 +213,10 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
     if($i != ($length-1))
       $query .= ", ";
   }
-  mysqli_query($dbc,$query);
+  //  If the length is 0, then we get a invalid query, which means that
+  //  nothing changes. So if length is 0, don't bother submitting the query
+  if($length != 0)
+    mysqli_query($dbc,$query);
   
   mysqli_commit($dbc);
   mysqli_autocommit($dbc, true);
