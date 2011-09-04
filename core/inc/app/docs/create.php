@@ -45,30 +45,27 @@ function IsNumeric(sText)
    }
 
 
-function createDoc() {
-        $('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
-        $('#bottom').hide();
-        dataString = $("#add-doc").serialize();
-        var fid = 0;
-        $.ajax({
-        type: "POST",
-        url: "writer.cc?n=1",
-        data: dataString,
-        success: function(data) {
-        	if (IsNumeric(data)) {
-               window.location = "writer.cc?n=2&doc_id=" + data;
-         } else {
-         	 $("#failer").html(data).slideDown(400);
-           $('#loadImgur').remove();
-           $('#bottom').show();
-         	 
-         }
-               
+ function createDoc() {
+   $('#bottom').after('<img src="core/site_img/loading.gif" id="loadImgur" style="margin-right:30px; margin-bottom:4px; float:right" />');
+   $('#bottom').hide();
+   dataString = $("#add-doc").serialize();
+   var fid = 0;
+   $.ajax({
+     type: "POST",
+     url: "writer.cc?n=1",
+     data: dataString,
+     success: function(data) {
+       if (IsNumeric(data)) {
+         window.location = "writer.cc?n=2&doc_id=" + data;
+       } else {
+         $("#failer").html(data).slideDown(400);
+         $('#loadImgur').remove();
+         $('#bottom').show();
+
        }
-
-        });
-}
-
+     }
+   });
+ }
 </script>
 <?php
 

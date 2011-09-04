@@ -165,14 +165,16 @@ function dropbox_contents($assignment_id,$student_id)
     return NULL;
   
   /*/
-   *  SELECT filebox_id
+   *  SELECT filebox_content.id,filebox_content.name,filebox_content.format,filebox_formats.format_name,filebox_formats.icon
    *  FROM dropbox_content
    *  JOIN filebox_content
    *    ON filebox_content.id = dropbox_content.filebox_id
+   *  JOIN filebox_formats
+   *    ON filebox_content.format = filebox_formats.format_id
    *  WHERE assignment_id = $assignment_id
    *    AND student_id = $student_id
   /*/
-  return good_query_table("SELECT filebox_content.id,filebox_content.name, filebox_formats.icon FROM dropbox_content JOIN filebox_content ON filebox_content.id = dropbox_content.filebox_id JOIN filebox_formats ON filebox_content.format = filebox_formats.format_id WHERE assignment_id = $assignment_id AND student_id = $student_id");
+  return good_query_table("SELECT filebox_content.id,filebox_content.name,filebox_content.format,filebox_formats.format_name,filebox_formats.icon FROM dropbox_content JOIN filebox_content ON filebox_content.id = dropbox_content.filebox_id JOIN filebox_formats ON filebox_content.format = filebox_formats.format_id WHERE assignment_id = $assignment_id AND student_id = $student_id");
 }
 
 /*/
