@@ -110,37 +110,36 @@ box-shadow:inset -4px 4px 10px -4px #ccc;">
 -webkit-box-shadow:inset -4px 4px 10px -4px #ccc;
 box-shadow:inset -4px 4px 4px -3px #ccc;">Get started with Docs</h1>
   <div class="lecButton" onClick="openBox('writer.php?n=1', 350); return false">
-    <img src="<?php echo $imgServer; ?>gen/addDoc.png" style="width:32px;float:left;margin-right:8px" />
+    <img src="<?= $imgServer ?>gen/addDoc.png" style="width:32px;float:left;margin-right:8px" />
     <div style="font-size:13px">Create Document</div>
     <div style="font-size:12px; color:#999; margin-top:-3px">Create a new document.</div>
   </div>
 
   <div class="lecButton" onClick="openBox('writer.php?n=5', 350); return false">
-    <img src="<?php echo $imgServer; ?>gen/opendoc.png" style="width:32px;float:left;margin-right:8px" />
+    <img src="<?= $imgServer ?>gen/opendoc.png" style="width:32px;float:left;margin-right:8px" />
     <div style="font-size:13px">Open Document</div>
     <div style="font-size:12px; color:#999; margin-top:-3px">Open an existing document.</div>
   </div>
 
   <!-- <div class="lecButton" onClick="openBox('writer.php?n=4', 350); return false">
-    <img src="<?php echo $imgServer; ?>gen/convdoc.png" style="width:32px;float:left;margin-right:8px" />
+    <img src="<?= $imgServer ?>gen/convdoc.png" style="width:32px;float:left;margin-right:8px" />
     <div style="font-size:13px">Import from Word</div>
     <div style="font-size:12px; color:#999; margin-top:-3px">Converts .doc, .docx, or .odt</div>
   </div> -->
 </div>
 <div style="float:right; width:670px">
   <div style="font-size:22px; color:#666; margin-bottom:15px">Recent documents</div>
-  <?php
-    foreach ($recentFiles as $file) {
-      echo '<div class="lecEl fullRound" onClick="openDoc(' . $file['id'] . ');">';
-      echo '<img src="' . $imgServer . 'gen/document.png" style="float:left;width:40px;margin-right:10px" /><span style="font-size:14px">' . $file['name'] . '</span><br />
-        <span style="font-size:11px; color:#999">' . date("g:ia F jS, Y", strtotime($file['time_date'])) . '</span><br />
-      </div>';
-    }
-
-    if(empty($recentFiles)){
-      echo '<p style="color:#999;font-size:16px;text-align:center">You don\'t have any recent lectures!<br />Create a new lecture or import a PowerPoint to get started!</p>';
-    }
-  ?>
+  <?php foreach ($recentFiles as $file) { ?>
+      <div class="lecEl fullRound" onClick="openDoc(<?= $file['id'] ?>);">
+        <img src="<?= $imgServer ?>gen/document.png" style="float:left;width:40px;margin-right:10px" /><span style="font-size:14px"><?= $file['name'] ?></span>
+        <br />
+        <span style="font-size:11px; color:#999"><?= date("g:ia F jS, Y", strtotime($file['time_date'])) ?></span>
+        <br />
+      </div>
+  <?php } ?>
+  <?php if(empty($recentFiles)) { ?>
+      <p style="color:#999;font-size:16px;text-align:center">You don't have any recent lectures!<br />Create a new lecture or import a PowerPoint to get started!</p>
+  <?php } ?>
   </div>
 </div>
 <?php

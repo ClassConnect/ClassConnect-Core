@@ -4,6 +4,17 @@
  *  include a comment with a nicely formatted version of the query.
 /*/
 
+function _dropbox_authorize_content($assignment_id,$student_id)
+{
+  global $user_id;
+  global $class_id;
+  global $class_level;
+  //  Any student other than the user is not allowed to see the content
+  if($user_id != $student_id && $class_level == 1)
+    return false;
+  return true;
+}
+
 /*/
  *  Parameters
  *    none
@@ -14,7 +25,42 @@
 function dropbox_assignments()
 {
   global $class_id;
+  /*/
+   *  SELECT *
+   *  FROM dropbox_assignments
+   *  WHERE class_id = $class_id
+  /*/
   return good_query_table("SELECT * FROM dropbox_assignments WHERE class_id = $class_id");
+}
+
+/*/
+ *  Parameters
+ *    $student_id: the id of the student for whom you want to get the number
+ *                 of files
+ *
+ *  Returns
+ *    A dictionary with the keys being the assignment id and the values being
+ *    the number of files given for that assignment
+/*/
+function dropbox_submitted_count($student_id)
+{
+  global $class_id;
+  /*/
+   *  SELECT dropbox_assignments.*, COUNT(dropbox_content.filebox_id) AS num_files
+   *  FROM dropbox_assignments
+   *  JOIN dropbox_content
+   *    ON dropbox_assignments.id = dropbox_content.assignment_id
+   *  WHERE class_id = $class_id
+   *    AND dropbox_content.student_id = $student_id
+   *  GROUP BY id
+  /*/
+  $ret = array();
+  $assignments = good_query_table("SELECT id, COUNT(dropbox_content.filebox_id) AS num_files FROM dropbox_assignments JOIN dropbox_content ON dropbox_assignments.id = dropbox_content.assignment_id WHERE class_id = $class_id AND dropbox_content.student_id = $student_id GROUP BY id");
+  foreach($assignments as $assignment)
+  {
+    $ret[$assignment['id']] = $assignment['num_files'];
+  }
+  return $ret;
 }
 
 /*/
@@ -108,42 +154,25 @@ function dropbox_delete_assignment($assignment_id)
  *    $student_id: the student whose files we will be retrieving
  *
  *  Returns
- *    An array with two keys: 'files' and 'folders'. The value of those keys
- *    will be arrays 'filebox_content'/'filebox_folder' rows (respectively)
- *    from the database (as they are retrieved by mysqli_fetch_array). If the
- *    current user does not have permission to see the content, returns null
+ *    An array of files (as represented by the filebox_content)
 /*/
 function dropbox_contents($assignment_id,$student_id)
 {
   global $class_id;
   global $class_level;
-  if($class_level != 3)
-    return null;
+  
+  if(!_dropbox_authorize_content($assignment_id,$student_id))
+    return NULL;
   
   /*/
-   * SELECT filebox_id, filebox_type 
-   * FROM dropbox_content 
-   * JOIN dropbox_assignments 
-   *   ON dropbox_content.assignment_id = dropbox_assignments.id 
-   * WHERE dropbox_assignments.class_id = $class_id 
-   *   AND assignment_id = $assignment_id 
-   *   AND student_id = $student_id
+   *  SELECT filebox_id
+   *  FROM dropbox_content
+   *  JOIN filebox_content
+   *    ON filebox_content.id = dropbox_content.filebox_id
+   *  WHERE assignment_id = $assignment_id
+   *    AND student_id = $student_id
   /*/
-  $contents = good_query_table("SELECT filebox_id, filebox_type FROM dropbox_content JOIN dropbox_assignments ON dropbox_content.assignment_id = dropbox_assignments.id WHERE dropbox_assignments.class_id = $class_id AND assignment_id = $assignment_id AND student_id = $student_id");
-  $file_query = "SELECT * FROM filebox_content WHERE id IN (";
-  $folder_query = "SELECT * FROM filebox_folders WHERE id IN (";
-  foreach($contents as $content)
-  {
-    if($content["filebox_type"] == 1)
-      $file_query .= $content["filebox_id"];
-    else
-      $folder_query .= $content["filebox_id"];
-  }
-  $file_query .= ")";
-  $folder_query .= ")";
-  $files = good_query_table($file_query);
-  $folders = good_query_table($folder_query);
-  return array('files' => $files, 'folders' => $folders);
+  return good_query_table("SELECT filebox_content.id,filebox_content.name, filebox_formats.icon FROM dropbox_content JOIN filebox_content ON filebox_content.id = dropbox_content.filebox_id JOIN filebox_formats ON filebox_content.format = filebox_formats.format_id WHERE assignment_id = $assignment_id AND student_id = $student_id");
 }
 
 /*/
@@ -158,19 +187,11 @@ function dropbox_contents($assignment_id,$student_id)
 /*/
 function dropbox_set_contents($assignment_id,$student_id,$files)
 {
-  global $class_id;
-  global $class_level;
-  if($class_level != 3)
-    return false;
-  
   global $dbc;
-  /*/
-   *  SELECT *
-   *  FROM dropbox_assignments
-   *  WHERE class_id = $class_id
-   *    AND id = $assignment_id
-  /*/
-  if(!mysqli_num_rows(good_query("SELECT * FROM dropbox_assignments WHERE class_id = $class_id AND id = $assignment_id")))
+  global $user_id;
+  global $class_id;
+  
+  if(!_dropbox_authorize_content($assignment_id,$student_id))
     return false;
   mysqli_autocommit($dbc, false);
   /*/
@@ -181,14 +202,14 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
   $query = "DELETE FROM dropbox_content WHERE assignment_id = $assignment_id AND student_id = $student_id";
   mysqli_query($dbc, $query);
   
-  //  Ha! I bet you though there woudl be a comment here! Well it's a dynamic 
+  //  Ha! I bet you though there would be a comment here! Well it's a dynamic 
   //  query so FUCK YOU!
-  $query = "INSERT INTO dropbox_content (assignment_id,student_id,filebox_id,filebox_type) VALUES ";
+  $query = "INSERT INTO dropbox_content (assignment_id,student_id,filebox_id) VALUES ";
   $length = count($files);
   for($i = 0 ; $i < $length ; $i++)
   {
     $file = $files[$i];
-    $query .= '('.$assignment_id.','.$student_id.','.$file["id"].','.$file["type"].')';
+    $query .= '('.$assignment_id.','.$student_id.','.$file.')';
     if($i != ($length-1))
       $query .= ", ";
   }
@@ -205,20 +226,24 @@ function dropbox_set_contents($assignment_id,$student_id,$files)
  *    $assignment_id: the assignment to query
  *
  *  Returns
- *    an array of 'user' rows from the database, as they are retrieved via
- *    mysqli_fetch_array()
+ *    an array of dictionaries. Dictionary has keys 'id','first_name',
+ *    'last_name', and 'num_content'
 /*/
 function dropbox_submitted_students($assignment_id)
 {
   /*/
-   *  SELECT DISTINCT users.* 
+   *  SELECT DISTINCT users.id, COUNT(dropbox_content.filebox_id) AS num_content 
    *  FROM dropbox_content 
    *  JOIN users 
    *    ON users.id = dropbox_content.student_id 
    *  WHERE dropbox_content.assignment_id = $assignment_id
   /*/
-  $query = "SELECT DISTINCT users.* FROM dropbox_content JOIN users ON users.id = dropbox_content.student_id WHERE dropbox_content.assignment_id = $assignment_id";
-  return good_query_table($query);
+  $query = "SELECT DISTINCT users.id, COUNT(dropbox_content.filebox_id) AS num_content  FROM dropbox_content JOIN users ON users.id = dropbox_content.student_id WHERE dropbox_content.assignment_id = $assignment_id";
+  $students = good_query_table($query);
+  $ret = array();
+  foreach($students as $student)
+    $ret[$student['id']] = $student['num_content'];
+  return $ret;
 }
 
 function buttonize_submitted_student($student){

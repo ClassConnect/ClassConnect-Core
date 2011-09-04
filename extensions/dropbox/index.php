@@ -12,6 +12,23 @@ echo '<cc:crumbs>DropBox</cc:crumbs>';
 $assignments = dropbox_assignments();
 ?>
 
+<?php
+// include core stuff
+require_once('../../core/inc/coreInc.php');
+// app extension file
+require_once('../core/main.php');
+// include core stuff
+require_once('../../core/inc/func/app/fileBox/main.php');
+require_once('./core/main.php');
+
+
+//declare crumbs
+echo '<cc:crumbs>DropBox</cc:crumbs>';
+
+echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
+$assignments = dropbox_assignments();
+?>
+
 <style type="text/css">
 .assignmentButton {
   height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px
@@ -87,13 +104,11 @@ span#dropbox_buttons{
 
 <?php
 //if a teacher...
-if($class_level == 3){
-  require_once('./teacher_view.php');
+echo '<span>';
+if($class_level == 3) {
+  require_once('teacher_view.php');
+} else if ($class_level == 1) {
+  require_once('student_view.php');
 }
-
-//if a student...
-else if ($class_level == 1){
-  $assignments_div = '<div id="student_assignments_list"></div>';
-}
-
+echo '</span>';
 ?>
