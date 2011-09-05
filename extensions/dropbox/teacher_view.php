@@ -16,7 +16,7 @@ box-shadow:inset -4px 4px 10px -4px #ccc;">
   */
   ?>
     <?php
-      echo "<div id='add-new-assignment' class='genButBkg noRound hostLecBut' style='width: 189px; margin-top: 0px;'><img src='/app/core/site_img/gen/addContent.png' style='float:left; margin-top:-2px; height:24px; margin-right:5px'>Add DropBox</div>";
+      echo "<div id='add-new-assignment' class='genButBkg noRound hostLecBut' style='width: 189px; margin-top: 0px;'><img src='/app/core/site_img/gen/addContent.png' style='float:left; margin-top:-2px; height:24px; margin-right:5px'>Add Assignment</div>";
       echo "<div id='teacher_assignments_list' class_id=$class_id $_string>";
       foreach($assignments as $assignment){
         $assignment_string = '<div date="' . $assignment['date_due'] .  '" class="assignmentButton" id='. $assignment['id'] . '>';
