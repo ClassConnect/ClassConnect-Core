@@ -124,7 +124,7 @@ foreach ($fileList as $fEntry) {
 }
 
 if (empty($dirList) && empty($fileList) && $dirID == 0 && $class_level == 3) {
-	echo '<li>To add content to ShareBox, go to <a href="/dropbox.php" onClick="window.location=\'filebox.cc\'">FileBox</a> and share the desired content with your classes. <a href="#" onClick="openBox(\'/app/core/ajax/barjax/echo.php?data=' . urlencode('<img src="/app/core/site_img/gen/cross.png" style="position:absolute;margin-top:-30px; margin-left:560px; border:3px solid #999; background:#eee; padding:5px; cursor:pointer" onClick="closeBox();" /><iframe width="560" height="349" src="http://www.youtube.com/embed/mf9_SqyIt1w" frameborder="0" allowfullscreen></iframe>') . '\', 560); return false">(watch a video)</a></li>';
+	echo '<li>Your student has not shared any files with you</li>';
 } elseif (empty($dirList) && empty($fileList)) {
 	echo '<li>No content found in this directory.</li>';
 }
