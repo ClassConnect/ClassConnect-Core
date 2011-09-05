@@ -138,7 +138,7 @@ box-shadow:inset -4px 4px 4px -3px #ccc;">Get started with Docs</h1>
       </div>
   <?php } ?>
   <?php if(empty($recentFiles)) { ?>
-      <p style="color:#999;font-size:16px;text-align:center">You don't have any recent lectures!<br />Create a new lecture or import a PowerPoint to get started!</p>
+      <p style="color:#999;font-size:16px;text-align:center">You don't have any recent documents!<br />Create a new document on the left to get started!</p>
   <?php } ?>
   </div>
 </div>
