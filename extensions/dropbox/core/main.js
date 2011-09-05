@@ -1,11 +1,24 @@
 var class_id;
 var _student_list_div;
 var _buttons;
+var _last_clicked;
+
+
+function refreshDropboxPage(){
+  var _url = postToAPI("GET", "index.php", currentApp, class_id, "ref=1");
+  $.get(_url, function(data){
+   $("#class_main").html(data); 
+  })
+  console.log(_last_clicked);
+  if(_last_clicked){
+    console.log(_last_clicked);
+    console.log($("#" + _last_clicked));
+  }
+}
+
 /*
 * Inserts list of students into div#dropbox_students_list
 */
-
-
 function fillStudentsList(assignment_id){
   var datastring = "aid=" + assignment_id;
   var _url = postToAPI("GET", "list_students.php", currentApp, class_id, datastring);
@@ -22,6 +35,7 @@ function addAssignment(){
       $("#dialogBox").html(data);
     }
     else{
+      refreshDropboxPage();
       closeBox();
     }
   });
@@ -37,6 +51,7 @@ function editAssignment(){
       $("#dialogBox").html(data);
     }
     else{
+      refreshDropboxPage();
       closeBox();
     }
   });
@@ -47,6 +62,10 @@ function deleteAssignment(){
 }
 
 $(document).ready(function(){
+  initialize_dropbox_page();
+});
+
+function initialize_dropbox_page(){
   $($("input[type=text]")[0]).focus();
   var $_lol = $("<span id='delete'>test</span>");
   class_id = parseInt($("#teacher_assignments_list").attr("class_id"));
@@ -54,7 +73,9 @@ $(document).ready(function(){
 
   $(".assignmentButton").each(function(){
     $(this).bind('click', function(){
-      fillStudentsList(parseInt($(this).attr("id")));
+      var button_id = parseInt($(this).attr("id"));
+      fillStudentsList(button_id);
+      _last_clicked = button_id;
       $(this).append(_buttons);
       _buttons.show();
     })
@@ -83,6 +104,7 @@ $(document).ready(function(){
       var datastring = "aid=" + _aid;
       var _url = postToAPI("POST", "remove_assignment.php", currentApp, class_id, datastring);
       $.post(_url, function(data){
+        refreshDropboxPage();
       });
 
     }
@@ -107,4 +129,8 @@ $(document).ready(function(){
   
   _buttons = $("#dropbox_buttons");
   _buttons.hide();
-});
+}
+
+function getLastClicked(){
+  return _last_clicked;
+}

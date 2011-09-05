@@ -12,7 +12,6 @@
       $_name = $_POST['assignment_name'];
       $_due = $_POST['assignment_date_due'];
       $_aid = $_POST['aid'];
-      var_dump($_due);
 
       //name validation
       if(!strlen($_name)){

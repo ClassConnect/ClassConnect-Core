@@ -7,25 +7,15 @@ require_once('../core/main.php');
 require_once('../../core/inc/func/app/fileBox/main.php');
 require_once('./core/main.php');
 
-//declare crumbs
-echo '<cc:crumbs>DropBox</cc:crumbs>';
-$assignments = dropbox_assignments();
-?>
-
-<?php
-// include core stuff
-require_once('../../core/inc/coreInc.php');
-// app extension file
-require_once('../core/main.php');
-// include core stuff
-require_once('../../core/inc/func/app/fileBox/main.php');
-require_once('./core/main.php');
-
 
 //declare crumbs
+if($_GET["ref"] == 1){
+
+}else{
 echo '<cc:crumbs>DropBox</cc:crumbs>';
 
 echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
+}
 $assignments = dropbox_assignments();
 ?>
 
@@ -52,6 +42,12 @@ $assignments = dropbox_assignments();
 .lecEl:hover {
   background: #f4f4f4;
 }
+
+.lecEl.student_selecter{
+  float: right;
+  width: 520px;
+}
+
 .lecButAct {
   background-color: #fff;
 }
@@ -98,6 +94,17 @@ span#delete{
 span#dropbox_buttons{
   float:right;
   margin-right:5px;
+}
+
+span.files_submitted{
+  float:right;
+  margin-right: 5px;
+}
+
+span.no_files_submitted{
+  float: right;
+  margin-right: 5px;
+  color: red;
 }
 
 </style>

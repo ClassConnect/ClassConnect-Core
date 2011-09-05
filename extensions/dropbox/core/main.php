@@ -246,11 +246,39 @@ function dropbox_submitted_students($assignment_id)
   return $ret;
 }
 
-function buttonize_submitted_student($student){
-  $_student_string = "<div class='assignmentButton' id=" . $student['id'] . ">";
-  $_student_string .= $student['first_name']. " " . $student['last_name']. "</div>";
-  return $_student_string;
+function buttonize_students($students, $submitted_details){
+  $deadbeats = array();
+  //show students that have submitted stuff first
+  foreach($students as $student){
+    $id = $student['id'];
+    if(!$submitted_details[$id]){
+      $deadbeats[] = $student;
+    }
+    else{
+      $submitted_files = $submitted_details[$id];
+
+      $_student_string = "<div class='lecEl fullRound student_selecter' id=" . $id . ">";
+      $_student_string .= $student['first_name']. " " . $student['last_name'];
+      if($submitted_files == 1){
+        $_student_string .= "<span class='files_submitted'>$submitted_files file submitted</span>". "</div>";
+      }
+      else{
+        $_student_string .= "<span class='files_submitted'>$submitted_files files submitted</span>". "</div>";
+      }
+      echo $_student_string;
+    }
+  }
+
+  //display students that haven't submitted files for the assignment
+  foreach($deadbeats as $student){
+    $id = $student['id'];
+    $_student_string = "<div class='lecEl fullRound student_selecter' float='right' id=" . $id . ">";
+    $_student_string .= $student['first_name']. " " . $student['last_name'];
+    $_student_string .= "<span class='no_files_submitted'>No files submitted</span>". "</div>";
+    echo $_student_string;
+  }
 }
+
 
 function check_date_format($date){
   $dateparts = preg_split("-", $date);
