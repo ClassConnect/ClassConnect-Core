@@ -4,6 +4,7 @@ require_once('../core/main.php');
 require_once('./core/main.php');
 if(isset($_POST['assignment_id']))
 {
+  var_dump($_POST['file_list']);
   dropbox_set_contents($_POST['assignment_id'],$user_id,explode(',',escape($_POST['file_list'])));
   exit();
 }
@@ -33,7 +34,10 @@ $files = dropbox_contents($_GET['a'],$user_id)
         table.appendChild(row);
       }
       if(length == 0)
+      {
         $("#file_list").html('<h5>No files selected</h5>');
+        $("#file_list_input").attr('value',"");
+      }
       else
       {
         $("#file_list").html($(table).html());
