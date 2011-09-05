@@ -12,7 +12,7 @@ require_once('./core/main.php');
 if($_GET["ref"] == 1){
 
 }else{
-echo '<cc:crumbs>DropBox</cc:crumbs>';
+echo '<cc:crumbs>Hand-In</cc:crumbs>';
 
 echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
 }

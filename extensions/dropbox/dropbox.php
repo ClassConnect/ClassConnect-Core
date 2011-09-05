@@ -18,6 +18,7 @@ if (is_numeric($_GET['n'])) {
 }
 //  Load the files from here
 $fileList = dropbox_contents($assignment_id,$student_id);
+$student = getUser($student_id);
 ?>
 <!--[if IE 7]><style type="text/css">
 #selectable2{
@@ -30,7 +31,7 @@ $fileList = dropbox_contents($assignment_id,$student_id);
 
 		}</style>
 <![endif]-->
-<cc:crumbs>Dropbox</cc:crumbs>
+<cc:crumbs><a href="index.php?aid=<?= $assignment_id ?>">Hand-In</a>{crumbSplit}<?= $student['first_name'].' '.$student['last_name'] ?></cc:crumbs>
 <div style="width:750px; float:left">
 <div id="boxCrumbs" style="font-size:10px">
 <input type="radio" id="radio1" onClick="changeDir(0)" name="radio"><label class="fbHeadLeft" for="radio1">Home</label>
