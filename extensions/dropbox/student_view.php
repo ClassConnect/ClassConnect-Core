@@ -6,18 +6,6 @@ function select_files(assignment)
 }
 </script>
 <style>
-  .file_count {
-    font-size:18px;
-    padding-top:7px;
-  }
-  
-  .file_count .none {
-    color:#D33;
-  }
-  
-  .file_count .amount {
-    font-weight:bold;
-  }
 </style>
 <div style="padding:5px">
 <?php

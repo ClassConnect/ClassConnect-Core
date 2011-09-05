@@ -17,7 +17,7 @@
   </div>
 </div>
 <div id="students_list">
-  <div id="llheader">Students</div>
+  <div id="llheader"><span id="students-header">Students</span></div>
   <div id="dropbox_students_list">
     <div id="dropbox_select_message">Click an assignment to view submissions</div>
   </div>
