@@ -9,10 +9,8 @@ function refreshDropboxPage(){
   $.get(_url, function(data){
    $("#class_main").html(data); 
   })
-  console.log(_last_clicked);
   if(_last_clicked){
-    console.log(_last_clicked);
-    console.log($("#" + _last_clicked));
+    $("#" + _last_clicked).click();
   }
 }
 

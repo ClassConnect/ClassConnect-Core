@@ -81,6 +81,14 @@ div.no_students_message{
 
 }
 
+span#students-header{
+  margin-left: 5px;
+}
+
+div#dropbox_select_message{
+  margin-left: 5px;
+}
+
 div#add-new-assignment{
   width: 180px;
   height: 15px;
@@ -96,17 +104,28 @@ span#dropbox_buttons{
   margin-right:5px;
 }
 
-span.files_submitted{
+.file_count.dropbox_view{
   float:right;
-  margin-right: 5px;
+  margin-right:5px;
 }
 
-span.no_files_submitted{
-  float: right;
-  margin-right: 5px;
-  color: red;
+.file_count {
+  font-size:18px;
+  padding-top:7px;
 }
 
+.file_count .none {
+  color:#D33;
+}
+
+.file_count .amount {
+  font-weight:bold;
+}
+
+div#teacher_assignments_list{
+  height: 500px;
+  overflow: auto;
+}
 </style>
 
 <?php
