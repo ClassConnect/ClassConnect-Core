@@ -17,11 +17,21 @@ function _dropbox_authorize_content($assignment_id,$student_id)
   return (mysqli_num_rows($result) == 1);
 }
 
-// function dropbox_allowed_content($content_id)
-// {
-//   global $user_id;
-//   "SELECT cid FROM class_teachers JOIN dropbox_assignments ON dropbox_assignments.class_id = class_teachers.cid JOIN dropbox_content ON dropbox_content.assignment_id = dropbox_assignments.id WHERE class_teachers.uid = 89 AND dropbox_content.filebox_id = 1888";
-// }
+function dropbox_allow_load($content_id, $class_id)
+{
+  /*/
+   *  SELECT * 
+   *  FROM dropbox_content 
+   *  JOIN dropbox_assignments 
+   *    ON dropbox_assignments.id = dropbox_content.assignment_id 
+   *  WHERE dropbox_content.id = $content_id
+   *    AND dropbox_assignments.class_id = $class_id
+  /*/
+  $content = good_query_table("SELECT * FROM dropbox_content JOIN dropbox_assignments ON dropbox_assignments.id = dropbox_content.assignment_id WHERE dropbox_content.id = $content_id AND dropbox_assignments.class_id = $class_id");
+  if(count($content) == 0)
+    return NULL;
+  return $content[0];
+}
 
 /*/
  *  Parameters
