@@ -4,9 +4,6 @@ Icon?
 # Thumbnails
 ._*
 
-# Database connection
-core/inc/data/connect.php
-
 # TextMate Extras
 *.tmproj
 .ftpssh_settings
