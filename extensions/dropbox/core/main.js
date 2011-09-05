@@ -2,6 +2,7 @@ var class_id;
 var _student_list_div;
 var _buttons;
 var _last_clicked;
+var _deleted;
 
 
 function refreshDropboxPage(){
@@ -9,10 +10,11 @@ function refreshDropboxPage(){
   $.get(_url, function(data){
    $("#class_main").html(data); 
   })
-  if(_last_clicked){
+  if(_last_clicked && _last_clicked != _deleted){
     $("#" + _last_clicked).click();
   }
 }
+
 
 /*
 * Inserts list of students into div#dropbox_students_list
@@ -33,7 +35,7 @@ function addAssignment(){
       $("#dialogBox").html(data);
     }
     else{
-      refreshDropboxPage();
+      changePage(currentApp, "index.php");
       closeBox();
     }
   });
@@ -49,7 +51,7 @@ function editAssignment(){
       $("#dialogBox").html(data);
     }
     else{
-      refreshDropboxPage();
+      changePage(currentApp, "index.php");
       closeBox();
     }
   });
@@ -102,7 +104,8 @@ function initialize_dropbox_page(){
       var datastring = "aid=" + _aid;
       var _url = postToAPI("POST", "remove_assignment.php", currentApp, class_id, datastring);
       $.post(_url, function(data){
-        refreshDropboxPage();
+        _deleted = _aid;
+        changePage(currentApp, "index.php");
       });
 
     }

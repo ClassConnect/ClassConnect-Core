@@ -92,7 +92,10 @@ span#students-header{
 }
 
 div#dropbox_select_message{
-  margin-left: 5px;
+  float: right;
+  font-size: 20px;
+  margin-right: 110px;
+  margin-top: 20px;
 }
 
 div#add-new-assignment{
