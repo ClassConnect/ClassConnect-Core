@@ -148,6 +148,30 @@ function dropbox_delete_assignment($assignment_id)
   return (mysqli_affected_rows($dbc) != 0);
 }
 
+function dropbox_view_content($content_id,$assignment_id,$student_id)
+{
+  global $class_id;
+  global $class_level;
+  if($class_level != 3)
+    return NULL;
+  /*/
+   *  SELECT filebox_content.* 
+   *  FROM filebox_content 
+   *  JOIN dropbox_content 
+   *    ON dropbox_content.filebox_id = filebox_content.id 
+   *  JOIN dropbox_assignments 
+   *    ON dropbox_assignments.id = dropbox_content.assignment_id 
+   *  WHERE dropbox_assignments.class_id = $class_id 
+   *    AND dropbox_content.filebox_id = $content_id 
+   *    AND dropbox_content.assignment_id = $assignment_id 
+   *    AND dropbox_content.student_id = $student_id
+  /*/
+  $result = good_query_table("SELECT filebox_content.* FROM filebox_content JOIN dropbox_content ON dropbox_content.filebox_id = filebox_content.id JOIN dropbox_assignments ON dropbox_assignments.id = dropbox_content.assignment_id WHERE dropbox_assignments.class_id = $class_id AND dropbox_content.filebox_id = $content_id AND dropbox_content.assignment_id = $assignment_id AND dropbox_content.student_id = $student_id");
+  if(count($result) != 1)
+    return NULL;
+  return $result[0];
+}
+
 /*/
  *  Parameters
  *    $assignment_id: the assignment for which the contents should be retrieved
@@ -174,7 +198,7 @@ function dropbox_contents($assignment_id,$student_id)
    *  WHERE assignment_id = $assignment_id
    *    AND student_id = $student_id
   /*/
-  return good_query_table("SELECT filebox_content.id,filebox_content.name,filebox_content.format,filebox_formats.format_name,filebox_formats.icon FROM dropbox_content JOIN filebox_content ON filebox_content.id = dropbox_content.filebox_id JOIN filebox_formats ON filebox_content.format = filebox_formats.format_id WHERE assignment_id = $assignment_id AND student_id = $student_id");
+  return good_query_table("SELECT filebox_content.id,filebox_content.name,filebox_content.format,filebox_formats.format_name,filebox_formats.icon,filebox_content.time_date FROM dropbox_content JOIN filebox_content ON filebox_content.id = dropbox_content.filebox_id JOIN filebox_formats ON filebox_content.format = filebox_formats.format_id WHERE assignment_id = $assignment_id AND student_id = $student_id");
 }
 
 /*/

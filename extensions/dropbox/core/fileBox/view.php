@@ -36,7 +36,7 @@ function showDesc() {
 
 echo '<div class="headTitle"><img src="' . $imgServer . 'gen/download_l.png" style="margin-top:3px; margin-right: 5px" /><div>' . $content['name'] . '.' . $content['ext'] . '</div></div>
 
-<a href="/app/convert/fileBox/dl.php?con_id=' . $content['id'] . '&cid=' . $class_id . '&dl=1" target="_blank"><div class="downloadButton">Download This File</div></a>
+<a href="/app/extensions/dropBox/dl.php?con_id=' . $content['id'] . '&cid=' . $class_id . '&s='.$student_id.'&a='.$assignment_id.'&dl=1" target="_blank"><div class="downloadButton">Download This File</div></a>
 
 <div id="opted" style="display:none; margin:10px; border: 1px solid #999; padding:5px; font-size:13px">' . $content['body'] . '</div>
 
