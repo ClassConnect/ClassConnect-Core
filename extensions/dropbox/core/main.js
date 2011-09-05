@@ -130,6 +130,15 @@ function initialize_dropbox_page(){
   
   _buttons = $("#dropbox_buttons");
   _buttons.hide();
+
+  var last_viewed = $("#teacher_assignments_list").attr("last_clicked");
+  if(!(last_viewed === undefined)){
+    $("#" + last_viewed).click();
+  }
+
+  $(".bsbutton").click(function(){
+    changePage(currentApp, "index.php?aid=90")
+  })
 }
 
 function getLastClicked(){

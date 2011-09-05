@@ -3,10 +3,15 @@
     <img src="/app/core/site_img/gen/add_l.png" style="float:left; margin-top:-4px; height:24px; margin-right:5px">
     <div class="load_text" style="margin-top:-12px;">Add Assignment</div>
 </div>
+<?php
+  if(isset($_GET['aid'])){
+    $_string = "last_clicked=" . "'" . $_GET['aid'] . "'";
+  }
+?>
 <div id="home-left">
   <div id="llheader">Assignments</div>
     <?php
-      echo "<div id='teacher_assignments_list' class_id=$class_id>";
+      echo "<div id='teacher_assignments_list' class_id=$class_id $_string>";
       foreach($assignments as $assignment){
         $assignment_string = '<div date="' . $assignment['date_due'] .  '" class="assignmentButton" id='. $assignment['id'] . '>';
         $assignment_string = $assignment_string . '<span class="assignment-name">' . $assignment['name'] . '</span>';
