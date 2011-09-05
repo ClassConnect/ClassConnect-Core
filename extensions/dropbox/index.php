@@ -136,14 +136,23 @@ span#dropbox_buttons{
   color:#D33;
 }
 
+div#ui-datepicker-div{
+  float:left;
+}
+
 .file_count .amount {
   font-weight:bold;
+}
+
+.lololol{
+  whatthefuckisthis;
 }
 
 div#teacher_assignments_list{
   height: 500px;
   overflow: auto;
 }
+
 
 
 </style>

@@ -94,7 +94,17 @@ function initialize_dropbox_page(){
     return false;
   });
 
-  $("#assignment_date_due").datepicker({ dateFormat: 'yy-mm-dd' });
+  //$("#assignment_date_due").datepicker({ dateFormat: 'yy-mm-dd' });
+
+  $("#assignment_date_due").datepicker( {
+      beforeShow: function() {
+           setTimeout(function() {
+               $(".ui-datepicker").css("z-index", 9999999999);
+           }, 10); 
+      },
+      dateFormat: 'yy-mm-dd'
+    });
+
 
   $("#add_assignment_submit").bind('click', function(){
     addAssignment();
