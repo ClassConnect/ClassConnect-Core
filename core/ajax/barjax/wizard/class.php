@@ -75,7 +75,7 @@ guider.createGuider({
     guider.createGuider({
       attachTo: "#app5",
       buttons: [],
-      buttonCustomHTML: "<br /><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(origApper); guider.next();\">Next</a><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(origApper);guider.hideAll();\">Close</a>",
+      buttonCustomHTML: "<br /><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(11); guider.next();\">Next</a><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(origApper);guider.hideAll();\">Close</a>",
       description: "Open lectures you've created using ClassConnect and deliver them directly to students along with an optional video stream. <?php echo '<a href=\"#\" onClick=\"openBox(\'/app/core/ajax/barjax/echo.php?data=' . urlencode('<img src="/app/core/site_img/gen/cross.png" style="position:absolute;margin-top:-30px; margin-left:560px; border:3px solid #999; background:#eee; padding:5px; cursor:pointer" onClick="closeBox();" /><iframe width="560" height="349" src="http://www.youtube.com/embed/wf3VAMMMwzM" frameborder="0" allowfullscreen></iframe>') . '\', 560, 1); return false\">(watch a video)</a>'; ?>",
       id: "sixth",
       next: "sev",
@@ -84,11 +84,23 @@ guider.createGuider({
       width: 400
     });
 
+    guider.createGuider({
+      attachTo: "#app11",
+      buttons: [],
+      buttonCustomHTML: "<br /><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(origApper); guider.next();\">Next</a><a class=\"guider_button\" style=\"float:right\" onClick=\"selectApp(origApper);guider.hideAll();\">Close</a>",
+      description: "Create DropBoxes where students can upload files, videos, websites, and more.",
+      id: "sev",
+      next: "eig",
+      position: 7,
+      title: "Allow students to turn in work.",
+      width: 400
+    });
+
   guider.createGuider({
       buttons: [],
       buttonCustomHTML: "<br /><a class=\"guider_button\" style=\"float:right\" onClick=\"guider.hideAll();\">Close</a>",
       description: "Send out the first class update, add events to the calendar, or open a class forum. When you're ready to move on, click the 'Getting Started' tab on the right!",
-      id: "sev",
+      id: "eig",
       title: "Your turn!"
     });
 <?php

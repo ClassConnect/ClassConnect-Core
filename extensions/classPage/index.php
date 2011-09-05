@@ -72,7 +72,7 @@ if ($class_level == 1) {
 
 // include teacher header
 } elseif ($class_level == 3) {
-	echo '<div id="teach_menu"><span class="item"><a href="classInfo.php" target="dialog" width="240"><img src="' . $imgServer . 'gen/edit_s.png" style="margin-bottom:-2px" /> Edit Class Info</a></span><span class="item"><a href="classCode.php" target="dialog" width="300"><img src="' . $imgServer . 'gen/key_s.png" style="margin-bottom:-2px" /> Class Code</a></span><span class="item"><a href="manageStudents.php"><img src="' . $imgServer . 'gen/users.png" style="margin-bottom:-1px" /> Manage Students</a></span></div>';
+	echo '<div id="teach_menu"><span class="item"><a href="attendance.php"><img src="' . $imgServer . 'gen/attendance.png" style="margin-bottom:-1px" /> Attendance</a></span><span class="item"><a href="classInfo.php" target="dialog" width="240"><img src="' . $imgServer . 'gen/edit_s.png" style="margin-bottom:-2px" /> Edit Class Info</a></span><span class="item"><a href="classCode.php" target="dialog" width="300"><img src="' . $imgServer . 'gen/key_s.png" style="margin-bottom:-2px" /> Class Code</a></span><span class="item"><a href="manageStudents.php"><img src="' . $imgServer . 'gen/users.png" style="margin-bottom:-1px" /> Manage Students</a></span></div>';
 	$comment_swap = 'an update';	
 }
 

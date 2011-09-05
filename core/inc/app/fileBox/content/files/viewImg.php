@@ -20,7 +20,7 @@ function showDesc() {
 </script>
 
 <?php
-echo '<img src="' . $content['content'] . '" width="' . $contet['file_type'] . '" />
+echo '<img src="' . $content['content'] . '" width="' . $content['file_type'] . '" />
 
 <div id="opted" style="display:none; margin:10px; border: 1px solid #999; padding:5px; font-size:13px">' . $content['body'] . '</div>
 

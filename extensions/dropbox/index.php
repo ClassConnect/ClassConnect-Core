@@ -14,7 +14,7 @@ if($_GET["ref"] == 1){
 }else{
 echo '<cc:crumbs>Hand-In</cc:crumbs>';
 
-echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
+echo '<script type="text/javascript" src="/app/extensions/dropBox/core/main.js"></script>';
 }
 $assignments = dropbox_assignments();
 ?>

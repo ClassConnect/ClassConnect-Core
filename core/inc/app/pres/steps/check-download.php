@@ -19,10 +19,10 @@ echo '<div class="wizard-steps">
 	});
 	function downloadDoc() {
 		$.ajax({
-			alert(1);
+
   			url: "presentations.php?n=6&step=2&id=<?php echo $conID; ?>",
   			success: function(data){
-  				alert(2);
+  				
   				$('.current').addClass('completed').removeClass('current');
   				$('.end').addClass('current');
   				window.location = "livelecture/Editor/index.php?fid=" + data;
