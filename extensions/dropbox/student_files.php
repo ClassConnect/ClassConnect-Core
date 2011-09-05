@@ -4,8 +4,9 @@ require_once('../core/main.php');
 require_once('./core/main.php');
 if(isset($_POST['assignment_id']))
 {
-  var_dump($_POST['file_list']);
-  dropbox_set_contents($_POST['assignment_id'],$user_id,explode(',',escape($_POST['file_list'])));
+  var_dump($_POST);
+  dropbox_remove_files($_POST['assignment_id'],$user_id,explode(',',escape($_POST['remove_list'])));
+  dropbox_add_files($_POST['assignment_id'],$user_id,explode(',',escape($_POST['file_list'])));
   exit();
 }
 $files = dropbox_contents($_GET['a'],$user_id)
@@ -59,15 +60,20 @@ $files = dropbox_contents($_GET['a'],$user_id)
       url: postToAPI("POST", "student_files.php", currentApp, <?= $class_id ?>, $("#file_form").serialize()),
       success: function(data) {
         closeBox();
-        window.location.reload();
+        changePage(currentApp,"index.php");
       }
     });
   }
-  var previously_selected = [];
-<?php foreach($files as $file) {?>
-  previously_selected.push({id:<?= $file['id'] ?>, icon:'<?= $imgServer ?>fileBox/formats/<?= $file['icon'] ?>.png', filename:'<?= $file['name'] ?>'});
-<?php } ?>
-  $("#files").setSelectedFiles(previously_selected);
+  function remove_file(file_id)
+  {
+    var $element = $("#current_"+file_id),
+        $input = $("#file_remove_input");
+    if($input.attr('value') == "")
+      $input.attr('value',file_id);
+    else
+      $input.attr('value',$input.attr('value')+","+file_id);
+    $element.hide();
+  }
 </script>
 <div class="headTitle">
   <img src="/app/core/site_img/gen/upload_l.png" style="margin-top:2px; margin-right: 5px">
@@ -76,10 +82,29 @@ $files = dropbox_contents($_GET['a'],$user_id)
 <div id="files"></div>
 <div style="border-top:1px solid #CCC; width:100%"></div>
 <form id="file_form" method="POST">
-  <h1>Selected Files</h1>
+  <h1>Currently on this assignment</h1>
+  <div id="current_file_list">
+    <table style="width:100%; padding:5px;">
+      <tbody>
+        <?php foreach($files as $file) { ?>
+          <tr id="current_<?= $file['id'] ?>">
+            <td>
+              <div style="float:right" onclick="remove_file(<?= $file['id'] ?>)">
+                <a>remove</a>
+              </div>
+              <img src="/app/core/site_img/fileBox/formats/<?= $file['icon'] ?>.png" style="height:12px; float:left; margin-right:5px; margin-top:2px" />
+              <?= $file['name'] ?>
+            </td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+  <h1>Files to add</h1>
   <div id="file_list" style="margin:5px"></div>
   <input id="assignment_id" type="hidden" name="assignment_id" value="<?= $_GET['a'] ?>"/>
   <input id="file_list_input" type="hidden" name="file_list" value="" />
+  <input id="file_remove_input" type="hidden" name="remove_list" value="" />
 </form>
 <div class="actions">
   <button class="button" onclick="submit_files();">

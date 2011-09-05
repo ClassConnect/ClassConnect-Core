@@ -3,7 +3,8 @@ if ($_SESSION['wizViz'][$final] != 1 || $_SESSION['wizardStep'] == 6) {
 ?>
   guider.createGuider({
       buttons: [{name: "Close"}, {name: "Next"}],
-      description: "SearchBox has access to over 400 million pieces of educational content. Watch the quick video below!<br /><br /><iframe width=\"380\" height=\"250\" src=\"http://www.youtube.com/embed/ERpNWANHK9w\" frameborder=\"0\" allowfullscreen></iframe>",
+      width: 620,
+      description: "SearchBox has access to over 400 million pieces of educational content. Watch the quick video below!<br /><br /><iframe width=\"600\" height=\"380\" src=\"http://www.youtube.com/embed/ERpNWANHK9w?HD=1;rel=0;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>",
       id: "first",
       next: "second",
       overlay: true,

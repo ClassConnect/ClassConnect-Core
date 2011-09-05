@@ -11,21 +11,18 @@ require_once('./core/main.php');
 //declare crumbs
 if($_GET["ref"] == 1){
 
-}else{
-echo '<cc:crumbs>DropBox</cc:crumbs>';
 
-echo '<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>';
+}else{
+echo '<cc:crumbs>Hand-In</cc:crumbs>';
+
+echo '<script type="text/javascript" src="/app/extensions/dropBox/core/main.js"></script>';
 }
 $assignments = dropbox_assignments();
 ?>
 
 <style type="text/css">
 .assignmentButton {
-  height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px;
-}
-
-.assignmentButton.selected{
-  background: #1e1e1e;
+  height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px
 }
 .assignmentButton:hover {
     opacity:0.75;
@@ -45,6 +42,7 @@ $assignments = dropbox_assignments();
 }
 .lecEl:hover {
   background: #f4f4f4;
+
 }
 
 .lecEl.student_selecter{
@@ -147,8 +145,7 @@ div#teacher_assignments_list{
   overflow: auto;
 }
 
-span#here_link{
-}
+
 </style>
 
 <?php

@@ -84,7 +84,7 @@ if (!empty($mySchools)) {
     </a></li>
 <li id="lectureappHover"><a href="presentations.cc">
          <img src="<?php echo $imgServer; ?>header/presentation.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
-           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Lectures
+           <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">LiveLecture
        <div style="color:#666; font-size:10px;margin-top:-5px">Create & edit lectures.</div></div>
 </a></li>
 <li id="docsappHover"><a href="writer.cc">
@@ -98,18 +98,13 @@ if (!empty($mySchools)) {
         <div style="color:#666; font-size:10px;margin-top:-5px">Educational search engine.</div></div>
 
     </a></li>
-<?php
-if ($level == 3) {
-?>
 <li id="gbookappHover"><a href="gradebook.cc">
         <img src="<?php echo $imgServer; ?>header/gbook.png" style="float:left;height:20px;padding-right:5px;margin-top:-1px" />
          <div style="margin-top:-5px; margin-bottom:-5px; margin-left:30px; width:137px">Gradebook
         <div style="color:#666; font-size:10px;margin-top:-5px">Manage your class grades.</div></div>
 
     </a></li>
-<?php
-}
-?>
+    
         </ul></div></li>
 <li id="settingsHover"><div><a class="getme" href="#" onClick="return false;"><img src="<?php echo $imgServer; ?>header/settings.png" style="float:left;height:18px;padding-right:5px;padding-top:2px;" /> Settings</a>
 

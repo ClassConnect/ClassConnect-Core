@@ -55,7 +55,7 @@ table{font-size:100%}
 
 
 <table cellpadding=0 cellspacing=0 width="100%" id="changeMe"><tr><td>
-<div id=details>&nbsp;&nbsp;&nbsp;&nbsp;<a href="class.cc?id=' . $class_id . '#4_index.php?dir=' . $content['fid'] . '" class="button">Back</a></div>
+<div id=details>&nbsp;&nbsp;&nbsp;&nbsp;<a href="class.cc?id=' . $class_id . '#11_dropbox.php?s='.$student_id.'&a='.$assignment_id.'" class="button">Back</a></div>
 <div id="theTitle">' . $content['name'] . '</div>
 <td align=right valign=bottom><div style="float:right"> <a href="#" class="button" onClick="showDesc()">Description</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="' . reverse_htmlentities($content['content']) . '" class="button">Remove Frame</a></div></table>
 <div id=outer-separator></div>
