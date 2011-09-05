@@ -220,6 +220,7 @@ function dropbox_contents($assignment_id,$student_id)
 /*/
 function dropbox_add_files($assignment_id,$student_id,$file_ids)
 {
+  global $dbc;
   global $user_id;
   global $class_id;
   //  The only person who can set the content is the user
@@ -234,6 +235,12 @@ function dropbox_add_files($assignment_id,$student_id,$file_ids)
   $value_string_array = array();
   foreach($files as $file)
   {
+    $file['name'] = mysqli_real_escape_string($dbc,$file['name']);
+    $file['body'] = mysqli_real_escape_string($dbc,$file['body']);
+    $file['content'] = mysqli_real_escape_string($dbc,$file['content']);
+    $file['ext'] = mysqli_real_escape_string($dbc,$file['ext']);
+    $file['file_type'] = mysqli_real_escape_string($dbc,$file['file_type']);
+    $file['size'] = mysqli_real_escape_string($dbc,$file['size']);
     $value_string_array[] = "({$file['format']},$student_id,$assignment_id,'{$file['name']}','{$file['body']}','{$file['content']}','{$file['ext']}','{$file['file_type']}','{$file['size']}',NOW())";
   }
   $query .= implode(",",$value_string_array);

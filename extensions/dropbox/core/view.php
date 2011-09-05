@@ -73,7 +73,7 @@ table{font-size:100%}
 // if were viewing an embed object
 } elseif ($content['format'] == 4) {
 	
-	echo reverse_htmlentities($content['content']);
+	echo html_entity_decode(reverse_htmlentities($content['content']));
 
 // if were viewing a scribd doc
 } elseif ($content['format'] == 5) {
@@ -116,7 +116,7 @@ table{font-size:100%}
 <div id="theTitle">' . $content['name'] . '</div>
 <td align=right valign=bottom><div style="float:right"> </div></table>
 <div id=outer-separator></div>
-<tr><td><div id=webframe style="width:100%;height:100%;overflow:auto">' . reverse_htmlentities($content['content']) . '</div>
+<tr><td><div id=webframe style="width:100%;height:100%;overflow:auto">' . html_entity_decode(reverse_htmlentities($content['content'])) . '</div>
 </table><div id="desc" style="display:none;">
 <div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
 <button class="button" onClick="closeBox();" type="submit">
@@ -176,7 +176,7 @@ table{font-size:100%}
 <div id="theTitle">' . $content['name'] . '</div>
 <td align=right valign=bottom><div style="float:right"> <a href="#" class="button" onClick="showDesc()">Description</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="' . reverse_htmlentities($content['content']) . '" class="button">Remove Frame</a></div></table>
 <div id=outer-separator></div>
-<tr><td><iframe allowtransparency=true frameborder=0 id=webframe scrolling=auto src="' . reverse_htmlentities($content['content']) . '" style="width:100%;height:100%"></iframe>
+<tr><td><iframe allowtransparency=true frameborder=0 id=webframe scrolling=auto src="' . html_entity_decode(reverse_htmlentities($content['content'])) . '" style="width:100%;height:100%"></iframe>
 </table><div id="desc" style="display:none;"><div class="headTitle" style="font-size:16px"><div>\'' . $content['name'] . '\' Description</div></div><div style="padding:3px; font-family: arial; font-size:14px">' . $content['body'] . '</div><div id="bottom" style="margin-top:10px; margin-bottom:5px; float:right">
 <button class="button" onClick="closeBox();" type="submit"> 
 <img src="' . $imgServer . 'gen/cross.png" /> Close</button>

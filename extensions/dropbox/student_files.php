@@ -4,7 +4,6 @@ require_once('../core/main.php');
 require_once('./core/main.php');
 if(isset($_POST['assignment_id']))
 {
-  var_dump($_POST);
   dropbox_remove_files($_POST['assignment_id'],$user_id,explode(',',escape($_POST['remove_list'])));
   dropbox_add_files($_POST['assignment_id'],$user_id,explode(',',escape($_POST['file_list'])));
   exit();
