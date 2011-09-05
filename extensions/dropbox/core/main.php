@@ -263,12 +263,12 @@ function buttonize_students($students, $submitted_details){
       $submitted_files = $submitted_details[$id];
       $_student_string = "<div class='lecEl fullRound student_selecter' id=" . $id . ">";
       $_student_string .= "<img src='/app/core/site_img/gen/dropbox_view.png' style='float:left;width:40px;margin-right:10px' />";
-      $_student_string .= $student['first_name']. " " . $student['last_name'];
+      $_student_string .= "<div class='dropbox_student_name'>" . $student['first_name']. " " . $student['last_name'] . "</div>";
       if($submitted_files == 1){
-        $_student_string .= "<span class='file_count dropbox_view'><span class='amount'>$submitted_files</span> file submitted</span>". "</div>";
+        $_student_string .= "<div class='file_count files'><span class='amount'>$submitted_files</span> file submitted</div>". "</div>";
       }
       else{
-        $_student_string .= "<span class='file_count dropbox_view'><span class='amount'>$submitted_files files submitted</span>". "</div>";
+        $_student_string .= "<div class='file_count files'><span class='amount'>$submitted_files</span> files submitted</div>". "</div>";
       }
       echo $_student_string;
     }
@@ -278,8 +278,8 @@ function buttonize_students($students, $submitted_details){
     $id = $student['id'];
     $_student_string = "<div class='lecEl fullRound student_selecter' float='right' id=" . $id . ">";
     $_student_string .= "<img src='/app/core/site_img/gen/dropbox_view.png' style='float:left;width:40px;margin-right:10px' />";
-    $_student_string .= $student['first_name']. " " . $student['last_name'];
-    $_student_string .= "<span class='file_count dropbox_view'><span class='none'>No files submitted</span></span>". "</div>";
+    $_student_string .= "<div class='dropbox_student_name'>" . $student['first_name']. " " . $student['last_name'] . "</div>";
+    $_student_string .= "<div class='file_count dropbox_view'><span class='none'>No files submitted</span></div>". "</div>";
     echo $_student_string;
   }
 }

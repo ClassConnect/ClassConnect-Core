@@ -81,6 +81,12 @@ div.no_students_message{
 
 }
 
+div.dropbox_student_name{
+  float: left;
+  padding-top: 10px;
+  display: inline !important;
+}
+
 span#students-header{
   margin-left: 5px;
 }
@@ -106,12 +112,16 @@ span#dropbox_buttons{
 
 .file_count.dropbox_view{
   float:right;
-  margin-right:5px;
+}
+
+.file_count.files{
+  float:right;
 }
 
 .file_count {
   font-size:18px;
   padding-top:7px;
+  float: right;
 }
 
 .file_count .none {
