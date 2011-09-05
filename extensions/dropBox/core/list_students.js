@@ -8,9 +8,5 @@ $(document).ready(function(){
 })
 
 function getBoxView(student_id, assignment_id){
-  var datastring = "a=" + assignment_id + "&s=" + student_id;
-  var _url = postToAPI("GET", "dropbox.php", currentApp, class_id, datastring);
-  $.get(_url, function(data){
-    $("#class_main").html(data);
-  });
+  changePage(currentApp,'dropbox.php?a='+assignment_id+"&s="+student_id);
 }

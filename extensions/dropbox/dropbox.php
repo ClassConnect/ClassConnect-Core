@@ -6,23 +6,20 @@ require_once('../core/main.php');
 // include core stuff
 require_once('./core/main.php');
 
-//  Load the files from here
+$assignment_id = $_GET['a'];
+$student_id = $_GET['s'];
 
 // if it's an external load
 if (is_numeric($_GET['n'])) {
 	if ($_GET['n'] == 1) {		  
-			require_once('core/view.php');
-		}
+		require_once('core/view.php');
 	}
 	exit();
 }
-
-$assignment_id = $_GET['a'];
-$student_id = $_GET['s'];
+//  Load the files from here
 $fileList = dropbox_contents($assignment_id,$student_id);
 ?>
-// load gen filebox template
-echo '<!--[if IE 7]><style type="text/css">
+<!--[if IE 7]><style type="text/css">
 #selectable2{
 			font-size: 12px;
 			margin-left:-17px;
@@ -33,9 +30,10 @@ echo '<!--[if IE 7]><style type="text/css">
 
 		}</style>
 <![endif]-->
+<cc:crumbs>Dropbox</cc:crumbs>
 <div style="width:750px; float:left">
 <div id="boxCrumbs" style="font-size:10px">
-<input type="radio" id="radio1" onClick="changeDir(0)" name="radio"><label class="fbHeadLeft" for="radio1">Home</label>';
+<input type="radio" id="radio1" onClick="changeDir(0)" name="radio"><label class="fbHeadLeft" for="radio1">Home</label>
 <?php
 // print out our breadcrumbs
 //  TODO: Make some decent breadcrumbs for the dropbox.
@@ -88,28 +86,28 @@ foreach ($fileList as $fEntry) {
 	
 	// different viewing options
 	if ($fEntry['format'] == 1) {
-		echo '<a href="dropbox.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
+		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
 		
 	} elseif ($fEntry['format'] == 2) {
-		echo '<a href="' . htmlentities(urlencode('dropbox.php?n=1&con_id=' . $fEntry['id'])) . '" target="external">';
+		echo '<a href="' . htmlentities(urlencode('dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'])) . '" target="external">';
 	
 	} elseif ($fEntry['format'] == 3) {
-		echo '<a href="dropbox.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
+		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
 		
 	} elseif ($fEntry['format'] == 4) {
-		echo '<a href="' . htmlentities(urlencode('dropbox.php?n=1&con_id=' . $fEntry['id'])) . '" target="embed">';
+		echo '<a href="' . htmlentities(urlencode('dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'])) . '" target="embed">';
 		
 	} elseif ($fEntry['format'] == 5) {
-		echo '<a href="dropbox.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
+		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="480" shadow="1">';
 		
 	} elseif ($fEntry['format'] == 7) {
-		echo '<a href="dropbox.php?dir=' . $fEntry['fid'] . '" onClick="window.location = \'/app/livelecture/Presenter/dropbox.php?fid=' . $fEntry['id'] . '&cid=' . $class_id . '\'; return false">';
+		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&dir=' . $fEntry['fid'] . '" onClick="window.location = \'/app/livelecture/Presenter/index.php?fid=' . $fEntry['id'] . '&cid=' . $class_id . '\'; return false">';
 
 	} elseif ($fEntry['format'] == 9) {
-		echo '<a href="dropbox.php?n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
+		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
 	
 	} else {
-		echo '<a href="' . htmlentities(urlencode('dropbox.php?n=1&con_id=' . $fEntry['id'])) . '" target="external">';
+		echo '<a href="' . htmlentities(urlencode('/dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'])) . '" target="external">';
 	}
 	?>
 <li>
@@ -125,7 +123,7 @@ foreach ($fileList as $fEntry) {
 }
 
 if (empty($dirList) && empty($fileList) && $dirID == 0 && $class_level == 3) {
-	echo '<li>To add content to ShareBox, go to <a href="dropbox.php" onClick="window.location=\'filebox.cc\'">FileBox</a> and share the desired content with your classes. <a href="#" onClick="openBox(\'/app/core/ajax/barjax/echo.php?data=' . urlencode('<img src="/app/core/site_img/gen/cross.png" style="position:absolute;margin-top:-30px; margin-left:560px; border:3px solid #999; background:#eee; padding:5px; cursor:pointer" onClick="closeBox();" /><iframe width="560" height="349" src="http://www.youtube.com/embed/mf9_SqyIt1w" frameborder="0" allowfullscreen></iframe>') . '\', 560); return false">(watch a video)</a></li>';
+	echo '<li>To add content to ShareBox, go to <a href="/dropbox.php" onClick="window.location=\'filebox.cc\'">FileBox</a> and share the desired content with your classes. <a href="#" onClick="openBox(\'/app/core/ajax/barjax/echo.php?data=' . urlencode('<img src="/app/core/site_img/gen/cross.png" style="position:absolute;margin-top:-30px; margin-left:560px; border:3px solid #999; background:#eee; padding:5px; cursor:pointer" onClick="closeBox();" /><iframe width="560" height="349" src="http://www.youtube.com/embed/mf9_SqyIt1w" frameborder="0" allowfullscreen></iframe>') . '\', 560); return false">(watch a video)</a></li>';
 } elseif (empty($dirList) && empty($fileList)) {
 	echo '<li>No content found in this directory.</li>';
 }
@@ -134,8 +132,6 @@ if (empty($dirList) && empty($fileList) && $dirID == 0 && $class_level == 3) {
 <br />
 <br />
 </div>
-
-// activate buttons
 <script type="text/javascript">
 	$(function() {
 		$( "#boxCrumbs" ).buttonset();

@@ -1,15 +1,10 @@
 <?php
 $content_id = escape($_GET['con_id']);
 
-// if we have authorization
-if (is_grandfather($permissions, $class_id, 1) || is_permitted($permissions, 1, $content_id, $class_id, 1)) {
-	// get the content info
-	$content = get_content($content_id);
-} else {
-	echo 'Cannot verify permissions. Please try again.';
-	exit();
-}
+$content = dropbox_view_content($_GET['con_id'],$_GET['a'],$_GET['s']);
 
+if($content == NULL)
+  exit();
 // if were uploading files
 if ($content['format'] == 1) {
 	require_once('fileBox/view.php');
@@ -191,10 +186,5 @@ table{font-size:100%}
 
 } elseif ($content['format'] == 9) {
 	require_once('../../core/inc/app/fileBox/content/files/viewImg.php');
-
-
 }
-
-
-
 ?>
