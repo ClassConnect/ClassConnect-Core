@@ -87,6 +87,13 @@ function initialize_dropbox_page(){
     openBox(_url, 350);
   });
 
+  $("#here_link").bind('click', function(){
+    var datastring = "aid=1";
+    var _url = postToAPI("GET", "add_assignment.php", currentApp, class_id, datastring);
+    openBox(_url, 350);
+    return false;
+  });
+
   $("#assignment_date_due").datepicker({ dateFormat: 'yy-mm-dd' });
 
   $("#add_assignment_submit").bind('click', function(){
@@ -136,9 +143,6 @@ function initialize_dropbox_page(){
     $("#" + last_viewed).click();
   }
 
-  $(".bsbutton").click(function(){
-    changePage(currentApp, "index.php?aid=90")
-  })
 }
 
 function getLastClicked(){

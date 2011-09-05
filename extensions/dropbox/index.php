@@ -21,7 +21,11 @@ $assignments = dropbox_assignments();
 
 <style type="text/css">
 .assignmentButton {
-  height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px
+  height:22px;border-bottom:1px solid #ccc;padding-left:5px;cursor: pointer;margin-top:5px;
+}
+
+.assignmentButton.selected{
+  background: #1e1e1e;
 }
 .assignmentButton:hover {
     opacity:0.75;
@@ -93,14 +97,17 @@ span#students-header{
 
 div#dropbox_select_message{
   float: right;
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 110px;
   margin-top: 20px;
 }
 
-div#add-new-assignment{
-  width: 180px;
-  height: 15px;
+div#dropbox_new_message{
+  float: right;
+  color: #555;
+  font-size: 16px;
+  margin-right: 150px;
+  margin-top: 20px;
 }
 
 span#delete{
@@ -138,6 +145,9 @@ span#dropbox_buttons{
 div#teacher_assignments_list{
   height: 500px;
   overflow: auto;
+}
+
+span#here_link{
 }
 </style>
 
