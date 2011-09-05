@@ -37,7 +37,7 @@
   }
 
 ?>
-<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>
+<script type="text/javascript" src="./extensions/dropBox/core/main.js"></script>
 
 <?php
   echo "<div id='$class_id' class='headTitle'><div>Edit Assignment</div></div>";

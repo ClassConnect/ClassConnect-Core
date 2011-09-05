@@ -1,4 +1,4 @@
-<script type="text/javascript" src="./extensions/dropbox/core/main.js"></script>
+<script type="text/javascript" src="./extensions/dropBox/core/main.js"></script>
 <?php
   if(isset($_GET['aid'])){
     $_string = "last_clicked=" . "'" . $_GET['aid'] . "'";

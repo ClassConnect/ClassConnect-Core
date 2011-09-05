@@ -9,7 +9,7 @@
   //I'd rather organize it this way...
   //require_once('core/list_students.js');
 
-  echo '<script type="text/javascript" src="./extensions/dropbox/core/list_students.js"></script>';
+  echo '<script type="text/javascript" src="./extensions/dropBox/core/list_students.js"></script>';
   //only let them do dope shit if they're a teacher
   $assignment_id = $_GET['aid'];
   if($class_level == 3){
