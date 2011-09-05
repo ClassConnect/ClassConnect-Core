@@ -108,7 +108,7 @@ foreach ($fileList as $fEntry) {
 		echo '<a href="dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'] . '" target="dialog" width="300">';
 	
 	} else {
-		echo '<a href="' . htmlentities(urlencode('/dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'])) . '" target="external">';
+		echo '<a href="' . htmlentities(urlencode('dropbox.php?a='.$assignment_id.'&s='.$student_id.'&n=1&con_id=' . $fEntry['id'])) . '" target="external">';
 	}
 	?>
 <li>
