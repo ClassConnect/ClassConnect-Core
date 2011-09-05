@@ -123,7 +123,7 @@ echo $initJS;
 
 
 
-<form method="POST" id="signup-form" style="margin-left:20px;margin-bottom:40px">
+<form method="POST" id="signup-form" style="margin-left:20px;margin-bottom:10px">
 <strong>First Name</strong> <br />
 <input type="text" name="firstName" style="width:215px" /><br /><br/>
 
@@ -139,9 +139,12 @@ echo $initJS;
 <strong>Confirm Password</strong> <br />
 <input type="password" name="pass2" style="width:215px" /><br /><br/>
 
+
 <button class="button" type="submit" style="margin-left:20px"> 
 <img src="<?php echo $imgServer; ?>gen/tick.png" /> Create Your Account!
 </button>
+
+<div style="font-size:11px; margin-top:50px;clear:both; color:#666">By signing up, you agree to our <a href="/termsofservice.php" target="_blank">Terms of Service</a>.</div>
 </form>
 
 

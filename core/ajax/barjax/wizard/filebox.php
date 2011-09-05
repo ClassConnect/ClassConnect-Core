@@ -3,7 +3,8 @@ if ($_SESSION['wizViz'][$final] != 1 || $_SESSION['wizardStep'] == 2) {
 ?>
   guider.createGuider({
       buttons: [{name: "Close"},{name: "Next"}],
-      description: "FileBox allows you to store & share files, YouTube videos, website bookmarks, and more. Watch the quick video below!<br /><br /><iframe width=\"380\" height=\"250\" src=\"http://www.youtube.com/embed/mf9_SqyIt1w\" frameborder=\"0\" allowfullscreen></iframe>",
+      width: 620,
+      description: "FileBox allows you to store & share files, YouTube videos, website bookmarks, and more. Watch the quick video below!<br /><br /><iframe width=\"600\" height=\"380\" src=\"http://www.youtube.com/embed/9ZFoQalb37U?HD=1;rel=0;showinfo=0\" frameborder=\"0\" allowfullscreen></iframe>",
       
       id: "first",
       next: "second",
